@@ -1,9 +1,9 @@
 ﻿[CmdletBinding()]
 param(
     [string]$RepoRoot,
-    [string]$RemoteUrl = 'ssh://suazzzi@93.183.106.203:52000/opt/git/vpn-server-wiki.git',
+    [string]$RemoteUrl = 'www-vpn-wiki-sync:/opt/git/vpn-server-wiki.git',
     [string]$GitExe = 'C:\Users\ACER-X-02\AppData\Local\Programs\ExpressLRS Configurator\dependencies\windows_amd64\PortableGit\cmd\git.exe',
-    [string]$PlinkExe = 'C:\Program Files\PuTTY\plink.exe',
+    [string]$OpenSshExe = 'C:\Windows\System32\OpenSSH\ssh.exe',
     [string]$LogPath
 )
 
@@ -208,12 +208,13 @@ try {
     try { $mutexAcquired = $mutex.WaitOne(0) } catch [System.Threading.AbandonedMutexException] { $mutexAcquired = $true }
     if (-not $mutexAcquired) { throw 'Другой импорт WIKI уже выполняется.' }
     if (-not (Test-Path -LiteralPath $GitExe)) { throw "Git не найден: $GitExe" }
-    if (-not (Test-Path -LiteralPath $PlinkExe)) { throw "Plink не найден: $PlinkExe" }
+    if (-not (Test-Path -LiteralPath $OpenSshExe)) { throw "Windows OpenSSH не найден: $OpenSshExe" }
 
     Write-WikiLog 'Начало одностороннего импорта Git-WIKI.'
     $env:GIT_TERMINAL_PROMPT = '0'
-    $env:GIT_SSH_VARIANT = 'plink'
-    $env:GIT_SSH_COMMAND = '"' + $PlinkExe + '" -batch'
+    $env:GIT_SSH_VARIANT = 'ssh'
+    $env:GIT_SSH = $OpenSshExe
+    $env:GIT_SSH_COMMAND = 'C:/Windows/System32/OpenSSH/ssh.exe -o IdentityAgent=none'
     $tempRoot = Join-Path ([System.IO.Path]::GetTempPath()) ('codex-vpn-wiki-' + [guid]::NewGuid().ToString('N'))
     $cloneRoot = Join-Path $tempRoot 'repository'
     $prepared = Join-Path $tempRoot 'upstream'
