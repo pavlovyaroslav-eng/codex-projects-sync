@@ -1,11 +1,13 @@
 ﻿[CmdletBinding()]
 param(
-    [string]$RepoRoot = (Split-Path -Parent $PSScriptRoot),
+    [string]$RepoRoot,
     [string]$GitExe = 'C:\Users\ACER-X-02\AppData\Local\Programs\ExpressLRS Configurator\dependencies\windows_amd64\PortableGit\cmd\git.exe',
-    [string]$LogPath = (Join-Path $env:LOCALAPPDATA 'CodexProjectSync\sync.log')
+    [string]$LogPath
 )
 
 $ErrorActionPreference = 'Stop'
+$RepoRoot = if ([string]::IsNullOrWhiteSpace($RepoRoot)) { Split-Path -Parent $PSScriptRoot } else { $RepoRoot }
+$LogPath = if ([string]::IsNullOrWhiteSpace($LogPath)) { Join-Path $env:LOCALAPPDATA 'CodexProjectSync\sync.log' } else { $LogPath }
 $ExpectedRemoteUrl = 'git@github-codex-projects-sync:pavlovyaroslav-eng/codex-projects-sync.git'
 $mutex = $null
 $mutexAcquired = $false
