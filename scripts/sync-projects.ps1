@@ -6,7 +6,7 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
-$ExpectedRemoteUrl = 'git@github.com:pavlovyaroslav-eng/codex-projects-sync.git'
+$ExpectedRemoteUrl = 'git@github-codex-projects-sync:pavlovyaroslav-eng/codex-projects-sync.git'
 $mutex = $null
 $mutexAcquired = $false
 
