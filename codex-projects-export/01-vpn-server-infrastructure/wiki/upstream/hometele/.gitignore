@@ -1,0 +1,54 @@
+# VPN Server WIKI — never commit secrets or raw private configs
+
+# Secrets / keys / cert private parts
+*.key
+*.pem
+*.p12
+*.pfx
+*.crt
+*.csr
+id_rsa*
+id_ed25519*
+*private*
+*secret*
+*token*
+*password*
+*.env
+.env
+.env.*
+secrets/
+private/
+
+# VPN links / exported client profiles
+client-links/
+*.vless
+*.vmess
+*.trojan
+*.conf.private
+
+# Databases and raw service state
+*.db
+*.sqlite
+*.sqlite3
+x-ui.db
+3x-ui.db
+
+# Archives/backups/logs
+*.tar
+*.tar.gz
+*.tgz
+*.zip
+*.7z
+*.bak
+*.backup
+*.log
+logs/
+
+# Raw configs must be sanitized manually before commit
+raw-configs/
+
+# Editor/OS noise
+.DS_Store
+Thumbs.db
+*.swp
+*.tmp

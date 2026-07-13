@@ -136,6 +136,19 @@ try {
     # Только fast-forward. При конфликте или расхождении история не изменяется.
     Invoke-Git -Arguments @('pull', '--ff-only', 'origin', 'main') | Out-Null
 
+    # Односторонний импорт серверной WIKI выполняется до git add/commit.
+    # При недоступном Pageant, ошибке доступа или находке секрета дочерний
+    # скрипт возвращает ненулевой код, и общая синхронизация останавливается.
+    $wikiSyncScript = Join-Path $RepoRoot 'scripts\sync-vpn-wiki.ps1'
+    if (-not (Test-Path -LiteralPath $wikiSyncScript -PathType Leaf)) {
+        throw "Скрипт импорта WIKI не найден: $wikiSyncScript"
+    }
+    & powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File $wikiSyncScript -RepoRoot $RepoRoot
+    if ($LASTEXITCODE -ne 0) {
+        throw 'Импорт серверной WIKI завершился ошибкой. Git add/commit/push не выполнялись.'
+    }
+    Write-SyncLog 'Импорт серверной WIKI завершён и прошёл проверку.'
+
     $status = Invoke-Git -Arguments @('status', '--porcelain=v1', '--untracked-files=all')
     if (@($status.Output | Where-Object { "$_".Trim() }).Count -gt 0) {
         Invoke-Git -Arguments @('add', '--all', '--', '.') | Out-Null
