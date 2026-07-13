@@ -1,0 +1,17 @@
+{
+  "format_version": 1,
+  "language": "ru",
+  "purpose": "Codex project context export",
+  "generated_date": "2026-07-13",
+  "projects": [
+    {"id":"01","slug":"vpn-server-infrastructure","status":"active","priority":"critical"},
+    {"id":"02","slug":"home-network-keenetic-rpi","status":"active","priority":"high"},
+    {"id":"03","slug":"windows-qr-tools","status":"working-needs-source-import","priority":"medium"},
+    {"id":"04","slug":"pc-reboot-diagnostics","status":"diagnosis-in-progress","priority":"high"},
+    {"id":"05","slug":"niva-21214-headlight-stl","status":"prototype","priority":"high"},
+    {"id":"06","slug":"media-processing-presentations","status":"active","priority":"medium"},
+    {"id":"07","slug":"fpv-ground-station-antennas","status":"concept-design","priority":"medium"},
+    {"id":"08","slug":"fpv-vision-autopilot","status":"research-prototype","priority":"medium"},
+    {"id":"09","slug":"estimates-and-pdf","status":"episodic","priority":"low"}
+  ]
+}

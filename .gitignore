@@ -1,0 +1,53 @@
+# Secrets and private configuration
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+*.pfx
+*.ovpn
+*.conf.private
+secrets/
+private/
+credentials/
+
+# Backups and archives
+backups/
+*.bak
+*.zip
+*.7z
+*.rar
+
+# Logs, caches, temporary files
+*.log
+*.tmp
+*.temp
+*.cache
+logs/
+tmp/
+temp/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Environments and dependencies
+.venv/
+venv/
+node_modules/
+vendor/
+
+# Build outputs
+build/
+dist/
+out/
+coverage/
+
+# OS and editor metadata
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*~
