@@ -23,8 +23,17 @@ function Write-SyncLog {
 function Invoke-Git {
     param([string[]]$Arguments, [switch]$AllowFailure)
 
-    $output = @(& $GitExe -C $RepoRoot @Arguments 2>&1)
-    $exitCode = $LASTEXITCODE
+    $previousErrorActionPreference = $ErrorActionPreference
+    try {
+        # Git пишет обычные информационные сообщения в stderr. Решение об
+        # ошибке принимается только по коду завершения процесса.
+        $ErrorActionPreference = 'Continue'
+        $output = @(& $GitExe -C $RepoRoot @Arguments 2>&1)
+        $exitCode = $LASTEXITCODE
+    }
+    finally {
+        $ErrorActionPreference = $previousErrorActionPreference
+    }
     foreach ($item in $output) {
         if ($null -ne $item -and "$item".Trim().Length -gt 0) {
             Write-SyncLog "git $($Arguments -join ' '): $item"
