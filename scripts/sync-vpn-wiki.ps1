@@ -112,6 +112,7 @@ function Sanitize-MtprotoInventories {
         $lines = @(Get-Content -LiteralPath $fullPath -Encoding UTF8)
         $replacementCount = 0
         $changedLines = New-Object System.Collections.Generic.HashSet[int]
+        $inspectedLines = New-Object System.Collections.Generic.HashSet[int]
 
         for ($lineIndex = 0; $lineIndex -lt $lines.Count; $lineIndex++) {
             $line = $lines[$lineIndex]
@@ -121,6 +122,7 @@ function Sanitize-MtprotoInventories {
                     $match = $matches[$matchIndex]
                     $valueGroup = $match.Groups['value']
                     $kind = Get-MtprotoValueKind -Value $valueGroup.Value -Context $line
+                    [void]$inspectedLines.Add($lineIndex + 1)
                     if ($kind -eq 'secret') {
                         $line = $line.Remove($valueGroup.Index, $valueGroup.Length).Insert($valueGroup.Index, '[REDACTED_MTPROTO_SECRET]')
                         $replacementCount++
@@ -136,8 +138,9 @@ function Sanitize-MtprotoInventories {
         }
 
         if ($replacementCount -gt 0) { Set-Content -LiteralPath $fullPath -Encoding UTF8 -Value $lines }
-        $lineList = if ($changedLines.Count) { (@($changedLines | Sort-Object) -join ',') } else { 'нет' }
-        Write-WikiLog ("{0} строки={1} [mtproto-secret] действие=обезличивание количество={2}" -f $relative, $lineList, $replacementCount)
+        $lineList = if ($inspectedLines.Count) { (@($inspectedLines | Sort-Object) -join ',') } else { 'нет' }
+        $action = if ($replacementCount -gt 0) { 'обезличивание' } elseif ($inspectedLines.Count -gt 0) { 'оставлено без изменения' } else { 'совпадений нет' }
+        Write-WikiLog ("{0} строки={1} [mtproto-secret] действие={2} количество={3}" -f $relative, $lineList, $action, $replacementCount)
     }
 }
 
