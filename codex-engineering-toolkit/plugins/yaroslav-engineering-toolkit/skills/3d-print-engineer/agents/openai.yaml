@@ -1,0 +1,4 @@
+interface:
+  display_name: "3D Print Engineer"
+  short_description: "Проверка и подготовка 3D-моделей"
+  default_prompt: "Используй $3d-print-engineer для безопасной подготовки 3D-модели."

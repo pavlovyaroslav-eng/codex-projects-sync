@@ -1,0 +1,4 @@
+interface:
+  display_name: "KiCad PCB Engineer"
+  short_description: "Проверка и проектирование плат в KiCad"
+  default_prompt: "Используй $kicad-pcb-engineer для проверки схемы и платы KiCad."

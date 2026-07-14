@@ -1,0 +1,4 @@
+interface:
+  display_name: "Media Local Pipeline"
+  short_description: "Локальная обработка изображений и видео"
+  default_prompt: "Используй $media-local-pipeline для локальной обработки медиа."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Embedded Firmware"
+  short_description: "Сборка и безопасная работа с прошивками"
+  default_prompt: "Используй $embedded-firmware для сборки и анализа прошивки."

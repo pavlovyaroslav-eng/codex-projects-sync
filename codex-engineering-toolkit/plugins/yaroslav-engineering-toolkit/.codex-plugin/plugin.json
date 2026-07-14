@@ -1,0 +1,24 @@
+{
+  "name": "yaroslav-engineering-toolkit",
+  "version": "1.0.0",
+  "description": "Локальные инженерные процессы для серверов, электроники, антенн, 3D-печати, прошивок и медиа.",
+  "author": {
+    "name": "Yaroslav Pavlov"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Yaroslav Engineering Toolkit",
+    "shortDescription": "Безопасные инженерные процессы для локальной работы.",
+    "longDescription": "Набор воспроизводимых процессов с резервным копированием, проверками и явными границами опасных операций.",
+    "developerName": "Yaroslav Pavlov",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive"
+    ],
+    "defaultPrompt": [
+      "Проверь инженерную задачу и предложи безопасный workflow.",
+      "Выполни аудит проекта без изменения исходников.",
+      "Подготовь проверяемый план изменений и отката."
+    ]
+  }
+}

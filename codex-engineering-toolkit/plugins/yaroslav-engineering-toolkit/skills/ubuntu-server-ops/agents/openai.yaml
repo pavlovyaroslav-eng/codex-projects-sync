@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ubuntu Server Ops"
+  short_description: "Безопасный аудит и сопровождение Ubuntu"
+  default_prompt: "Используй $ubuntu-server-ops для read-only аудита Ubuntu-сервера."

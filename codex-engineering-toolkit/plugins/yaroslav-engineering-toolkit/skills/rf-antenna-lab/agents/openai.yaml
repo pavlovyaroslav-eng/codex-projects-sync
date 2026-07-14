@@ -1,0 +1,4 @@
+interface:
+  display_name: "RF Antenna Lab"
+  short_description: "Расчёт и подготовка моделей антенн"
+  default_prompt: "Используй $rf-antenna-lab для инженерного расчёта антенны."
