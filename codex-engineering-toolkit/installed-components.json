@@ -1,5 +1,5 @@
 ﻿{
-    "generatedAt":  "2026-07-14T13:53:08.7011303+03:00",
+    "generatedAt":  "2026-07-14T15:32:18.0116648+03:00",
     "machine":  "DESKTOP-5J9FAII",
     "toolkitRoot":  "C:\\Users\\ACER-X-02\\Downloads\\codex-projects-export\\codex-engineering-toolkit",
     "components":  [
@@ -232,6 +232,14 @@
                            "status":  "passed",
                            "version":  "11.3.0",
                            "path":  "C:\\Users\\ACER-X-02\\AppData\\Local\\Programs\\GNU Octave\\Octave-11.3.0\\mingw64\\bin\\octave-cli.exe",
+                           "critical":  true,
+                           "detail":  "Exit code 0"
+                       },
+                       {
+                           "name":  "Python RF libraries",
+                           "status":  "passed",
+                           "version":  "numpy 2.5.1; scipy 1.18.0; matplotlib 3.11.0; h5py 3.16.0; scikit-rf 2.0.1",
+                           "path":  "C:\\Users\\ACER-X-02\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
                            "critical":  true,
                            "detail":  "Exit code 0"
                        },

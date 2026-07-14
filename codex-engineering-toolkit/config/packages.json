@@ -384,6 +384,20 @@
       "allowMajorUpdate": false
     },
     {
+      "name": "Python RF libraries",
+      "command": "python-import-rf",
+      "manager": "pip",
+      "packageId": "numpy scipy matplotlib h5py scikit-rf",
+      "executablePath": "C:\\Users\\ACER-X-02\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "versionCommand": "python -c import numpy, scipy, matplotlib, h5py, skrf",
+      "versionArguments": ["-c", "import numpy, scipy, matplotlib, h5py, skrf; print('numpy=' + numpy.__version__ + '; scipy=' + scipy.__version__ + '; matplotlib=' + matplotlib.__version__ + '; h5py=' + h5py.__version__ + '; scikit-rf=' + skrf.__version__)"],
+      "installedVersion": "numpy 2.5.1; scipy 1.18.0; matplotlib 3.11.0; h5py 3.16.0; scikit-rf 2.0.1",
+      "runtimeStatus": "Passed import smoke-test after no-cache retry",
+      "updateScope": "user",
+      "autoUpdateAllowed": false,
+      "allowMajorUpdate": false
+    },
+    {
       "name": "openEMS",
       "command": "openEMS",
       "manager": null,
