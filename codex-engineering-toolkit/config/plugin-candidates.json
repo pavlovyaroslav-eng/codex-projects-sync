@@ -1,0 +1,47 @@
+{
+  "generatedAt": "2026-07-14",
+  "candidates": [
+    {
+      "requestedName": "Codex Security",
+      "officialId": "codex-security@openai-curated-remote",
+      "status": "installed",
+      "oauthRequired": false,
+      "note": "Установка подтверждена после перезапуска: manifest версии 0.1.11 присутствует в кэше Desktop."
+    },
+    {
+      "requestedName": "GitHub",
+      "officialId": "github@openai-curated-remote",
+      "status": "installed",
+      "oauthRequired": true,
+      "note": "Плагин присутствовал до установки toolkit и сохранён."
+    },
+    {
+      "requestedName": "Canva",
+      "officialId": null,
+      "status": "connector-available",
+      "oauthRequired": true,
+      "note": "Коннектор доступен в текущей сессии; отдельный install-кандидат не опубликован."
+    },
+    {
+      "requestedName": "Google Drive",
+      "officialId": "google-drive@openai-curated-remote",
+      "status": "installed",
+      "oauthRequired": true,
+      "note": "Штатный установщик Desktop вернул completed=true."
+    },
+    {
+      "requestedName": "Creative Production",
+      "officialId": null,
+      "status": "unavailable",
+      "oauthRequired": false,
+      "note": "Точное официальное соответствие в доступном каталоге не найдено."
+    },
+    {
+      "requestedName": "Remotion",
+      "officialId": null,
+      "status": "local-project",
+      "oauthRequired": false,
+      "note": "Плагин не найден; создан локальный проект tools/media-remotion."
+    }
+  ]
+}

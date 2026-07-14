@@ -1,0 +1,322 @@
+﻿{
+    "generatedAt":  "2026-07-14T13:53:08.7011303+03:00",
+    "machine":  "DESKTOP-5J9FAII",
+    "toolkitRoot":  "C:\\Users\\ACER-X-02\\Downloads\\codex-projects-export\\codex-engineering-toolkit",
+    "components":  [
+                       {
+                           "name":  "Codex CLI",
+                           "status":  "passed",
+                           "version":  "0.144.3",
+                           "path":  "E:\\EngineeringTools\\npm-global\\codex.cmd",
+                           "critical":  true,
+                           "detail":  "Exit code 0"
+                       },
+                       {
+                           "name":  "Git",
+                           "status":  "passed",
+                           "version":  "2.55.0.2",
+                           "path":  "E:\\EngineeringTools\\Git\\cmd\\git.exe",
+                           "critical":  true,
+                           "detail":  "Exit code 0"
+                       },
+                       {
+                           "name":  "GitHub CLI",
+                           "status":  "passed",
+                           "version":  "2.96.0",
+                           "path":  "E:\\EngineeringTools\\GitHubCLI\\bin\\gh.exe",
+                           "critical":  true,
+                           "detail":  "Exit code 0"
+                       },
+                       {
+                           "name":  "OpenSSH Client",
+                           "status":  "passed",
+                           "version":  "Windows built-in",
+                           "path":  "C:\\Windows\\System32\\OpenSSH\\ssh.exe",
+                           "critical":  true,
+                           "detail":  "Exit code 0"
+                       },
+                       {
+                           "name":  "PowerShell 7",
+                           "status":  "failed",
+                           "version":  "7.6.3.0",
+                           "path":  "C:\\Users\\ACER-X-02\\AppData\\Local\\Microsoft\\WindowsApps\\pwsh.exe",
+                           "critical":  true,
+                           "detail":  "Exception calling \"Start\" with \"0\" argument(s): \"No applicable app licenses found\""
+                       },
+                       {
+                           "name":  "Python",
+                           "status":  "passed",
+                           "version":  "3.12.10",
+                           "path":  "C:\\Users\\ACER-X-02\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+                           "critical":  true,
+                           "detail":  "Exit code 0"
+                       },
+                       {
+                           "name":  "pipx",
+                           "status":  "passed",
+                           "version":  "1.15.0",
+                           "path":  "C:\\Users\\ACER-X-02\\AppData\\Roaming\\Python\\Python312\\Scripts\\pipx.exe",
+                           "critical":  true,
+                           "detail":  "Exit code 0"
+                       },
+                       {
+                           "name":  "Node.js LTS",
+                           "status":  "passed",
+                           "version":  "24.18.0",
+                           "path":  "E:\\EngineeringTools\\NodeJS\\node-v24.18.0-win-x64\\node.exe",
+                           "critical":  true,
+                           "detail":  "Exit code 0"
+                       },
+                       {
+                           "name":  "npm",
+                           "status":  "passed",
+                           "version":  "11.16.0",
+                           "path":  "E:\\EngineeringTools\\NodeJS\\node-v24.18.0-win-x64\\npm.cmd",
+                           "critical":  true,
+                           "detail":  "Exit code 0"
+                       },
+                       {
+                           "name":  "7-Zip",
+                           "status":  "passed",
+                           "version":  "26.02",
+                           "path":  "C:\\Program Files\\7-Zip\\7z.exe",
+                           "critical":  true,
+                           "detail":  "Exit code 0"
+                       },
+                       {
+                           "name":  "jq",
+                           "status":  "passed",
+                           "version":  "1.8.2",
+                           "path":  "E:\\EngineeringTools\\jq\\jq.exe",
+                           "critical":  true,
+                           "detail":  "Exit code 0"
+                       },
+                       {
+                           "name":  "ripgrep",
+                           "status":  "passed",
+                           "version":  "15.1.0",
+                           "path":  "E:\\EngineeringTools\\ripgrep\\ripgrep-15.1.0-x86_64-pc-windows-msvc\\rg.exe",
+                           "critical":  true,
+                           "detail":  "Exit code 0"
+                       },
+                       {
+                           "name":  "CMake",
+                           "status":  "passed",
+                           "version":  "4.4.0",
+                           "path":  "C:\\Users\\ACER-X-02\\.local\\bin\\cmake.exe",
+                           "critical":  true,
+                           "detail":  "Exit code 0"
+                       },
+                       {
+                           "name":  "Ninja",
+                           "status":  "passed",
+                           "version":  "1.13.2",
+                           "path":  "E:\\EngineeringTools\\Ninja\\ninja.exe",
+                           "critical":  true,
+                           "detail":  "Exit code 0"
+                       },
+                       {
+                           "name":  "FFmpeg",
+                           "status":  "passed",
+                           "version":  "8.1.1",
+                           "path":  "C:\\Users\\ACER-X-02\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.exe",
+                           "critical":  true,
+                           "detail":  "Exit code 0"
+                       },
+                       {
+                           "name":  "ImageMagick",
+                           "status":  "passed",
+                           "version":  "7.1.2.27",
+                           "path":  "C:\\Program Files\\ImageMagick-7.1.2-Q16-HDRI\\magick.exe",
+                           "critical":  true,
+                           "detail":  "Exit code 0"
+                       },
+                       {
+                           "name":  "ExifTool",
+                           "status":  "passed",
+                           "version":  "13.59",
+                           "path":  "E:\\EngineeringTools\\ExifTool\\ExifTool.exe",
+                           "critical":  true,
+                           "detail":  "Exit code 0"
+                       },
+                       {
+                           "name":  "KiCad",
+                           "status":  "passed",
+                           "version":  "9.0.4",
+                           "path":  "E:\\KiCAD\\bin\\kicad-cli.exe",
+                           "critical":  true,
+                           "detail":  "Exit code 0"
+                       },
+                       {
+                           "name":  "FreeCAD",
+                           "status":  "passed",
+                           "version":  "1.1.1",
+                           "path":  "C:\\Users\\ACER-X-02\\AppData\\Local\\Programs\\FreeCAD 1.1\\bin\\freecadcmd.exe",
+                           "critical":  true,
+                           "detail":  "Exit code 0"
+                       },
+                       {
+                           "name":  "OpenSCAD",
+                           "status":  "passed",
+                           "version":  "2021.01",
+                           "path":  "C:\\Program Files\\OpenSCAD\\openscad.exe",
+                           "critical":  true,
+                           "detail":  "Exit code 0"
+                       },
+                       {
+                           "name":  "Blender",
+                           "status":  "passed",
+                           "version":  "5.1.2",
+                           "path":  "C:\\Program Files\\Blender Foundation\\Blender 5.1\\blender.exe",
+                           "critical":  true,
+                           "detail":  "Exit code 0"
+                       },
+                       {
+                           "name":  "MeshLab",
+                           "status":  "passed",
+                           "version":  "2025.07",
+                           "path":  "C:\\Program Files\\VCG\\MeshLab\\meshlab.exe",
+                           "critical":  true,
+                           "detail":  null
+                       },
+                       {
+                           "name":  "PrusaSlicer",
+                           "status":  "passed",
+                           "version":  "2.9.6",
+                           "path":  "C:\\Program Files\\Prusa3D\\PrusaSlicer\\prusa-slicer.exe",
+                           "critical":  true,
+                           "detail":  "Exit code 1"
+                       },
+                       {
+                           "name":  "Arduino CLI",
+                           "status":  "passed",
+                           "version":  "1.5.1",
+                           "path":  "C:\\Program Files\\Arduino CLI\\arduino-cli.exe",
+                           "critical":  true,
+                           "detail":  "Exit code 0"
+                       },
+                       {
+                           "name":  "PlatformIO Core",
+                           "status":  "passed",
+                           "version":  "6.1.19",
+                           "path":  "C:\\Users\\ACER-X-02\\.local\\bin\\pio.exe",
+                           "critical":  true,
+                           "detail":  "Exit code 0"
+                       },
+                       {
+                           "name":  "esptool",
+                           "status":  "passed",
+                           "version":  "5.3.1",
+                           "path":  "C:\\Users\\ACER-X-02\\.local\\bin\\esptool.exe",
+                           "critical":  true,
+                           "detail":  "Exit code 0"
+                       },
+                       {
+                           "name":  "OpenOCD",
+                           "status":  "passed",
+                           "version":  "0.12.0-7",
+                           "path":  "C:\\Users\\ACER-X-02\\AppData\\Local\\Microsoft\\WinGet\\Packages\\xpack-dev-tools.openocd-xpack_Microsoft.Winget.Source_8wekyb3d8bbwe\\xpack-openocd-0.12.0-7\\bin\\openocd.exe",
+                           "critical":  true,
+                           "detail":  "Exit code 0"
+                       },
+                       {
+                           "name":  "AVRDUDE",
+                           "status":  "passed",
+                           "version":  "8.2",
+                           "path":  "C:\\Users\\ACER-X-02\\AppData\\Local\\Microsoft\\WinGet\\Links\\avrdude.exe",
+                           "critical":  true,
+                           "detail":  "Exit code 0"
+                       },
+                       {
+                           "name":  "GNU Octave",
+                           "status":  "passed",
+                           "version":  "11.3.0",
+                           "path":  "C:\\Users\\ACER-X-02\\AppData\\Local\\Programs\\GNU Octave\\Octave-11.3.0\\mingw64\\bin\\octave-cli.exe",
+                           "critical":  true,
+                           "detail":  "Exit code 0"
+                       },
+                       {
+                           "name":  "openEMS",
+                           "status":  "unavailable",
+                           "version":  null,
+                           "path":  null,
+                           "critical":  false,
+                           "detail":  "No trusted WinGet package or approved build was available."
+                       },
+                       {
+                           "name":  "Remotion project",
+                           "status":  "passed",
+                           "version":  "4.0.489",
+                           "path":  "E:\\EngineeringTools\\NodeJS\\node-v24.18.0-win-x64\\npm.cmd",
+                           "critical":  true,
+                           "detail":  "Exit code 0"
+                       }
+                   ],
+    "structuralChecks":  [
+                             {
+                                 "name":  "packages.json",
+                                 "status":  "passed",
+                                 "detail":  "Valid JSON"
+                             },
+                             {
+                                 "name":  "personal plugin manifest",
+                                 "status":  "passed",
+                                 "detail":  "Exit code 0"
+                             },
+                             {
+                                 "name":  "skill:3d-print-engineer",
+                                 "status":  "passed",
+                                 "detail":  "Exit code 0"
+                             },
+                             {
+                                 "name":  "skill:embedded-firmware",
+                                 "status":  "passed",
+                                 "detail":  "Exit code 0"
+                             },
+                             {
+                                 "name":  "skill:kicad-pcb-engineer",
+                                 "status":  "passed",
+                                 "detail":  "Exit code 0"
+                             },
+                             {
+                                 "name":  "skill:media-local-pipeline",
+                                 "status":  "passed",
+                                 "detail":  "Exit code 0"
+                             },
+                             {
+                                 "name":  "skill:rf-antenna-lab",
+                                 "status":  "passed",
+                                 "detail":  "Exit code 0"
+                             },
+                             {
+                                 "name":  "skill:ubuntu-server-ops",
+                                 "status":  "passed",
+                                 "detail":  "Exit code 0"
+                             },
+                             {
+                                 "name":  "personal marketplace",
+                                 "status":  "passed",
+                                 "detail":  "C:\\Users\\ACER-X-02\\.agents\\plugins\\marketplace.json"
+                             },
+                             {
+                                 "name":  "weekly scheduled task",
+                                 "status":  "passed",
+                                 "detail":  "Ready"
+                             },
+                             {
+                                 "name":  "Remotion compositions",
+                                 "status":  "passed",
+                                 "detail":  "Exit code 0"
+                             },
+                             {
+                                 "name":  "Git scope",
+                                 "status":  "passed",
+                                 "detail":  "Changes limited to toolkit"
+                             },
+                             {
+                                 "name":  "secret scan",
+                                 "status":  "passed",
+                                 "detail":  "No credential-shaped values found"
+                             }
+                         ]
+}

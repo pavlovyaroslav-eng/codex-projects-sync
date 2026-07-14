@@ -1,0 +1,17 @@
+logs/
+backups/
+node_modules/
+out/
+.cache/
+*.log
+*.tmp
+*.bak
+.env
+.env.*
+!.env.example
+secrets/
+credentials/
+!plugins/
+!plugins/**
+!scripts/
+!scripts/**
