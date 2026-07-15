@@ -1,0 +1,17 @@
+Reference,Qty,Value,Package,Side,Notes
+U2,1,ESP32-DevKitC V4 38-pin,2x19 P2.54 row spacing 25.40 mm,Front,Antenna at right board edge
+U1,1,74HC4051N,DIP-16 socket 7.62 mm,Front,Install IC in socket
+R1,1,470R,0805,Back,Video series resistor
+R2 R3,2,5.1k,0805,Back,USB-C CC pull-downs
+C1 C2 C5,3,100nF,0805,Back,Ceramic decoupling
+C3 C4,2,220uF 16V,Radial D8 P3.5,Front,Electrolytic
+J1,1,VIDEO OUT,Banana jack 2-pin P10.16 right-angle,Front,Verify purchased footprint
+J2,1,2.4G,1x3 P2.54 right-angle,Front,Signal +5V GND
+J3,1,300,1x3 P2.54 right-angle,Front,Signal +5V GND
+J4,1,500,1x3 P2.54 right-angle,Front,Signal +5V GND
+J5,1,915,1x3 P2.54 right-angle,Front,Signal +5V GND
+J6,1,TBS,1x3 P2.54 right-angle,Front,Signal +5V GND
+J7,1,KRL,1x3 P2.54 right-angle,Front,Signal +5V GND
+J8,1,USB-C power 6P,Right-angle THT custom P2.0,Front,Must verify exact connector
+JP1 JP2,2,Insulated wire,0.9 mm drilled pads,Front,Maximum two jumpers
+
