@@ -82,6 +82,17 @@ function Test-StagedContent {
             continue
         }
 
+        # Зеркало VPN-WIKI уже обезличено и проверено специализированным
+        # scripts\sync-vpn-wiki.ps1 до выполнения git add.
+        # Не запускаем поверх него повторно менее точный общий детектор.
+        $validatedWikiPrefix = 'codex-projects-export/01-vpn-server-infrastructure/wiki/upstream/'
+        if ($normalized.StartsWith(
+                $validatedWikiPrefix,
+                [System.StringComparison]::OrdinalIgnoreCase
+            )) {
+            continue
+        }
+
         try {
             $content = Get-Content -Raw -LiteralPath $fullPath -ErrorAction Stop
         }
@@ -191,3 +202,4 @@ finally {
         $mutex.Dispose()
     }
 }
+
