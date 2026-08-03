@@ -347,15 +347,19 @@ hometele-status [server|all]
 ### Matrix AI bot
 
 ```text
-service: hometele-ai.service
-WorkingDirectory: /opt/hometele-ai
-ExecStart: /opt/hometele-ai/venv/bin/python /opt/hometele-ai/hometele-ai.py
-Назначение: HomeTele AI Matrix Bot через локальный Qwen3-Coder
-API: `http://10.93.0.10:8080/v1` через `tun93`
-Модель: `qwen3-coder-30b-a3b-q4km`
-Команда Element: `!ai текст вопроса`
-Проверка модели: `!model` -> `Qwen3-Coder-30B-A3B-Instruct Q4_K_M`
+service: matrix-qwen-bot.service
+User/Group: matrix-qwen-bot
+WorkingDirectory: /opt/matrix-qwen-bot
+Config: /etc/matrix-qwen-bot/bot.env (root:matrix-qwen-bot, 0640)
+State: /var/lib/matrix-qwen-bot/state.json
+Назначение: приватный разговорный Matrix bot через локальную Qwen3-14B
+LLM route: www tun93 10.93.0.1 -> local-ai 10.93.0.10:8080/v1
 ```
+
+Старый `hometele-ai.service` (DeepSeek) отключён, но не удалён. Backup и полный
+откат: `/opt/backups/matrix-deepseek-bot-20260801-193151/RESTORE.md`.
+
+Подробности: [`04-MATRIX-QWEN-BOT.md`](04-MATRIX-QWEN-BOT.md).
 
 ### Synapse Admin
 

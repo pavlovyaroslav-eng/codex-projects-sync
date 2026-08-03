@@ -214,8 +214,8 @@ docker logs --tail=80 mtproto-telegram
 systemctl status matrix-synapse --no-pager -l
 systemctl status coturn --no-pager -l
 systemctl status hometele-command-agent --no-pager -l
-systemctl status hometele-ai --no-pager -l
-systemctl status openvpn-server@local-ai --no-pager -l
+systemctl status matrix-qwen-bot --no-pager -l
+systemctl is-active openvpn-server@local-ai
 curl -fsS http://10.93.0.10:8080/health
 curl -fsS http://10.93.0.10:8080/v1/models
 docker ps --filter "name=synapse-admin"
@@ -231,14 +231,11 @@ journalctl -u hometele-command-agent -n 150 --no-pager
 Логи AI bot:
 
 ```bash
-journalctl -u hometele-ai -n 150 --no-pager
+journalctl -u matrix-qwen-bot -n 150 --no-pager
 ```
 
-В Element локальная модель вызывается командой `!ai текст вопроса`. Команда
-`!model` возвращает точное имя backend-модели без генеративного угадывания. Бот
-принимает команды только от `ALLOWED_USER`; конфигурация API хранится в
-`/etc/hometele-ai.conf` с mode `0600`. Откат переключения описан в
-`/var/backups/hometele-ai-local-20260803T050714Z/ROLLBACK.txt`.
+Полный rollback на DeepSeek описан в
+`/opt/backups/matrix-deepseek-bot-20260801-193151/RESTORE.md`.
 
 ---
 

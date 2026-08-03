@@ -377,17 +377,18 @@ hometele-status [server|all]
 Сервис:
 
 ```text
-hometele-ai.service
-WorkingDirectory=/opt/hometele-ai
-ExecStart=/opt/hometele-ai/venv/bin/python /opt/hometele-ai/hometele-ai.py
+matrix-qwen-bot.service
+User=matrix-qwen-bot
+WorkingDirectory=/opt/matrix-qwen-bot
+EnvironmentFile=/etc/matrix-qwen-bot/bot.env
 ```
 
-Назначение: HomeTele AI Matrix Bot через локальный Qwen3-Coder на ИИ-станции.
-Команда в Element: `!ai текст вопроса`. Endpoint доступен только через
-изолированный OpenVPN: `http://10.93.0.10:8080/v1`; модель
-`qwen3-coder-30b-a3b-q4km`. Служба active/enabled, backlog после рестарта не
-воспроизводится. Backup переключения:
-`/var/backups/hometele-ai-local-20260802T204355Z`.
+Назначение: приватный разговорный Matrix bot через локальную Qwen3-14B.
+OpenAI-compatible endpoint доступен только по OpenVPN:
+`http://10.93.0.10:8080/v1`, модель `qwen3-14b-q4km`, контекст 8192.
+
+Старый `hometele-ai.service` отключён, сохранён для rollback и не удалён.
+Подробности и диагностика: [`04-MATRIX-QWEN-BOT.md`](04-MATRIX-QWEN-BOT.md).
 
 ### Synapse Admin
 
