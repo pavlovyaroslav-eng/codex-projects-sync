@@ -54,3 +54,6 @@ Thumbs.db
 
 # Generated large G-code file
 v400-calibration/max-flow/plate_1.gcode
+
+# Local PowerShell backup files
+scripts/*.bak-*
