@@ -1,5 +1,5 @@
 ﻿{
-    "generatedAt":  "2026-07-14T15:32:18.0116648+03:00",
+    "generatedAt":  "2026-07-26T08:28:58.7134503+03:00",
     "machine":  "DESKTOP-5J9FAII",
     "toolkitRoot":  "C:\\Users\\ACER-X-02\\Downloads\\codex-projects-export\\codex-engineering-toolkit",
     "components":  [
@@ -41,7 +41,7 @@
                            "version":  "7.6.3.0",
                            "path":  "C:\\Users\\ACER-X-02\\AppData\\Local\\Microsoft\\WindowsApps\\pwsh.exe",
                            "critical":  true,
-                           "detail":  "Exception calling \"Start\" with \"0\" argument(s): \"No applicable app licenses found\""
+                           "detail":  "Executable not found"
                        },
                        {
                            "name":  "Python",
@@ -61,19 +61,19 @@
                        },
                        {
                            "name":  "Node.js LTS",
-                           "status":  "passed",
+                           "status":  "failed",
                            "version":  "24.18.0",
                            "path":  "E:\\EngineeringTools\\NodeJS\\node-v24.18.0-win-x64\\node.exe",
                            "critical":  true,
-                           "detail":  "Exit code 0"
+                           "detail":  "Executable not found"
                        },
                        {
                            "name":  "npm",
-                           "status":  "passed",
+                           "status":  "failed",
                            "version":  "11.16.0",
                            "path":  "E:\\EngineeringTools\\NodeJS\\node-v24.18.0-win-x64\\npm.cmd",
                            "critical":  true,
-                           "detail":  "Exit code 0"
+                           "detail":  "Executable not found"
                        },
                        {
                            "name":  "7-Zip",
@@ -253,11 +253,11 @@
                        },
                        {
                            "name":  "Remotion project",
-                           "status":  "passed",
+                           "status":  "failed",
                            "version":  "4.0.489",
                            "path":  "E:\\EngineeringTools\\NodeJS\\node-v24.18.0-win-x64\\npm.cmd",
                            "critical":  true,
-                           "detail":  "Exit code 0"
+                           "detail":  "Executable not found"
                        }
                    ],
     "structuralChecks":  [
@@ -309,12 +309,12 @@
                              {
                                  "name":  "weekly scheduled task",
                                  "status":  "passed",
-                                 "detail":  "Ready"
+                                 "detail":  "Running"
                              },
                              {
                                  "name":  "Remotion compositions",
-                                 "status":  "passed",
-                                 "detail":  "Exit code 0"
+                                 "status":  "failed",
+                                 "detail":  "Executable not found"
                              },
                              {
                                  "name":  "Git scope",

@@ -1,0 +1,2 @@
+open-interpreter==0.4.3
+

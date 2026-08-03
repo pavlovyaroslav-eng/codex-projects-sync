@@ -1,0 +1,144 @@
+﻿===== SHRINK LIMIT =====
+
+
+SizeMin    : 428549033984
+SizeMax    : 1000082185728
+SizeMinGiB : 399,12
+SizeMaxGiB : 931,4
+
+
+
+
+
+DiskNumber      : 0
+PartitionNumber : 3
+DriveLetter     : C
+Size            : 1000081457152
+SizeGiB         : 931,4
+Offset          : 122683392
+
+
+
+
+
+Size          : 1000081453056
+SizeRemaining : 712391147520
+SizeGiB       : 931,4
+FreeGiB       : 663,47
+HealthStatus  : Healthy
+
+
+
+===== DISK / FIRMWARE / HEALTH =====
+
+DeviceId FriendlyName            SerialNumber         FirmwareVersion MediaType BusType HealthStatus OperationalStatus
+-------- ------------            ------------         --------------- --------- ------- ------------ -----------------
+0        Samsung SSD 990 PRO 1TB 0025_384B_41A0_6E2A. 4B2QJXD7        SSD       NVMe    Healthy      OK               
+
+
+
+Index Model                   FirmwareRevision SerialNumber         InterfaceType MediaType                      Size S
+                                                                                                                      t
+                                                                                                                      a
+                                                                                                                      t
+                                                                                                                      u
+                                                                                                                      s
+----- -----                   ---------------- ------------         ------------- ---------                      ---- -
+    0 Samsung SSD 990 PRO 1TB 4B2QJXD7         0025_384B_41A0_6E2A. SCSI          Fixed hard disk media 1000202273280 O
+
+
+
+
+Temperature            : 43
+TemperatureMax         : 82
+Wear                   : 0
+PowerOnHours           : 
+ReadErrorsTotal        : 
+ReadErrorsUncorrected  : 
+WriteErrorsTotal       : 
+WriteErrorsUncorrected : 
+ReadLatencyMax         : 1392
+WriteLatencyMax        : 1394
+FlushLatencyMax        : 589
+
+
+
+===== WINRE / SECURE BOOT =====
+powershell.exe : ReAgentc.exe : REAGENTC.EXE: конечная установка Windows не найдена.
+строка:4 знак:1
++ & powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass - ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (ReAgentc.exe : ...ows не найдена.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+C:\LocalAI-Deployment\windows-stage1-followup-audit.ps1:48 знак:1
++ & reagentc.exe /info /target C:\Windows 2>&1
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (REAGENTC.EXE: к...ows не найдена.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+    
+reagentc_exit=3
+===== CPU FEATURES / NUMA =====
+
+
+AVX                     : True
+AVX2                    : True
+NumaApiSuccess          : True
+HighestNumaNode         : 0
+NumaNodeCount           : 1
+ActiveLogicalProcessors : 56
+
+
+
+
+Name   AvailableMBytes TotalMBytes
+----   --------------- -----------
+0                60210       65414
+_Total           60210       65414
+
+
+===== WHEA / MEMORY DIAGNOSTIC =====
+
+
+TimeCreated      : 31.07.2026 19:25:29
+Id               : 18
+LevelDisplayName : Сведения
+ProviderName     : Microsoft-Windows-Kernel-Boot
+Message          : Число вариантов загрузки данной системы: 0x1.
+
+
+
+===== NETWORK LINK =====
+
+
+Name                 : Ethernet
+InterfaceDescription : Realtek PCIe GbE Family Controller
+Status               : Up
+MacAddress           : 00-E0-21-A9-50-30
+LinkSpeed            : 100 Mbps
+DriverVersion        : 9.1.410.2015
+DriverDate           : 2015-04-10
+
+
+
+
+
+DisplayName     : Speed & Duplex
+DisplayValue    : Auto Negotiation
+RegistryKeyword : *SpeedDuplex
+RegistryValue   : {0}
+
+
+
+
+
+ReceivedBytes            : 365321277
+SentBytes                : 26059638
+ReceivedPacketErrors     : 0
+OutboundPacketErrors     : 0
+ReceivedDiscardedPackets : 0
+OutboundDiscardedPackets : 0
+
+
+

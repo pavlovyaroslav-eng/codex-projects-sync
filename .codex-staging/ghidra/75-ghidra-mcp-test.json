@@ -1,0 +1,141 @@
+{
+  "debug_import": "already imported",
+  "stripped_import": "already imported",
+  "project_binaries": "{\n  \"programs\": [\n    {\n      \"name\": \"/b457e07131fc9d48e06966502afd4b509f8a4fcc10e4c63054d1da6f9918b306-safe_add.stripped_-9fb667\",\n      \"file_path\": \"/var/lib/ghidramcp/incoming/b457e07131fc9d48e06966502afd4b509f8a4fcc10e4c63054d1da6f9918b306-safe_add.stripped_\",\n      \"load_time\": 1785695467.5281377,\n      \"analysis_complete\": true,\n      \"metadata\": {},\n      \"code_indexed\": true,\n      \"strings_indexed\": true\n    },\n    {\n      \"name\": \"/eb5b103bc376ac5af210c1ebb8045ce212dadcffe85fa317c1fcb3dd877f7bee-safe_add_-2eeae7\",\n      \"file_path\": \"/var/lib/ghidramcp/incoming/eb5b103bc376ac5af210c1ebb8045ce212dadcffe85fa317c1fcb3dd877f7bee-safe_add_\",\n      \"load_time\": 1785695467.7143552,\n      \"analysis_complete\": true,\n      \"metadata\": {},\n      \"code_indexed\": true,\n      \"strings_indexed\": true\n    }\n  ]\n}",
+  "function_list": "{\n  \"symbols\": [\n    {\n      \"name\": \"_start\",\n      \"address\": \"00101060\",\n      \"type\": \"Function\",\n      \"namespace\": \"Global\",\n      \"source\": \"IMPORTED\",\n      \"refcount\": 5,\n      \"external\": false,\n      \"is_thunk\": false,\n      \"thunk_target\": null\n    },\n    {\n      \"name\": \"_init\",\n      \"address\": \"00101000\",\n      \"type\": \"Function\",\n      \"namespace\": \"Global\",\n      \"source\": \"IMPORTED\",\n      \"refcount\": 4,\n      \"external\": false,\n      \"is_thunk\": false,\n      \"thunk_target\": null\n    },\n    {\n      \"name\": \"FUN_00101020\",\n      \"address\": \"00101020\",\n      \"type\": \"Function\",\n      \"namespace\": \"Global\",\n      \"source\": \"DEFAULT\",\n      \"refcount\": 4,\n      \"external\": false,\n      \"is_thunk\": false,\n      \"thunk_target\": null\n    },\n    {\n      \"name\": \"main\",\n      \"address\": \"00101161\",\n      \"type\": \"Function\",\n      \"namespace\": \"Global\",\n      \"source\": \"IMPORTED\",\n      \"refcount\": 4,\n      \"external\": false,\n      \"is_thunk\": false,\n      \"thunk_target\": null\n    },\n    {\n      \"name\": \"_fini\",\n      \"address\": \"00101198\",\n      \"type\": \"Function\",\n      \"namespace\": \"Global\",\n      \"source\": \"IMPORTED\",\n      \"refcount\": 3,\n      \"external\": false,\n      \"is_thunk\": false,\n      \"thunk_target\": null\n    },\n    {\n      \"name\": \"add_numbers\",\n      \"address\": \"00101149\",\n      \"type\": \"Function\",\n      \"namespace\": \"Global\",\n      \"source\": \"IMPORTED\",\n      \"refcount\": 3,\n      \"external\": false,\n      \"is_thunk\": false,\n      \"thunk_target\": null\n    },\n    {\n      \"name\": \"__do_global_dtors_aux\",\n      \"address\": \"00101100\",\n      \"type\": \"Function\",\n      \"namespace\": \"Global\",\n      \"source\": \"IMPORTED\",\n      \"refcount\": 2,\n      \"external\": false,\n      \"is_thunk\": false,\n      \"thunk_target\": null\n    },\n    {\n      \"name\": \"deregister_tm_clones\",\n      \"address\": \"00101090\",\n      \"type\": \"Function\",\n      \"namespace\": \"Global\",\n      \"source\": \"IMPORTED\",\n      \"refcount\": 1,\n      \"external\": false,\n      \"is_thunk\": false,\n      \"thunk_target\": null\n    },\n    {\n      \"name\": \"register_tm_clones\",\n      \"address\": \"001010c0\",\n      \"type\": \"Function\",\n      \"namespace\": \"Global\",\n      \"source\": \"IMPORTED\",\n      \"refcount\": 1,\n      \"external\": false,\n      \"is_thunk\": false,\n      \"thunk_target\": null\n    },\n    {\n      \"name\": \"__cxa_finalize\",\n      \"address\": \"00101040\",\n      \"type\": \"Function\",\n      \"namespace\": \"<EXTERNAL>\",\n      \"source\": \"DEFAULT\",\n      \"refcount\": 4,\n      \"external\": false,\n      \"is_thunk\": true,\n      \"thunk_target\": \"<EXTERNAL>::__cxa_finalize @ EXTERNAL:00000003\"\n    },\n    {\n      \"name\": \"printf\",\n      \"address\": \"00101050\",\n      \"type\": \"Function\",\n      \"namespace\": \"<EXTERNAL>\",\n      \"source\": \"DEFAULT\",\n      \"refcount\": 4,\n      \"external\": false,\n      \"is_thunk\": true,\n      \"thunk_target\": \"<EXTERNAL>::printf @ EXTERNAL:00000002\"\n    },\n    {\n      \"name\": \"__gmon_start__\",\n      \"address\": \"00105018\",\n      \"type\": \"Function\",\n      \"namespace\": \"<EXTERNAL>\",\n      \"source\": \"DEFAULT\",\n      \"refcount\": 3,\n      \"external\": false,\n      \"is_thunk\": true,\n      \"thunk_target\": \"<EXTERNAL>::__gmon_start__ @ EXTERNAL:00000006\"\n    },\n    {\n      \"name\": \"_ITM_deregisterTMCloneTable\",\n      \"address\": \"00105008\",\n      \"type\": \"Function\",\n      \"namespace\": \"<EXTERNAL>\",\n      \"source\": \"DEFAULT\",\n      \"refcount\": 3,\n      \"external\": false,\n      \"is_thunk\": true,\n      \"thunk_target\": \"<EXTERNAL>::_ITM_deregisterTMCloneTable @ EXTERNAL:00000004\"\n    },\n    {\n      \"name\": \"_ITM_registerTMCloneTable\",\n      \"address\": \"00105020\",\n      \"type\": \"Function\",\n      \"namespace\": \"<EXTERNAL>\",\n      \"source\": \"DEFAULT\",\n      \"refcount\": 3,\n      \"external\": false,\n      \"is_thunk\": true,\n      \"thunk_target\": \"<EXTERNAL>::_ITM_registerTMCloneTable @ EXTERNAL:00000005\"\n    },\n    {\n      \"name\": \"__cxa_finalize\",\n      \"address\": \"00105028\",\n      \"type\": \"Function\",\n      \"namespace\": \"<EXTERNAL>\",\n      \"source\": \"DEFAULT\",\n      \"refcount\": 2,\n      \"external\": false,\n      \"is_thunk\": true,\n      \"thunk_target\": \"<EXTERNAL>::__cxa_finalize @ EXTERNAL:00000003\"\n    },\n    {\n      \"name\": \"__libc_start_main\",\n      \"address\": \"00105000\",\n      \"type\": \"Function\",\n      \"namespace\": \"<EXTERNAL>\",\n      \"source\": \"DEFAULT\",\n      \"refcount\": 2,\n      \"external\": false,\n      \"is_thunk\": true,\n      \"thunk_target\": \"<EXTERNAL>::__libc_start_main @ EXTERNAL:00000001\"\n    },\n    {\n      \"name\": \"frame_dummy\",\n      \"address\": \"00101140\",\n      \"type\": \"Function\",\n      \"namespace\": \"Global\",\n      \"source\": \"IMPORTED\",\n      \"refcount\": 2,\n      \"external\": false,\n      \"is_thunk\": true,\n      \"thunk_target\": \"register_tm_clones @ 001010c0\"\n    },\n    {\n      \"name\": \"printf\",\n      \"address\": \"00105010\",\n      \"type\": \"Function\",\n      \"namespace\": \"<EXTERNAL>\",\n      \"source\": \"DEFAULT\",\n      \"refcount\": 2,\n      \"external\": false,\n      \"is_thunk\": true,\n      \"thunk_target\": \"<EXTERNAL>::printf @ EXTERNAL:00000002\"\n    }\n  ]\n}",
+  "main_search": "{\n  \"symbols\": [\n    {\n      \"name\": \"main\",\n      \"address\": \"00101161\",\n      \"type\": \"Function\",\n      \"namespace\": \"Global\",\n      \"source\": \"IMPORTED\",\n      \"refcount\": 4,\n      \"external\": false,\n      \"is_thunk\": false,\n      \"thunk_target\": null\n    }\n  ]\n}",
+  "add_numbers_search": "{\n  \"symbols\": [\n    {\n      \"name\": \"add_numbers\",\n      \"address\": \"00101149\",\n      \"type\": \"Function\",\n      \"namespace\": \"Global\",\n      \"source\": \"IMPORTED\",\n      \"refcount\": 3,\n      \"external\": false,\n      \"is_thunk\": false,\n      \"thunk_target\": null\n    }\n  ]\n}",
+  "imports": "{\n  \"imports\": [\n    {\n      \"name\": \"__libc_start_main\",\n      \"library\": \"<EXTERNAL>\"\n    },\n    {\n      \"name\": \"printf\",\n      \"library\": \"<EXTERNAL>\"\n    },\n    {\n      \"name\": \"__cxa_finalize\",\n      \"library\": \"<EXTERNAL>\"\n    },\n    {\n      \"name\": \"_ITM_deregisterTMCloneTable\",\n      \"library\": \"<EXTERNAL>\"\n    },\n    {\n      \"name\": \"_ITM_registerTMCloneTable\",\n      \"library\": \"<EXTERNAL>\"\n    },\n    {\n      \"name\": \"__gmon_start__\",\n      \"library\": \"<EXTERNAL>\"\n    }\n  ]\n}",
+  "strings": "{\n  \"strings\": [\n    {\n      \"value\": \"Result: %d\\n\",\n      \"address\": \"00102004\",\n      \"similarity\": 1.0\n    }\n  ]\n}",
+  "main_decompile": "{\n  \"name\": \"main-00101161\",\n  \"code\": \"\\n/* WARNING: Unknown calling convention -- yet parameter storage is locked */\\n\\nint main(void)\\n\\n{\\n  uint uVar1;\\n  \\n  uVar1 = add_numbers(0x14,0x16);\\n  printf(\\\"Result: %d\\\\n\\\",(ulong)uVar1);\\n  return 0;\\n}\\n\\n\",\n  \"signature\": \"int main(void);\",\n  \"error\": null,\n  \"callees\": [\n    \"add_numbers\",\n    \"printf\"\n  ],\n  \"referenced_strings\": [\n    \"Result: %d\\n\",\n    \"Result: %d\\n\"\n  ],\n  \"xrefs\": [\n    {\n      \"function_name\": null,\n      \"from_address\": \"Entry Point\",\n      \"to_address\": \"00101161\",\n      \"type\": \"EXTERNAL\"\n    },\n    {\n      \"function_name\": null,\n      \"from_address\": \"00102044\",\n      \"to_address\": \"00101161\",\n      \"type\": \"INDIRECTION\"\n    },\n    {\n      \"function_name\": null,\n      \"from_address\": \"00102100\",\n      \"to_address\": \"00101161\",\n      \"type\": \"DATA\"\n    },\n    {\n      \"function_name\": \"_start\",\n      \"from_address\": \"00101078\",\n      \"to_address\": \"00101161\",\n      \"type\": \"DATA\"\n    }\n  ]\n}",
+  "add_numbers_decompile": "{\n  \"name\": \"add_numbers-00101149\",\n  \"code\": \"\\nint add_numbers(int a,int b)\\n\\n{\\n  int b_local;\\n  int a_local;\\n  \\n  return b + a;\\n}\\n\\n\",\n  \"signature\": \"int add_numbers(int a,int b);\",\n  \"error\": null,\n  \"callees\": null,\n  \"referenced_strings\": null,\n  \"xrefs\": [\n    {\n      \"function_name\": null,\n      \"from_address\": \"0010203c\",\n      \"to_address\": \"00101149\",\n      \"type\": \"INDIRECTION\"\n    },\n    {\n      \"function_name\": null,\n      \"from_address\": \"001020e0\",\n      \"to_address\": \"00101149\",\n      \"type\": \"DATA\"\n    },\n    {\n      \"function_name\": \"main\",\n      \"from_address\": \"00101173\",\n      \"to_address\": \"00101149\",\n      \"type\": \"UNCONDITIONAL_CALL\"\n    }\n  ]\n}",
+  "xrefs": "{\n  \"target\": \"add_numbers\",\n  \"cross_references\": [\n    {\n      \"function_name\": null,\n      \"from_address\": \"0010203c\",\n      \"to_address\": \"00101149\",\n      \"type\": \"INDIRECTION\"\n    },\n    {\n      \"function_name\": null,\n      \"from_address\": \"001020e0\",\n      \"to_address\": \"00101149\",\n      \"type\": \"DATA\"\n    },\n    {\n      \"function_name\": \"main\",\n      \"from_address\": \"00101173\",\n      \"to_address\": \"00101149\",\n      \"type\": \"UNCONDITIONAL_CALL\"\n    }\n  ],\n  \"error\": null\n}",
+  "comment": "{\n  \"binary_name\": \"eb5b103bc376ac5af210c1ebb8045ce212dadcffe85fa317c1fcb3dd877f7bee-safe_add_-2eeae7\",\n  \"address\": \"00101149\",\n  \"comment\": \"Safe MCP verification: adds two integers.\",\n  \"comment_type\": \"decompiler\"\n}",
+  "save": "{}",
+  "stripped_main_search": "{\n  \"symbols\": []\n}",
+  "calls": [
+    {
+      "tool": "list_project_binaries",
+      "arguments": {},
+      "isError": false,
+      "result": "{\n  \"programs\": [\n    {\n      \"name\": \"/b457e07131fc9d48e06966502afd4b509f8a4fcc10e4c63054d1da6f9918b306-safe_add.stripped_-9fb667\",\n      \"file_path\": \"/var/lib/ghidramcp/incoming/b457e07131fc9d48e06966502afd4b509f8a4fcc10e4c63054d1da6f9918b306-safe_add.stripped_\",\n      \"load_time\": 1785695467.5281377,\n      \"analysis_complete\": true,\n      \"metadata\": {},\n      \"code_indexed\": true,\n      \"strings_indexed\": true\n    },\n    {\n      \"name\": \"/eb5b103bc376ac5af210c1ebb8045ce212dadcffe85fa317c1fcb3dd877f7bee-safe_add_-2eeae7\",\n      \"file_path\": \"/var/lib/ghidramcp/incoming/eb5b103bc376ac5af210c1ebb8045ce212dadcffe85fa317c1fcb3dd877f7bee-safe_add_\",\n      \"load_time\": 1785695467.7143552,\n      \"analysis_complete\": true,\n      \"metadata\": {},\n      \"code_indexed\": true,\n      \"strings_indexed\": true\n    }\n  ]\n}"
+    },
+    {
+      "tool": "list_project_binaries",
+      "arguments": {},
+      "isError": false,
+      "result": "{\n  \"programs\": [\n    {\n      \"name\": \"/b457e07131fc9d48e06966502afd4b509f8a4fcc10e4c63054d1da6f9918b306-safe_add.stripped_-9fb667\",\n      \"file_path\": \"/var/lib/ghidramcp/incoming/b457e07131fc9d48e06966502afd4b509f8a4fcc10e4c63054d1da6f9918b306-safe_add.stripped_\",\n      \"load_time\": 1785695467.5281377,\n      \"analysis_complete\": true,\n      \"metadata\": {},\n      \"code_indexed\": true,\n      \"strings_indexed\": true\n    },\n    {\n      \"name\": \"/eb5b103bc376ac5af210c1ebb8045ce212dadcffe85fa317c1fcb3dd877f7bee-safe_add_-2eeae7\",\n      \"file_path\": \"/var/lib/ghidramcp/incoming/eb5b103bc376ac5af210c1ebb8045ce212dadcffe85fa317c1fcb3dd877f7bee-safe_add_\",\n      \"load_time\": 1785695467.7143552,\n      \"analysis_complete\": true,\n      \"metadata\": {},\n      \"code_indexed\": true,\n      \"strings_indexed\": true\n    }\n  ]\n}"
+    },
+    {
+      "tool": "search_symbols_by_name",
+      "arguments": {
+        "binary_name": "eb5b103bc376ac5af210c1ebb8045ce212dadcffe85fa317c1fcb3dd877f7bee-safe_add_-2eeae7",
+        "query": ".*",
+        "functions_only": true,
+        "limit": 100
+      },
+      "isError": false,
+      "result": "{\n  \"symbols\": [\n    {\n      \"name\": \"_start\",\n      \"address\": \"00101060\",\n      \"type\": \"Function\",\n      \"namespace\": \"Global\",\n      \"source\": \"IMPORTED\",\n      \"refcount\": 5,\n      \"external\": false,\n      \"is_thunk\": false,\n      \"thunk_target\": null\n    },\n    {\n      \"name\": \"_init\",\n      \"address\": \"00101000\",\n      \"type\": \"Function\",\n      \"namespace\": \"Global\",\n      \"source\": \"IMPORTED\",\n      \"refcount\": 4,\n      \"external\": false,\n      \"is_thunk\": false,\n      \"thunk_target\": null\n    },\n    {\n      \"name\": \"FUN_00101020\",\n      \"address\": \"00101020\",\n      \"type\": \"Function\",\n      \"namespace\": \"Global\",\n      \"source\": \"DEFAULT\",\n      \"refcount\": 4,\n      \"external\": false,\n      \"is_thunk\": false,\n      \"thunk_target\": null\n    },\n    {\n      \"name\": \"main\",\n      \"address\": \"00101161\",\n      \"type\": \"Function\",\n      \"namespace\": \"Global\",\n      \"source\": \"IMPORTED\",\n      \"refcount\": 4,\n      \"external\": false,\n      \"is_thunk\": false,\n      \"thunk_target\": null\n    },\n    {\n      \"name\": \"_fini\",\n      \"address\": \"00101198\",\n      \"type\": \"Function\",\n      \"namespace\": \"Global\",\n      \"source\": \"IMPORTED\",\n      \"refcount\": 3,\n      \"external\": false,\n      \"is_thunk\": false,\n      \"thunk_target\": null\n    },\n    {\n      \"name\": \"add_numbers\",\n      \"address\": \"00101149\",\n      \"type\": \"Function\",\n      \"namespace\": \"Global\",\n      \"source\": \"IMPORTED\",\n      \"refcount\": 3,\n      \"external\": false,\n      \"is_thunk\": false,\n      \"thunk_target\": null\n    },\n    {\n      \"name\": \"__do_global_dtors_aux\",\n      \"address\": \"00101100\",\n      \"type\": \"Function\",\n      \"namespace\": \"Global\",\n      \"source\": \"IMPORTED\",\n      \"refcount\": 2,\n      \"external\": false,\n      \"is_thunk\": false,\n      \"thunk_target\": null\n    },\n    {\n      \"name\": \"deregister_tm_clones\",\n      \"address\": \"00101090\",\n      \"type\": \"Function\",\n      \"namespace\": \"Global\",\n      \"source\": \"IMPORTED\",\n      \"refcount\": 1,\n      \"external\": false,\n      \"is_thunk\": false,\n      \"thunk_target\": null\n    },\n    {\n      \"name\": \"register_tm_clones\",\n      \"address\": \"001010c0\",\n      \"type\": \"Function\",\n      \"namespace\": \"Global\",\n      \"source\": \"IMPORTED\",\n      \"refcount\": 1,\n      \"external\": false,\n      \"is_thunk\": false,\n      \"thunk_target\": null\n    },\n    {\n      \"name\": \"__cxa_finalize\",\n      \"address\": \"00101040\",\n      \"type\": \"Function\",\n      \"namespace\": \"<EXTERNAL>\",\n      \"source\": \"DEFAULT\",\n      \"refcount\": 4,\n      \"external\": false,\n      \"is_thunk\": true,\n      \"thunk_target\": \"<EXTERNAL>::__cxa_finalize @ EXTERNAL:00000003\"\n    },\n    {\n      \"name\": \"printf\",\n      \"address\": \"00101050\",\n      \"type\": \"Function\",\n      \"namespace\": \"<EXTERNAL>\",\n      \"source\": \"DEFAULT\",\n      \"refcount\": 4,\n      \"external\": false,\n      \"is_thunk\": true,\n      \"thunk_target\": \"<EXTERNAL>::printf @ EXTERNAL:00000002\"\n    },\n    {\n      \"name\": \"__gmon_start__\",\n      \"address\": \"00105018\",\n      \"type\": \"Function\",\n      \"namespace\": \"<EXTERNAL>\",\n      \"source\": \"DEFAULT\",\n      \"refcount\": 3,\n      \"external\": false,\n      \"is_thunk\": true,\n      \"thunk_target\": \"<EXTERNAL>::__gmon_start__ @ EXTERNAL:00000006\"\n    },\n    {\n      \"name\": \"_ITM_deregisterTMCloneTable\",\n      \"address\": \"00105008\",\n      \"type\": \"Function\",\n      \"namespace\": \"<EXTERNAL>\",\n      \"source\": \"DEFAULT\",\n      \"refcount\": 3,\n      \"external\": false,\n      \"is_thunk\": true,\n      \"thunk_target\": \"<EXTERNAL>::_ITM_deregisterTMCloneTable @ EXTERNAL:00000004\"\n    },\n    {\n      \"name\": \"_ITM_registerTMCloneTable\",\n      \"address\": \"00105020\",\n      \"type\": \"Function\",\n      \"namespace\": \"<EXTERNAL>\",\n      \"source\": \"DEFAULT\",\n      \"refcount\": 3,\n      \"external\": false,\n      \"is_thunk\": true,\n      \"thunk_target\": \"<EXTERNAL>::_ITM_registerTMCloneTable @ EXTERNAL:00000005\"\n    },\n    {\n      \"name\": \"__cxa_finalize\",\n      \"address\": \"00105028\",\n      \"type\": \"Function\",\n      \"namespace\": \"<EXTERNAL>\",\n      \"source\": \"DEFAULT\",\n      \"refcount\": 2,\n      \"external\": false,\n      \"is_thunk\": true,\n      \"thunk_target\": \"<EXTERNAL>::__cxa_finalize @ EXTERNAL:00000003\"\n    },\n    {\n      \"name\": \"__libc_start_main\",\n      \"address\": \"00105000\",\n      \"type\": \"Function\",\n      \"namespace\": \"<EXTERNAL>\",\n      \"source\": \"DEFAULT\",\n      \"refcount\": 2,\n      \"external\": false,\n      \"is_thunk\": true,\n      \"thunk_target\": \"<EXTERNAL>::__libc_start_main @ EXTERNAL:00000001\"\n    },\n    {\n      \"name\": \"frame_dummy\",\n      \"address\": \"00101140\",\n      \"type\": \"Function\",\n      \"namespace\": \"Global\",\n      \"source\": \"IMPORTED\",\n      \"refcount\": 2,\n      \"external\": false,\n      \"is_thunk\": true,\n      \"thunk_target\": \"register_tm_clones @ 001010c0\"\n    },\n    {\n      \"name\": \"printf\",\n      \"address\": \"00105010\",\n      \"type\": \"Function\",\n      \"namespace\": \"<EXTERNAL>\",\n      \"source\": \"DEFAULT\",\n      \"refcount\": 2,\n      \"external\": false,\n      \"is_thunk\": true,\n      \"thunk_target\": \"<EXTERNAL>::printf @ EXTERNAL:00000002\"\n    }\n  ]\n}"
+    },
+    {
+      "tool": "search_symbols_by_name",
+      "arguments": {
+        "binary_name": "eb5b103bc376ac5af210c1ebb8045ce212dadcffe85fa317c1fcb3dd877f7bee-safe_add_-2eeae7",
+        "query": "^main$",
+        "functions_only": true,
+        "limit": 10
+      },
+      "isError": false,
+      "result": "{\n  \"symbols\": [\n    {\n      \"name\": \"main\",\n      \"address\": \"00101161\",\n      \"type\": \"Function\",\n      \"namespace\": \"Global\",\n      \"source\": \"IMPORTED\",\n      \"refcount\": 4,\n      \"external\": false,\n      \"is_thunk\": false,\n      \"thunk_target\": null\n    }\n  ]\n}"
+    },
+    {
+      "tool": "search_symbols_by_name",
+      "arguments": {
+        "binary_name": "eb5b103bc376ac5af210c1ebb8045ce212dadcffe85fa317c1fcb3dd877f7bee-safe_add_-2eeae7",
+        "query": "^add_numbers$",
+        "functions_only": true,
+        "limit": 10
+      },
+      "isError": false,
+      "result": "{\n  \"symbols\": [\n    {\n      \"name\": \"add_numbers\",\n      \"address\": \"00101149\",\n      \"type\": \"Function\",\n      \"namespace\": \"Global\",\n      \"source\": \"IMPORTED\",\n      \"refcount\": 3,\n      \"external\": false,\n      \"is_thunk\": false,\n      \"thunk_target\": null\n    }\n  ]\n}"
+    },
+    {
+      "tool": "list_imports",
+      "arguments": {
+        "binary_name": "eb5b103bc376ac5af210c1ebb8045ce212dadcffe85fa317c1fcb3dd877f7bee-safe_add_-2eeae7",
+        "limit": 100
+      },
+      "isError": false,
+      "result": "{\n  \"imports\": [\n    {\n      \"name\": \"__libc_start_main\",\n      \"library\": \"<EXTERNAL>\"\n    },\n    {\n      \"name\": \"printf\",\n      \"library\": \"<EXTERNAL>\"\n    },\n    {\n      \"name\": \"__cxa_finalize\",\n      \"library\": \"<EXTERNAL>\"\n    },\n    {\n      \"name\": \"_ITM_deregisterTMCloneTable\",\n      \"library\": \"<EXTERNAL>\"\n    },\n    {\n      \"name\": \"_ITM_registerTMCloneTable\",\n      \"library\": \"<EXTERNAL>\"\n    },\n    {\n      \"name\": \"__gmon_start__\",\n      \"library\": \"<EXTERNAL>\"\n    }\n  ]\n}"
+    },
+    {
+      "tool": "search_strings",
+      "arguments": {
+        "binary_name": "eb5b103bc376ac5af210c1ebb8045ce212dadcffe85fa317c1fcb3dd877f7bee-safe_add_-2eeae7",
+        "query": "Result",
+        "limit": 20
+      },
+      "isError": false,
+      "result": "{\n  \"strings\": [\n    {\n      \"value\": \"Result: %d\\n\",\n      \"address\": \"00102004\",\n      \"similarity\": 1.0\n    }\n  ]\n}"
+    },
+    {
+      "tool": "decompile_function",
+      "arguments": {
+        "binary_name": "eb5b103bc376ac5af210c1ebb8045ce212dadcffe85fa317c1fcb3dd877f7bee-safe_add_-2eeae7",
+        "name_or_address": "main",
+        "include_callees": true,
+        "include_strings": true,
+        "include_xrefs": true
+      },
+      "isError": false,
+      "result": "{\n  \"name\": \"main-00101161\",\n  \"code\": \"\\n/* WARNING: Unknown calling convention -- yet parameter storage is locked */\\n\\nint main(void)\\n\\n{\\n  uint uVar1;\\n  \\n  uVar1 = add_numbers(0x14,0x16);\\n  printf(\\\"Result: %d\\\\n\\\",(ulong)uVar1);\\n  return 0;\\n}\\n\\n\",\n  \"signature\": \"int main(void);\",\n  \"error\": null,\n  \"callees\": [\n    \"add_numbers\",\n    \"printf\"\n  ],\n  \"referenced_strings\": [\n    \"Result: %d\\n\",\n    \"Result: %d\\n\"\n  ],\n  \"xrefs\": [\n    {\n      \"function_name\": null,\n      \"from_address\": \"Entry Point\",\n      \"to_address\": \"00101161\",\n      \"type\": \"EXTERNAL\"\n    },\n    {\n      \"function_name\": null,\n      \"from_address\": \"00102044\",\n      \"to_address\": \"00101161\",\n      \"type\": \"INDIRECTION\"\n    },\n    {\n      \"function_name\": null,\n      \"from_address\": \"00102100\",\n      \"to_address\": \"00101161\",\n      \"type\": \"DATA\"\n    },\n    {\n      \"function_name\": \"_start\",\n      \"from_address\": \"00101078\",\n      \"to_address\": \"00101161\",\n      \"type\": \"DATA\"\n    }\n  ]\n}"
+    },
+    {
+      "tool": "decompile_function",
+      "arguments": {
+        "binary_name": "eb5b103bc376ac5af210c1ebb8045ce212dadcffe85fa317c1fcb3dd877f7bee-safe_add_-2eeae7",
+        "name_or_address": "add_numbers",
+        "include_xrefs": true
+      },
+      "isError": false,
+      "result": "{\n  \"name\": \"add_numbers-00101149\",\n  \"code\": \"\\nint add_numbers(int a,int b)\\n\\n{\\n  int b_local;\\n  int a_local;\\n  \\n  return b + a;\\n}\\n\\n\",\n  \"signature\": \"int add_numbers(int a,int b);\",\n  \"error\": null,\n  \"callees\": null,\n  \"referenced_strings\": null,\n  \"xrefs\": [\n    {\n      \"function_name\": null,\n      \"from_address\": \"0010203c\",\n      \"to_address\": \"00101149\",\n      \"type\": \"INDIRECTION\"\n    },\n    {\n      \"function_name\": null,\n      \"from_address\": \"001020e0\",\n      \"to_address\": \"00101149\",\n      \"type\": \"DATA\"\n    },\n    {\n      \"function_name\": \"main\",\n      \"from_address\": \"00101173\",\n      \"to_address\": \"00101149\",\n      \"type\": \"UNCONDITIONAL_CALL\"\n    }\n  ]\n}"
+    },
+    {
+      "tool": "list_xrefs",
+      "arguments": {
+        "binary_name": "eb5b103bc376ac5af210c1ebb8045ce212dadcffe85fa317c1fcb3dd877f7bee-safe_add_-2eeae7",
+        "name_or_address": "add_numbers"
+      },
+      "isError": false,
+      "result": "{\n  \"target\": \"add_numbers\",\n  \"cross_references\": [\n    {\n      \"function_name\": null,\n      \"from_address\": \"0010203c\",\n      \"to_address\": \"00101149\",\n      \"type\": \"INDIRECTION\"\n    },\n    {\n      \"function_name\": null,\n      \"from_address\": \"001020e0\",\n      \"to_address\": \"00101149\",\n      \"type\": \"DATA\"\n    },\n    {\n      \"function_name\": \"main\",\n      \"from_address\": \"00101173\",\n      \"to_address\": \"00101149\",\n      \"type\": \"UNCONDITIONAL_CALL\"\n    }\n  ],\n  \"error\": null\n}"
+    },
+    {
+      "tool": "set_comment",
+      "arguments": {
+        "binary_name": "eb5b103bc376ac5af210c1ebb8045ce212dadcffe85fa317c1fcb3dd877f7bee-safe_add_-2eeae7",
+        "target": "add_numbers",
+        "comment": "Safe MCP verification: adds two integers.",
+        "comment_type": "decompiler"
+      },
+      "isError": false,
+      "result": "{\n  \"binary_name\": \"eb5b103bc376ac5af210c1ebb8045ce212dadcffe85fa317c1fcb3dd877f7bee-safe_add_-2eeae7\",\n  \"address\": \"00101149\",\n  \"comment\": \"Safe MCP verification: adds two integers.\",\n  \"comment_type\": \"decompiler\"\n}"
+    },
+    {
+      "tool": "save",
+      "arguments": {},
+      "isError": false,
+      "result": "{}"
+    },
+    {
+      "tool": "search_symbols_by_name",
+      "arguments": {
+        "binary_name": "b457e07131fc9d48e06966502afd4b509f8a4fcc10e4c63054d1da6f9918b306-safe_add.stripped_-9fb667",
+        "query": "^main$",
+        "functions_only": true,
+        "limit": 10
+      },
+      "isError": false,
+      "result": "{\n  \"symbols\": []\n}"
+    }
+  ]
+}

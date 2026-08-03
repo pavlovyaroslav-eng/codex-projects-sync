@@ -1,0 +1,2 @@
+name, driver_version, memory.total [MiB], memory.used [MiB], memory.free [MiB], temperature.gpu
+NVIDIA GeForce RTX 5070, 595.84, 12227 MiB, 76 MiB, 11697 MiB, 36

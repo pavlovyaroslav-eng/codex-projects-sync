@@ -1,0 +1,34 @@
+[Unit]
+Description=Qwen3-Coder OpenAI tool-call compatibility proxy
+After=network-online.target qwen3-coder.service
+Wants=network-online.target
+Requires=qwen3-coder.service
+PartOf=qwen3-coder.service
+Conflicts=local-ai-llama.service local-ai-coder30.service local-ai-qwen-vl.service
+
+[Service]
+Type=simple
+User=user
+Group=user
+WorkingDirectory=/srv/ai
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/usr/bin/python3 /opt/local-ai/apps/qwen3-coder-tool-proxy.py --listen-host 0.0.0.0 --listen-port 8080 --backend http://127.0.0.1:8012
+Restart=on-failure
+RestartSec=2
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+CapabilityBoundingSet=
+AmbientCapabilities=
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

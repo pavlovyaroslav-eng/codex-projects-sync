@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+errors=0
+check_url() {
+  local name="$1" url="$2"
+  if curl -fsS --max-time 10 "$url" >/dev/null; then
+    echo "OK   $name $url"
+  else
+    echo "FAIL $name $url"
+    errors=$((errors + 1))
+  fi
+}
+
+echo "Local AI health $(date --iso-8601=seconds)"
+echo "Host: $(hostname)  Kernel: $(uname -r)"
+check_url Qwen3-Coder http://127.0.0.1:8012/health
+check_url Qwen3-API-compat http://127.0.0.1:8080/health
+if systemctl is-active --quiet local-ai-open-webui.service; then
+  check_url Open-WebUI http://127.0.0.1:3000/health
+else
+  echo "SKIP Open-WebUI service is inactive"
+fi
+
+if systemctl is-active --quiet pyghidra-mcp.service \
+  && ss -ltnH 'sport = :8000' | grep -Fq '127.0.0.1:8000'; then
+  echo "OK   PyGhidra MCP 127.0.0.1:8000"
+else
+  echo "FAIL PyGhidra MCP"
+  errors=$((errors + 1))
+fi
+
+if nvidia-smi --query-gpu=name,driver_version,memory.used,memory.total,temperature.gpu \
+  --format=csv,noheader; then
+  echo "OK   NVIDIA"
+else
+  echo "FAIL NVIDIA"
+  errors=$((errors + 1))
+fi
+
+available_kib="$(df --output=avail /srv/ai | tail -1 | tr -d ' ')"
+echo "Disk available: $((available_kib / 1024 / 1024)) GiB"
+if (( available_kib < 150 * 1024 * 1024 )); then
+  echo "FAIL less than 150 GiB free"
+  errors=$((errors + 1))
+fi
+
+echo "Result: ${errors} error(s)"
+exit "$errors"

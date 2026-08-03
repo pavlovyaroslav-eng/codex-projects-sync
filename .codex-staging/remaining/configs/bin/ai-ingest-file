@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+trap 'rc=$?; printf "ai-ingest-file: error line=%s rc=%s command=%q\n" "$LINENO" "$rc" "$BASH_COMMAND" >&2; exit "$rc"' ERR
+
+if (($# != 1)); then
+  echo "Usage: ai-ingest-file /path/to/file" >&2
+  exit 64
+fi
+source_path="$(realpath -- "$1")"
+if [[ ! -f "$source_path" || -L "$source_path" ]]; then
+  echo "Input must be a regular, non-symlink file" >&2
+  exit 65
+fi
+
+sha256="$(sha256sum -- "$source_path" | awk '{print $1}')"
+sha1="$(sha1sum -- "$source_path" | awk '{print $1}')"
+case_dir="$HOME/AI-Workbench/quarantine/$sha256"
+mkdir -p -- "$case_dir"
+chmod 0700 "$case_dir"
+copy_path="$case_dir/original.bin"
+if [[ ! -e "$copy_path" ]]; then
+  cp --reflink=auto --preserve=timestamps -- "$source_path" "$copy_path"
+fi
+chmod 0400 "$copy_path"
+copy_sha256="$(sha256sum -- "$copy_path" | awk '{print $1}')"
+[[ "$copy_sha256" == "$sha256" ]]
+
+name="$(basename -- "$source_path")"
+name_status="safe"
+if [[ ! "$name" =~ ^[[:alnum:]_.+()\ \-]+$ ]]; then
+  name_status="contains-unusual-characters"
+fi
+mime="$(file --brief --mime-type -- "$copy_path")"
+description="$(file --brief -- "$copy_path")"
+size="$(stat -c %s -- "$copy_path")"
+mtime="$(stat -c %y -- "$copy_path")"
+ingested="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+
+jq -n \
+  --arg original_path "$source_path" --arg stored_path "$copy_path" \
+  --arg original_name "$name" --arg filename_check "$name_status" \
+  --arg sha256 "$sha256" --arg sha1 "$sha1" --arg mime "$mime" \
+  --arg description "$description" --arg mtime "$mtime" --arg ingested_at "$ingested" \
+  --argjson size "$size" \
+  '{original_path:$original_path,stored_path:$stored_path,original_name:$original_name,filename_check:$filename_check,sha256:$sha256,sha1:$sha1,size:$size,mime:$mime,file_description:$description,mtime:$mtime,ingested_at:$ingested_at,executed:false}' \
+  >"$case_dir/metadata.json"
+
+strings -a -n 8 -- "$copy_path" | sed -n '1,200p' >"$case_dir/strings-preview.txt"
+{
+  printf '# Initial static analysis\n\n'
+  printf -- '- SHA-256: `%s`\n- SHA-1: `%s`\n- Size: %s bytes\n- Type: `%s`\n- MIME: `%s`\n- Filename check: `%s`\n- Stored read-only: `%s`\n- Executed: **no**\n\n' \
+    "$sha256" "$sha1" "$size" "$description" "$mime" "$name_status" "$copy_path"
+  printf '## Safe probes\n\n'
+  if readelf -h -- "$copy_path" 2>/dev/null; then
+    printf '\nELF header parsed successfully.\n'
+  else
+    printf 'No ELF header was parsed.\n'
+  fi
+} >"$case_dir/INITIAL_REPORT.md"
+chmod 0400 "$case_dir/metadata.json" "$case_dir/strings-preview.txt" "$case_dir/INITIAL_REPORT.md"
+printf '%s\n' "$case_dir"

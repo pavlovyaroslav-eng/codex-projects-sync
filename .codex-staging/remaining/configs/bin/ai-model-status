@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+exec systemctl status qwen3-coder.service --no-pager -l

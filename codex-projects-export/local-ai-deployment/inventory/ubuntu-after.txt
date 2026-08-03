@@ -1,0 +1,229 @@
+
+===== identity =====
+2026-08-01T02:24:10+03:00
+ Static hostname: local-ai
+       Icon name: computer-desktop
+         Chassis: desktop 🖥️
+      Machine ID: 86d27986b9a7402e99fc4e1ca0f6ae47
+         Boot ID: f4b06652197a424890a0f410e402a85b
+Operating System: Ubuntu 24.04.4 LTS
+          Kernel: Linux 7.0.0-28-generic
+    Architecture: x86-64
+ Hardware Vendor: INTEL
+  Hardware Model: X99
+Firmware Version: 5.11
+   Firmware Date: Wed 2024-03-06
+    Firmware Age: 2y 4month 3w 4d
+PRETTY_NAME="Ubuntu 24.04.4 LTS"
+NAME="Ubuntu"
+VERSION_ID="24.04"
+VERSION="24.04.4 LTS (Noble Numbat)"
+VERSION_CODENAME=noble
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+UBUNTU_CODENAME=noble
+LOGO=ubuntu-logo
+Linux local-ai 7.0.0-28-generic #28~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Wed Jul  1 15:50:57 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+
+===== boot =====
+BootCurrent: 0001
+Timeout: 1 seconds
+BootOrder: 0001,0005,0000,0002,0003
+Boot0000* Windows Boot Manager	HD(1,GPT,602747b4-bc99-4dbc-ba32-6e68d8a9a582,0x800,0x32000)/File(\EFI\MICROSOFT\BOOT\BOOTMGFW.EFI)57494e444f5753000100000088000000780000004200430044004f0042004a004500430054003d007b00390064006500610038003600320063002d0035006300640064002d0034006500370030002d0061006300630031002d006600330032006200330034003400640034003700390035007d00000061000100000010000000040000007fff0400
+      dp: 04 01 2a 00 01 00 00 00 00 08 00 00 00 00 00 00 00 20 03 00 00 00 00 00 b4 47 27 60 99 bc bc 4d ba 32 6e 68 d8 a9 a5 82 02 02 / 04 04 46 00 5c 00 45 00 46 00 49 00 5c 00 4d 00 49 00 43 00 52 00 4f 00 53 00 4f 00 46 00 54 00 5c 00 42 00 4f 00 4f 00 54 00 5c 00 42 00 4f 00 4f 00 54 00 4d 00 47 00 46 00 57 00 2e 00 45 00 46 00 49 00 00 00 / 7f ff 04 00
+    data: 57 49 4e 44 4f 57 53 00 01 00 00 00 88 00 00 00 78 00 00 00 42 00 43 00 44 00 4f 00 42 00 4a 00 45 00 43 00 54 00 3d 00 7b 00 39 00 64 00 65 00 61 00 38 00 36 00 32 00 63 00 2d 00 35 00 63 00 64 00 64 00 2d 00 34 00 65 00 37 00 30 00 2d 00 61 00 63 00 63 00 31 00 2d 00 66 00 33 00 32 00 62 00 33 00 34 00 34 00 64 00 34 00 37 00 39 00 35 00 7d 00 00 00 61 00 01 00 00 00 10 00 00 00 04 00 00 00 7f ff 04 00
+Boot0001* Ubuntu	HD(1,GPT,602747b4-bc99-4dbc-ba32-6e68d8a9a582,0x800,0x32000)/File(\EFI\UBUNTU\SHIMX64.EFI)
+      dp: 04 01 2a 00 01 00 00 00 00 08 00 00 00 00 00 00 00 20 03 00 00 00 00 00 b4 47 27 60 99 bc bc 4d ba 32 6e 68 d8 a9 a5 82 02 02 / 04 04 34 00 5c 00 45 00 46 00 49 00 5c 00 55 00 42 00 55 00 4e 00 54 00 55 00 5c 00 53 00 48 00 49 00 4d 00 58 00 36 00 34 00 2e 00 45 00 46 00 49 00 00 00 / 7f ff 04 00
+Boot0002* Hard Drive	BBS(HD,,0x0)0000474f00004e4fc3000000010000008100530061006d00730075006e006700200053005300440020003900390030002000500052004f00200031005400420000000501090002000000007fff040002010c00d041030a0000000001010600000101010600000003171000010000000025384b41a06e2a7fff040001044400ef47642dc93ba041ac194d51d01b4ce6530061006d00730075006e006700200053005300440020003900390030002000500052004f00200031005400420000007fff04000000424f00004e4fb3000000010000006700470065006e00650072006900630020004d00610073007300530074006f00720061006700650043006c00610073007300320030003100350000000501090002000000007fff040002010c00d041030a0000000001010600011c0101060000000305060001000305060000007fff040001042e00ef47642dc93ba041ac194d51d01b4ce630003000300030003000300030003000320030003100350000007fff04000000424f00004e4fb8000000010000006c00470065006e00650072006900630020004d00610073007300530074006f00720061006700650043006c00610073007300320030003100350000000501090002000000007fff040002010c00d041030a0000000001010600011c01010600000003050600010003050600000003110500017fff040001042e00ef47642dc93ba041ac194d51d01b4ce630003000300030003000300030003000320030003100350000007fff04000000424f
+      dp: 05 01 09 00 02 00 00 00 00 / 7f ff 04 00
+    data: 00 00 47 4f 00 00 4e 4f c3 00 00 00 01 00 00 00 81 00 53 00 61 00 6d 00 73 00 75 00 6e 00 67 00 20 00 53 00 53 00 44 00 20 00 39 00 39 00 30 00 20 00 50 00 52 00 4f 00 20 00 31 00 54 00 42 00 00 00 05 01 09 00 02 00 00 00 00 7f ff 04 00 02 01 0c 00 d0 41 03 0a 00 00 00 00 01 01 06 00 00 01 01 01 06 00 00 00 03 17 10 00 01 00 00 00 00 25 38 4b 41 a0 6e 2a 7f ff 04 00 01 04 44 00 ef 47 64 2d c9 3b a0 41 ac 19 4d 51 d0 1b 4c e6 53 00 61 00 6d 00 73 00 75 00 6e 00 67 00 20 00 53 00 53 00 44 00 20 00 39 00 39 00 30 00 20 00 50 00 52 00 4f 00 20 00 31 00 54 00 42 00 00 00 7f ff 04 00 00 00 42 4f 00 00 4e 4f b3 00 00 00 01 00 00 00 67 00 47 00 65 00 6e 00 65 00 72 00 69 00 63 00 20 00 4d 00 61 00 73 00 73 00 53 00 74 00 6f 00 72 00 61 00 67 00 65 00 43 00 6c 00 61 00 73 00 73 00 32 00 30 00 31 00 35 00 00 00 05 01 09 00 02 00 00 00 00 7f ff 04 00 02 01 0c 00 d0 41 03 0a 00 00 00 00 01 01 06 00 01 1c 01 01 06 00 00 00 03 05 06 00 01 00 03 05 06 00 00 00 7f ff 04 00 01 04 2e 00 ef 47 64 2d c9 3b a0 41 ac 19 4d 51 d0 1b 4c e6 30 00 30 00 30 00 30 00 30 00 30 00 30 00 30 00 32 00 30 00 31 00 35 00 00 00 7f ff 04 00 00 00 42 4f 00 00 4e 4f b8 00 00 00 01 00 00 00 6c 00 47 00 65 00 6e 00 65 00 72 00 69 00 63 00 20 00 4d 00 61 00 73 00 73 00 53 00 74 00 6f 00 72 00 61 00 67 00 65 00 43 00 6c 00 61 00 73 00 73 00 32 00 30 00 31 00 35 00 00 00 05 01 09 00 02 00 00 00 00 7f ff 04 00 02 01 0c 00 d0 41 03 0a 00 00 00 00 01 01 06 00 01 1c 01 01 06 00 00 00 03 05 06 00 01 00 03 05 06 00 00 00 03 11 05 00 01 7f ff 04 00 01 04 2e 00 ef 47 64 2d c9 3b a0 41 ac 19 4d 51 d0 1b 4c e6 30 00 30 00 30 00 30 00 30 00 30 00 30 00 30 00 32 00 30 00 31 00 35 00 00 00 7f ff 04 00 00 00 42 4f
+Boot0003* UEFI: Built-in EFI Shell	VenMedia(5023b95c-db26-429b-a648-bd47664c8012)0000424f
+      dp: 04 03 14 00 5c b9 23 50 26 db 9b 42 a6 48 bd 47 66 4c 80 12 / 7f ff 04 00
+    data: 00 00 42 4f
+Boot0005* UEFI OS	HD(1,GPT,602747b4-bc99-4dbc-ba32-6e68d8a9a582,0x800,0x32000)/File(\EFI\BOOT\BOOTX64.EFI)0000424f
+      dp: 04 01 2a 00 01 00 00 00 00 08 00 00 00 00 00 00 00 20 03 00 00 00 00 00 b4 47 27 60 99 bc bc 4d ba 32 6e 68 d8 a9 a5 82 02 02 / 04 04 30 00 5c 00 45 00 46 00 49 00 5c 00 42 00 4f 00 4f 00 54 00 5c 00 42 00 4f 00 4f 00 54 00 58 00 36 00 34 00 2e 00 45 00 46 00 49 00 00 00 / 7f ff 04 00
+    data: 00 00 42 4f
+saved_entry=gnulinux-simple-21060c37-278d-4a64-b170-abf256c0508c
+GRUB_DEFAULT=saved
+GRUB_TIMEOUT_STYLE=menu
+GRUB_TIMEOUT=10
+GRUB_SAVEDEFAULT=true
+
+===== storage =====
+NAME        PATH             SIZE TYPE FSTYPE FSVER MOUNTPOINTS           PARTUUID                             MODEL
+sda         /dev/sda           0B disk                                                                         MassStorageClass
+sdb         /dev/sdb        59,5G disk                                                                         MassStorageClass
+└─sdb1      /dev/sdb1       59,5G part exfat  1.0   /media/user/F8F4-A607 319702f4-01                          
+nvme0n1     /dev/nvme0n1   931,5G disk                                                                         Samsung SSD 990 PRO 1TB
+├─nvme0n1p1 /dev/nvme0n1p1   100M part vfat   FAT32 /boot/efi             602747b4-bc99-4dbc-ba32-6e68d8a9a582 
+├─nvme0n1p2 /dev/nvme0n1p2    16M part                                    c0ef454b-e28c-4e5f-84a4-a3269d406ba0 
+├─nvme0n1p3 /dev/nvme0n1p3   420G part ntfs                               b6e2ff9f-2478-4beb-a573-2f4a8cd42329 
+└─nvme0n1p4 /dev/nvme0n1p4 511,4G part ext4   1.0   /                     721153f5-df7f-47d5-ba53-a78a6c437c30 
+Файл.система   Тип  Размер Использовано  Дост Использовано% Cмонтировано в
+/dev/nvme0n1p4 ext4   503G          97G  380G           21% /
+/dev/nvme0n1p4 ext4   503G          97G  380G           21% /
+               всего        занят        своб      общая  буф/врем.   доступно
+Память:         62Gi       3,4Gi        49Gi        31Mi        10Gi        59Gi
+Подкачка:       15Gi          0B        15Gi
+NAME      TYPE SIZE USED PRIO
+/swap.img file  16G   0B   -1
+enabled
+enabled
+
+===== network =====
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+enp5s0           UP             192.168.1.65/24 fd98:1fa8:6209:0:239a:ee6b:ec4e:80f7/64 fd98:1fa8:6209:0:2e0:21ff:fea9:5030/64 fe80::2e0:21ff:fea9:5030/64 
+default via 192.168.1.1 dev enp5s0 proto dhcp src 192.168.1.65 metric 100 
+192.168.1.0/24 dev enp5s0 proto kernel scope link src 192.168.1.65 metric 100 
+	Speed: 100Mb/s
+	Duplex: Full
+	Link detected: yes
+tcp   LISTEN 0      4096         0.0.0.0:22         0.0.0.0:*    users:(("sshd",pid=1843,fd=3),("systemd",pid=1,fd=258))
+tcp   LISTEN 0      2048         0.0.0.0:3000       0.0.0.0:*    users:(("open-webui",pid=3009,fd=27))                  
+tcp   LISTEN 0      512          0.0.0.0:8080       0.0.0.0:*    users:(("llama-server",pid=2321,fd=37))                
+tcp   LISTEN 0      4096            [::]:22            [::]:*    users:(("sshd",pid=1843,fd=4),("systemd",pid=1,fd=259))
+Состояние: активен
+
+     В                          Действие    Из
+     -                          --------    --
+[ 1] 22/tcp                     ALLOW IN    192.168.1.41               # local-ai controller SSH
+[ 2] 8080/tcp                   ALLOW IN    192.168.1.41               # local-ai llama API
+[ 3] 3000/tcp                   ALLOW IN    192.168.1.41               # local-ai Open WebUI
+[ 4] 8188/tcp                   ALLOW IN    192.168.1.41               # local-ai ComfyUI
+[ 5] 8000/tcp                   ALLOW IN    192.168.1.41               # local-ai Whisper API
+
+
+===== security =====
+permitrootlogin no
+pubkeyauthentication yes
+passwordauthentication no
+kbdinteractiveauthentication no
+Status for the jail: sshd
+|- Filter
+|  |- Currently failed:	0
+|  |- Total failed:	0
+|  `- Journal matches:	_SYSTEMD_UNIT=sshd.service + _COMM=sshd
+`- Actions
+   |- Currently banned:	0
+   |- Total banned:	0
+   `- Banned IP list:	
+/etc/sudoers: успешно обработан
+/etc/sudoers.d/90-local-ai-user: успешно обработан
+/etc/sudoers.d/README: успешно обработан
+
+===== gpu =====
+Sat Aug  1 02:24:10 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 595.84                 Driver Version: 595.84         CUDA Version: 13.2     |
++-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA GeForce RTX 5070        Off |   00000000:02:00.0  On |                  N/A |
+|  0%   41C    P8              7W /  250W |    9267MiB /  12227MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|    0   N/A  N/A            1979      G   /usr/lib/xorg/Xorg                       53MiB |
+|    0   N/A  N/A            2191      G   /usr/bin/gnome-shell                     75MiB |
+|    0   N/A  N/A            2321      C   ....cpp-current/bin/llama-server       9104MiB |
++-----------------------------------------------------------------------------------------+
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2026 NVIDIA Corporation
+Built on Fri_May_08_10:53:34_AM_PDT_2026
+Cuda compilation tools, release 13.2, V13.2.86
+Build cuda_13.2.r13.2/compiler.37953736_0
+torch 2.12.0+cu132
+torch_cuda 13.2
+cuda_available True
+device NVIDIA GeForce RTX 5070
+capability (12, 0)
+
+===== applications =====
+open-webui 0.9.5
+faster-whisper 1.2.1
+322122449c9d2ba8b8df1bb517364527dd0615f1
+2b90b9f5ceec907a1c18123530e92e794ad901a4
+
+===== services =====
+enabled
+disabled
+disabled
+disabled
+disabled
+disabled
+disabled
+active
+active
+active
+inactive
+inactive
+inactive
+inactive
+Sat 2026-08-01 02:25:55 MSK  1min 40s Sat 2026-08-01 02:17:32 MSK      - local-ai-health.timer          local-ai-health.service
+Sun 2026-08-02 00:10:07 MSK       21h Sat 2026-08-01 01:29:45 MSK      - local-ai-cleanup.timer         local-ai-cleanup.service
+Mon 2026-08-03 00:14:16 MSK 1 day 21h Sat 2026-08-01 01:29:45 MSK      - local-ai-backup.timer          local-ai-backup.service
+Selected: qwen14
+local-ai-llama            active
+local-ai-coder30          inactive
+local-ai-qwen-vl          inactive
+local-ai-open-webui       active
+local-ai-comfyui          inactive
+local-ai-whisper          inactive
+NVIDIA GeForce RTX 5070, 9267 MiB, 12227 MiB, 41
+
+===== models =====
+324	/srv/local-ai/models/sam2/sam2.1_hiera_small.pt.manifest.json
+379	/srv/local-ai/models/llm/qwen3-coder-30b-a3b-q4km/manifest.json
+401	/srv/local-ai/models/llm/qwen3-vl-8b-q4km/manifest.json
+92181852	/srv/local-ai/models/comfyui/sam2/sam2.1_hiera_small-fp16.safetensors
+184416285	/srv/local-ai/models/sam2/sam2.1_hiera_small.pt
+752289728	/srv/local-ai/models/llm/qwen3-vl-8b-q4km/mmproj-Qwen3VL-8B-Instruct-Q8_0.gguf
+5027784800	/srv/local-ai/models/llm/qwen3-vl-8b-q4km/Qwen3VL-8B-Instruct-Q4_K_M.gguf
+6938078334	/srv/local-ai/models/comfyui/checkpoints/sd_xl_base_1.0.safetensors
+9001753376	/srv/local-ai/models/llm/qwen3-14b-q4km/Qwen3-14B-Q4_K_M.gguf
+18632186176	/srv/local-ai/models/llm/qwen3-coder-30b-a3b-q4km/Qwen3-Coder-30B-A3B-Instruct-Q4_K_M.gguf
+{"ComfyUI-Manager":"2b40deba7d04afeee29ee70c88f6c336e43dc9ca","ComfyUI-VideoHelperSuite":"4ee72c065db22c9d96c2427954dc69e7b908444b","ComfyUI-segment-anything-2":"0c35fff5f382803e2310103357b5e985f5437f32","ComfyUI-Frame-Interpolation":"26545cc2dd95bc3d27f056016300673bdeee78f5","comfyui_controlnet_aux":"e8b689a513c3e6b63edc44066560ca5919c0576e","ComfyUI-WanVideoWrapper":"088128b224242e110d3906c6750e9a3a348a659b"}
+{
+  "status": "ok",
+  "frames": 18,
+  "resolution": "512x512",
+  "tracked_pixel_min": 6761,
+  "tracked_pixel_max": 6823,
+  "encoder": "h264_nvenc",
+  "elapsed_seconds": 4.679,
+  "torch_peak_allocated_mib": 859,
+  "gpu_temperature_c": 43,
+  "output": "/srv/local-ai/output/sam2-test/tracked-with-original-audio.mp4",
+  "streams": [
+    {
+      "codec_name": "h264",
+      "codec_type": "video"
+    },
+    {
+      "codec_name": "aac",
+      "codec_type": "audio"
+    }
+  ]
+}
+
+===== health =====
+Local AI health 2026-08-01T02:24:15+03:00
+Host: local-ai  Kernel: 7.0.0-28-generic
+Mode: llm (qwen14)
+OK   llama.cpp http://127.0.0.1:8080/health
+OK   Open-WebUI http://127.0.0.1:3000/health
+NVIDIA GeForce RTX 5070, 595.84, 9267 MiB, 12227 MiB, 41
+OK   NVIDIA
+Disk available: 379 GiB
+Result: 0 error(s)

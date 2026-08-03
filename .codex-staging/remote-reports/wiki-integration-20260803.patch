@@ -1,0 +1,130 @@
+--- a/README.md
++++ b/README.md
+@@ -61,2 +61,16 @@
+ UFW или Windows Boot Manager. Разрешённая перезагрузка выполнена; автозапуск
+ Qwen, MCP, health timer, NVIDIA и изолированной libvirt-сети проверен.
++
++## Актуализация 2026-08-03
++
++- Compatibility proxy `:8080` исправлен: браузерные GET-запросы и gzip-ответы
++  llama.cpp обрабатываются корректно.
++- Open WebUI снова active/enabled на `:3000`; LAN и VPN origins заданы явно.
++  Через `10.93.0.10:3000` проверен реальный ответ Qwen3-Coder.
++- Matrix/Element-бот на `www` использует тот же API; `!model` возвращает точное
++  имя `Qwen3-Coder-30B-A3B-Instruct Q4_K_M`.
++- PyGhidra MCP опубликован только на VPN `10.93.0.10:8000/mcp`. Open
++  Interpreter с `native` harness реально выполнил `list_project_binaries` и
++  `decompile_function(main)`.
++- Ghidra и Whisper разделяют порт `8000`: `ai-mode whisper` освобождает его,
++  `ai-mode llm` возвращает MCP; systemd `Conflicts` страхуют ручной запуск.
+--- a/INSTALL_REPORT.md
++++ b/INSTALL_REPORT.md
+@@ -103,2 +103,15 @@
+ См. точные ошибки в [`reports/FAILED_STEPS.md`](reports/FAILED_STEPS.md) и
+ откат в [`ROLLBACK.md`](ROLLBACK.md).
++
++## Дополнение 2026-08-03
++
++- web UI/gzip fix: `/srv/local-ai/backups/web-ui-fix-20260803T050319Z`;
++- Open WebUI VPN origin fix:
++  `/srv/local-ai/backups/webui-origin-20260803T053121Z`;
++- VPN publication PyGhidra MCP:
++  `/srv/local-ai/backups/ghidra-mcp-vpn-20260803T050715Z`;
++- Ghidra/Whisper mode integration:
++  `/srv/local-ai/backups/ghidra-whisper-modes-20260803T053637Z`.
++
++Open Interpreter на Acer переведён на `native` harness и зарегистрирован с
++VPN MCP endpoint; тест декомпиляции завершён успешно.
+--- a/SECURITY_MODEL.md
++++ b/SECURITY_MODEL.md
+@@ -49,2 +49,16 @@
+   libvirt-сеть вернулись в ожидаемое состояние. Позднее намеренно добавлен один
+   wildcard listener `:8080`, защищённый прежними UFW rules; failed units нет.
++
++## Актуализация 2026-08-03
++
++- Устаревший пункт о неработающем Open WebUI больше не актуален: служба
++  active/enabled на `:3000`, LAN/VPN origins перечислены явно, wildcard CORS не
++  используется.
++- MCP backend остаётся на `127.0.0.1:8000`; `systemd-socket-proxyd` публикует
++  его только на VPN-адресе `10.93.0.10:8000`. UFW принимает порт `8000` лишь из
++  ранее разрешённых controller/VPN scopes; публичного DNAT нет.
++- Open Interpreter автоматически одобряет Ghidra MCP tools. Это осознанная
++  граница доверия: доступ требует VPN-профиля, а анализируемые файлы всё равно
++  считаются недоверенными и не должны исполняться на хосте.
++- Open WebUI и Element являются чат-интерфейсами без Ghidra tools. Доступ к
++  декомпиляции предоставлен Open Interpreter и локальному Qwen Code.
+--- a/ROLLBACK.md
++++ b/ROLLBACK.md
+@@ -87,2 +87,15 @@
+ выполнить `bash -n`, установить как `root:root 0755`, затем запустить
+ `local-ai-health.service` и проверить `/var/lib/local-ai/health-latest.txt`.
++
++## Изменения 2026-08-03
++
++Точные инструкции отката находятся внутри соответствующих backup-каталогов:
++
++- `/srv/local-ai/backups/web-ui-fix-20260803T050319Z/ROLLBACK.txt` — gzip proxy
++  и включение Open WebUI;
++- `/srv/local-ai/backups/webui-origin-20260803T053121Z/ROLLBACK.txt` — точный
++  список LAN/VPN origins;
++- `/srv/local-ai/backups/ghidra-mcp-vpn-20260803T050715Z/ROLLBACK.txt` — VPN
++  socket proxy для MCP;
++- `/srv/local-ai/backups/ghidra-whisper-modes-20260803T053637Z/ROLLBACK.txt` —
++  интеграция владельца порта `8000` с `ai-mode`.
+--- a/reports/OPEN_PORTS.md
++++ b/reports/OPEN_PORTS.md
+@@ -21,2 +21,16 @@
+ существовавшие точные правила; новые firewall rules не добавлялись и область
+ доступа не расширялась. Публичного проброса нет.
++
++## Актуализация 2026-08-03
++
++Предыдущая строка о закрытом `3000/tcp` историческая и больше не отражает
++runtime:
++
++| Bind | Порт | Служба | Scope |
++|---|---:|---|---|
++| `0.0.0.0` | 3000/tcp | Open WebUI | controller/VPN UFW only |
++| `127.0.0.1` | 8000/tcp | PyGhidra MCP | loopback backend |
++| `10.93.0.10` | 8000/tcp | MCP socket proxy | VPN only, LLM mode |
++| `0.0.0.0` | 8000/tcp | Whisper | whisper mode вместо MCP |
++
++`ai-mode` и systemd `Conflicts` исключают одновременное владение портом 8000.
+--- a/reports/FINAL_VERIFICATION.md
++++ b/reports/FINAL_VERIFICATION.md
+@@ -72,2 +72,15 @@
+   `Result: 0 error(s)`, timer active/enabled;
+ - `systemctl --failed` после исправления пуст.
++
++## Проверка интеграции 2026-08-03
++
++- `:8080/`: HTTP 200 HTML через LAN и VPN, gzip browser error устранена;
++- Open WebUI `:3000`: title/UI/model отрисованы, console errors отсутствуют;
++- browser chat через `10.93.0.10:3000`: Qwen3-Coder вернул реальный ответ;
++- Element backend: `qwen3-coder-30b-a3b-q4km`, добавлен `!model`;
++- Open Interpreter config: `native` harness, MCP `ghidra`, approval `approve`;
++- `ghidra/list_project_binaries`: completed, возвращены два тестовых ELF;
++- `ghidra/decompile_function(main)`: completed, возвращён C-код с
++  `add_numbers(0x14,0x16)` и `printf`;
++- MCP VPN listener: только `10.93.0.10:8000`, backend loopback-only;
++- Ghidra/Whisper port conflicts проверены `systemd-analyze verify`.
+--- a/reports/GHIDRA_MCP_TEST.md
++++ b/reports/GHIDRA_MCP_TEST.md
+@@ -31 +31,16 @@
+ Полный машинный журнал: `logs/75-ghidra-mcp-test.json`.
++
++## Open Interpreter через VPN — 2026-08-03
++
++Endpoint для Acer: `http://10.93.0.10:8000/mcp`; HTTP header `Host` задан как
++`127.0.0.1:8000` для совместимости с DNS-rebinding protection FastMCP. Backend
++по-прежнему слушает только loopback.
++
++Open Interpreter использует `harness = "native"` и
++`default_tools_approval_mode = "approve"`. Подтверждены настоящие MCP events:
++
++- `ghidra/list_project_binaries (completed)` — возвращены debug и stripped ELF;
++- `ghidra/decompile_function (completed)` — для `main` возвращён C-код с
++  `add_numbers(0x14,0x16)` и `printf("Result: %d\\n", ...)`.
++
++Пустой MCP resources list не является отказом: PyGhidra публикует tools.

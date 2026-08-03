@@ -1,0 +1,22 @@
+[Unit]
+Description=Proxy VPN PyGhidra MCP traffic to the loopback service
+Requires=pyghidra-mcp.service
+After=pyghidra-mcp.service
+
+[Service]
+Type=notify
+DynamicUser=true
+ExecStart=/lib/systemd/systemd-socket-proxyd --exit-idle-time=5min 127.0.0.1:8000
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+CapabilityBoundingSet=
+AmbientCapabilities=

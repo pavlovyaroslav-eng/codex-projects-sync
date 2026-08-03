@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+trap 'rc=$?; printf "ai-static-scan: error line=%s rc=%s command=%q\n" "$LINENO" "$rc" "$BASH_COMMAND" >&2; exit "$rc"' ERR
+
+if (($# != 1)); then echo "Usage: ai-static-scan /path/to/file" >&2; exit 64; fi
+target="$(realpath -- "$1")"
+if [[ ! -f "$target" || -L "$target" ]]; then echo "Input must be a regular, non-symlink file" >&2; exit 65; fi
+podman image exists localhost/ai-static-tools:1.0
+if podman container exists ai-static-tools; then
+  echo "A container named ai-static-tools already exists; inspect it before retrying." >&2
+  exit 73
+fi
+sha256="$(sha256sum -- "$target" | awk '{print $1}')"
+stamp="$(date -u +%Y%m%dT%H%M%SZ)"
+output="$HOME/AI-Workbench/reports/static-${sha256}-${stamp}"
+mkdir -m 0700 -- "$output"
+parent="$(dirname -- "$target")"
+base="$(basename -- "$target")"
+podman run --rm --name ai-static-tools \
+  --network=none --read-only --tmpfs /tmp:rw,noexec,nosuid,nodev,size=256m \
+  --cap-drop=all --security-opt=no-new-privileges --pids-limit=256 --memory=2g --cpus=4 \
+  --userns=keep-id --user "$(id -u):$(id -g)" --env "TARGET_BASENAME=$base" \
+  --volume "$parent:/input:ro" --volume "$output:/output:rw" \
+  localhost/ai-static-tools:1.0
+chmod -R u=rwX,go= "$output"
+printf '%s\n' "$output"

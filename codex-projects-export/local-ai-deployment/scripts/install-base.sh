@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+[[ ${EUID} -eq 0 ]] || { echo "Run as root." >&2; exit 1; }
+bash "${DIR}/ubuntu-stage1-bootstrap.sh" "$@"
+bash "${DIR}/ubuntu-stage2-system-base.sh" "$@"
+

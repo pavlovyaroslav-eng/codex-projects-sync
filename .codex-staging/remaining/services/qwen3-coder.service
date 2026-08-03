@@ -1,0 +1,41 @@
+[Unit]
+Description=Qwen3-Coder 30B A3B local llama.cpp API
+After=network.target
+StartLimitIntervalSec=300
+StartLimitBurst=3
+ConditionFileIsExecutable=/opt/ai-stack/bin/llama-server
+ConditionPathExists=/srv/ai/models/qwen3-coder-30b-a3b/Qwen3-Coder-30B-A3B-Instruct-Q4_K_M.gguf
+
+[Service]
+Type=simple
+User=qwenllm
+Group=qwenllm
+WorkingDirectory=/opt/ai-stack
+ExecStart=/opt/ai-stack/bin/llama-server --model /srv/ai/models/qwen3-coder-30b-a3b/Qwen3-Coder-30B-A3B-Instruct-Q4_K_M.gguf --alias qwen3-coder-30b-a3b-q4km --host 127.0.0.1 --port 8012 --ctx-size 32768 --parallel 1 --threads 28 --batch-size 512 --ubatch-size 128 --n-gpu-layers 99 --n-cpu-moe 32 --flash-attn on --cache-type-k q8_0 --cache-type-v q8_0 --no-kv-offload --load-mode mmap --metrics
+Restart=on-failure
+RestartSec=10s
+TimeoutStartSec=15min
+TimeoutStopSec=2min
+KillSignal=SIGINT
+LimitNOFILE=1048576
+UMask=0027
+
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectHostname=true
+ProtectClock=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+CapabilityBoundingSet=
+AmbientCapabilities=
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+IPAddressDeny=any
+IPAddressAllow=localhost
+ReadWritePaths=/var/lib/qwenllm /var/log/ai-stack
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,34 @@
+Captured: 2026-08-01 Europe/Moscow
+
+hometele
+  OpenVPN: 2.6.19
+  Easy-RSA: 3.1.7-2
+  service: openvpn-server@local-ai.service enabled/active
+  interface: tun93 10.93.0.1/24
+  ingress: 21200/udp
+
+local-ai
+  service: openvpn-client@hometele-local-ai.service enabled/active
+  interface: tun93 10.93.0.10/24
+  UFW on tun93 from 10.93.0.0/24: tcp 22,3000,8000,8080,8188
+
+Windows owner laptop
+  OpenVPN: 2.7.5-I001 amd64 (winget 2.7.501)
+  service: OpenVPNService Running/Automatic
+  interface: OpenVPN TAP-Windows6 10.93.0.11/24
+  Hiddify: active sing-tun interface tun0
+  Aider: 0.86.2
+  OpenCode: 1.18.10
+
+Validation
+  server -> local-ai ICMP: pass after client restart
+  laptop -> local-ai SSH 22: pass
+  laptop -> llama.cpp /health: ok
+  laptop -> Open WebUI /health: true
+  Aider -> qwen3-coder-30b-a3b-q4km: pass
+  OpenCode local-ai agent -> qwen3-coder-30b-a3b-q4km: pass
+  default route pushed by this VPN: no
+  Hiddify outer tunnel -> OpenVPN -> local-ai: pass
+
+No private keys, inline certificates, VPN profiles, passwords or public client
+source addresses are included in this inventory.

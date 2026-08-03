@@ -1,0 +1,4 @@
+<network>
+  <name>windows-analysis-isolated</name>
+  <bridge name='virbr99' stp='on' delay='0'/>
+</network>

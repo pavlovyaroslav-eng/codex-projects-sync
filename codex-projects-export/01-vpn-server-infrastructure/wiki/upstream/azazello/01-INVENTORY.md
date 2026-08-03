@@ -350,7 +350,10 @@ hometele-status [server|all]
 service: hometele-ai.service
 WorkingDirectory: /opt/hometele-ai
 ExecStart: /opt/hometele-ai/venv/bin/python /opt/hometele-ai/hometele-ai.py
-Назначение: HomeTele AI Matrix Bot via DeepSeek
+Назначение: HomeTele AI Matrix Bot через локальный Qwen3-Coder
+API: `http://10.93.0.10:8080/v1` через `tun93`
+Модель: `qwen3-coder-30b-a3b-q4km`
+Команда Element: `!ai текст вопроса`
 ```
 
 ### Synapse Admin

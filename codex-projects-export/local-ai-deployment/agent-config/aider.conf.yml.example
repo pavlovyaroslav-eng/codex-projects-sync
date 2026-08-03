@@ -1,0 +1,5 @@
+model: openai/qwen3-coder-30b-a3b-q4km
+openai-api-base: http://10.93.0.10:8080/v1
+openai-api-key: local-no-auth
+chat-language: ru
+show-model-warnings: false

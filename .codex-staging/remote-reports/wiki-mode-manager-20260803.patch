@@ -1,0 +1,43 @@
+--- a/README.md
++++ b/README.md
+@@ -75,2 +75,7 @@
+ - Ghidra и Whisper разделяют порт `8000`: `ai-mode whisper` освобождает его,
+   `ai-mode llm` возвращает MCP; systemd `Conflicts` страхуют ручной запуск.
++- `ai-model` синхронизирован с новым `qwen3-coder.service`: профиль `coder30`
++  управляет backend `8012`, proxy `8080` и Open WebUI.
++- Полный цикл `LLM -> Whisper -> LLM` проверен; после возврата повторный вызов
++  Open Interpreter `ghidra/list_project_binaries` завершён успешно, health-check
++  вернул `0 error(s)`.
+--- a/INSTALL_REPORT.md
++++ b/INSTALL_REPORT.md
+@@ -116,2 +116,8 @@
+ Open Interpreter на Acer переведён на `native` harness и зарегистрирован с
+ VPN MCP endpoint; тест декомпиляции завершён успешно.
++
++Дополнительные backups менеджера режимов:
++
++- `/srv/local-ai/backups/model-mode-manager-20260803T055440Z`;
++- `/srv/local-ai/backups/ai-mode-ghidra-ready-20260803T055841Z`;
++- `/srv/local-ai/backups/ai-model-start-limit-20260803T060020Z`.
+--- a/ROLLBACK.md
++++ b/ROLLBACK.md
+@@ -100,2 +100,8 @@
+ - `/srv/local-ai/backups/ghidra-whisper-modes-20260803T053637Z/ROLLBACK.txt` —
+   интеграция владельца порта `8000` с `ai-mode`.
++
++Последующие точечные rollback-файлы:
++
++- `/srv/local-ai/backups/model-mode-manager-20260803T055440Z/ROLLBACK.txt`;
++- `/srv/local-ai/backups/ai-mode-ghidra-ready-20260803T055841Z/ROLLBACK.txt`;
++- `/srv/local-ai/backups/ai-model-start-limit-20260803T060020Z/ROLLBACK.txt`.
+--- a/reports/FINAL_VERIFICATION.md
++++ b/reports/FINAL_VERIFICATION.md
+@@ -85,2 +85,8 @@
+ - MCP VPN listener: только `10.93.0.10:8000`, backend loopback-only;
+ - Ghidra/Whisper port conflicts проверены `systemd-analyze verify`.
++- Реальный цикл `ai-mode whisper` -> `ai-mode llm`: PASS; Whisper получил порт
++  `8000`, затем Qwen/API/WebUI/PyGhidra/VPN socket восстановились;
++- `ai-mode llm` ждёт фактический MCP listener, а `ai-model` обрабатывает
++  start-limit только своих AI-служб;
++- повторный Open Interpreter `ghidra/list_project_binaries`: completed;
++- итоговый health-check: `Result: 0 error(s)`, failed units отсутствуют.

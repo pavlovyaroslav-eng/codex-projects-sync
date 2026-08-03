@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+trap 'rc=$?; printf "scan-entry: error line=%s rc=%s command=%q\n" "$LINENO" "$rc" "$BASH_COMMAND" >&2; exit "$rc"' ERR
+
+[[ "${TARGET_BASENAME:-}" =~ ^[^/]+$ ]]
+target="/input/$TARGET_BASENAME"
+test -f "$target"
+test -d /output
+sha256="$(sha256sum -- "$target" | awk '{print $1}')"
+sha1="$(sha1sum -- "$target" | awk '{print $1}')"
+size="$(stat -c %s -- "$target")"
+description="$(file --brief -- "$target")"
+mime="$(file --brief --mime-type -- "$target")"
+
+strings -a -n 8 -- "$target" | sed -n '1,500p' > /output/strings.txt
+if readelf -aW -- "$target" >/output/readelf.txt 2>/output/readelf.stderr; then
+  elf_parsed=true
+else
+  elf_parsed=false
+fi
+if objdump -x -- "$target" >/output/objdump.txt 2>/output/objdump.stderr; then
+  object_parsed=true
+else
+  object_parsed=false
+fi
+if capa --json "$target" >/output/capa.json 2>/output/capa.stderr; then
+  capa_status=matched_or_clean
+else
+  capa_status=unsupported_or_error
+fi
+if yara /opt/ai-static-tools/baseline.yar "$target" >/output/yara.txt 2>/output/yara.stderr; then
+  yara_status=completed
+else
+  yara_status=no_match_or_error
+fi
+if clamscan --no-summary "$target" >/output/clamav.txt 2>/output/clamav.stderr; then
+  clamav_status=clean
+else
+  clamav_rc="$?"
+  clamav_status="unavailable_or_detection_rc_${clamav_rc}"
+fi
+if 7z l -slt -- "$target" >/output/archive-list.txt 2>/output/archive-list.stderr; then
+  archive_status=listed
+else
+  archive_status=not_archive_or_error
+fi
+entropy="$(python3 - "$target" <<'PY'
+import collections, math, pathlib, sys
+data = pathlib.Path(sys.argv[1]).read_bytes()
+if not data:
+    print("0.000000")
+else:
+    counts = collections.Counter(data)
+    print(f"{-sum((n/len(data))*math.log2(n/len(data)) for n in counts.values()):.6f}")
+PY
+)"
+
+jq -n --arg sha256 "$sha256" --arg sha1 "$sha1" --arg description "$description" \
+  --arg mime "$mime" --arg entropy "$entropy" --arg capa "$capa_status" \
+  --arg yara "$yara_status" --arg clamav "$clamav_status" --arg archive "$archive_status" \
+  --argjson size "$size" --argjson elf_parsed "$elf_parsed" --argjson object_parsed "$object_parsed" \
+  '{sha256:$sha256,sha1:$sha1,size:$size,type:$description,mime:$mime,entropy_bits_per_byte:($entropy|tonumber),elf_parsed:$elf_parsed,object_parsed:$object_parsed,capa:$capa,yara:$yara,clamav:$clamav,archive_listing:$archive,executed:false,network:false}' \
+  >/output/report.json
+{
+  printf '# Static scan report\n\n'
+  printf -- '- SHA-256: `%s`\n- SHA-1: `%s`\n- Size: %s bytes\n- Type: `%s`\n- MIME: `%s`\n- Entropy: %s bits/byte\n- capa: `%s`\n- YARA: `%s`\n- ClamAV: `%s`\n- Archive listing: `%s`\n- Executed: **no**\n- Container network: **disabled**\n' \
+    "$sha256" "$sha1" "$size" "$description" "$mime" "$entropy" "$capa_status" "$yara_status" "$clamav_status" "$archive_status"
+} >/output/REPORT.md

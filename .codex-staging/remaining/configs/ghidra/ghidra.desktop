@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Ghidra 12.1.2
+Comment=Software reverse engineering suite
+Exec=/usr/local/bin/ghidra
+Icon=/opt/ghidra/current/support/ghidra.ico
+Terminal=false
+Categories=Development;Debugger;

@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+trap 'rc=$?; printf "ai-ghidra-stage: error line=%s rc=%s command=%q\n" "$LINENO" "$rc" "$BASH_COMMAND" >&2; exit "$rc"' ERR
+if (($# != 1)); then echo "Usage: ai-ghidra-stage /path/to/file" >&2; exit 64; fi
+source_path="$(realpath -- "$1")"
+if [[ ! -f "$source_path" || -L "$source_path" ]]; then echo "Input must be a regular, non-symlink file" >&2; exit 65; fi
+sha256="$(sha256sum -- "$source_path" | awk '{print $1}')"
+safe_name="$(printf '%s' "$(basename -- "$source_path")" | tr -c 'A-Za-z0-9._-' '_')"
+target="/var/lib/ghidramcp/incoming/${sha256}-${safe_name}"
+if [[ ! -e "$target" ]]; then
+  install -m 0640 -- "$source_path" "$target"
+fi
+[[ "$(sha256sum -- "$target" | awk '{print $1}')" == "$sha256" ]]
+printf '%s\n' "$target"

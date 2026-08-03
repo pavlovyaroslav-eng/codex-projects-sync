@@ -1,0 +1,54 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "local-ai": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Local AI over OpenVPN",
+      "options": {
+        "baseURL": "http://10.93.0.10:8080/v1",
+        "apiKey": "local-no-auth"
+      },
+      "models": {
+        "qwen3-coder-30b-a3b-q4km": {
+          "name": "Qwen3 Coder 30B Local",
+          "limit": { "context": 8192, "output": 2048 }
+        },
+        "qwen3-14b-q4km": {
+          "name": "Qwen3 14B Local",
+          "limit": { "context": 8192, "output": 2048 }
+        },
+        "qwen3-vl-8b-q4km": {
+          "name": "Qwen3 VL 8B Local",
+          "limit": { "context": 8192, "output": 2048 }
+        }
+      }
+    }
+  },
+  "model": "local-ai/qwen3-coder-30b-a3b-q4km",
+  "autoupdate": false,
+  "default_agent": "local-ai",
+  "subagent_depth": 0,
+  "share": "disabled",
+  "agent": {
+    "local-ai": {
+      "description": "Local coding agent backed by the private Qwen3 Coder VPN endpoint",
+      "mode": "primary",
+      "model": "local-ai/qwen3-coder-30b-a3b-q4km",
+      "temperature": 0.1,
+      "steps": 6,
+      "prompt": "For simple questions, answer directly without tools. For coding work, use only the minimum required tools. Never repeat the same tool call without new evidence. If blocked, explain the blocker and stop.",
+      "permission": {
+        "read": "allow",
+        "glob": "allow",
+        "grep": "allow",
+        "list": "allow",
+        "edit": "ask",
+        "bash": "ask",
+        "external_directory": "ask",
+        "task": "deny",
+        "webfetch": "deny",
+        "websearch": "deny"
+      }
+    }
+  }
+}

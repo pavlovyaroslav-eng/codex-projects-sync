@@ -1,0 +1,12 @@
+[Unit]
+Description=VPN socket for the local PyGhidra MCP server
+After=openvpn-client@hometele-local-ai.service
+Wants=openvpn-client@hometele-local-ai.service
+
+[Socket]
+ListenStream=10.93.0.10:8000
+FreeBind=true
+NoDelay=true
+
+[Install]
+WantedBy=sockets.target

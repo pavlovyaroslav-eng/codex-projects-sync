@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+if (($# < 1)); then echo "Usage: ai-software-search SEARCH..." >&2; exit 64; fi
+apt-cache search --names-only -- "$*"

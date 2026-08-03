@@ -1,0 +1,16 @@
+﻿HomeTele AI remote test v2
+UTC: 2026-08-02T06:00:12.8989145Z
+OS: Microsoft Windows NT 10.0.19042.0
+PowerShell: 5.1.19041.1320
+Endpoint: http://10.93.0.10:8080
+Expected model: qwen3-14b-q4km
+VPN credentials: not collected
+
+[OK] Direct TCP 10.93.0.10:8080 (TUN/direct route is available)
+[OK] Transport: direct/TUN
+[OK] GET /health
+[OK] GET /v1/models: qwen3-14b-q4km
+[OK] Web UI with gzip: HTTP 200
+[OK] Chat Completions: non-empty UTF-8 answer (34 chars)
+[OK] Total duration: 1.45 s
+PASS Remote AI station is available through VLESS/VPN.

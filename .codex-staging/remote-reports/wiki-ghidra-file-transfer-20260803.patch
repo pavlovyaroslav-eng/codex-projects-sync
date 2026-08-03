@@ -1,0 +1,9 @@
+--- a/reports/GHIDRA_MCP_TEST.md
++++ b/reports/GHIDRA_MCP_TEST.md
+@@ -46 +46,6 @@
+ Пустой MCP resources list не является отказом: PyGhidra публикует tools.
++
++Для нового файла с Acer сначала выполняются SSH-копирование в
++`/home/user/AI-Workbench/incoming`, `ai-ingest-file` и `ai-ghidra-stage` без
++исполнения файла. Только полученный Ubuntu path передаётся в
++`ghidra/import_binary`; локальный Windows path PyGhidra не видит.

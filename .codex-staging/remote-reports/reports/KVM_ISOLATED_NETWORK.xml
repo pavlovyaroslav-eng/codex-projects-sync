@@ -1,0 +1,7 @@
+<network>
+  <name>windows-analysis-isolated</name>
+  <uuid>67fa84cc-75f5-4be8-970d-454b80c949f1</uuid>
+  <bridge name='virbr99' stp='on' delay='0'/>
+  <mac address='52:54:00:4c:6d:07'/>
+</network>
+

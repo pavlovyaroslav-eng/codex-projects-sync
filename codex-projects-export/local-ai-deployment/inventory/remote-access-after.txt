@@ -1,0 +1,75 @@
+Collected: 2026-07-31T21:01:25.3913902+03:00
+
+===== Services =====
+
+Name          Status StartType
+----          ------ ---------
+LanmanServer Running Automatic
+sshd         Running Automatic
+TermService  Running Automatic
+WinRM        Running Automatic
+
+===== Listening ports =====
+
+LocalAddress LocalPort OwningProcess
+------------ --------- -------------
+::                  22          6640
+0.0.0.0             22          6640
+::                 445             4
+0.0.0.0           3389         15120
+::                3389         15120
+::                5985             4
+
+===== SMB share =====
+
+
+Name        : LocalAI-Deployment$
+Path        : C:\LocalAI-Deployment
+Description : Local AI deployment audit workspace (LAN only)
+EncryptData : True
+CachingMode : None
+
+
+
+
+AccountName            AccessControlType AccessRight
+-----------            ----------------- -----------
+WIN-27KGFBIDMBS\User               Allow        Full
+BUILTIN\Администраторы             Allow        Full
+
+===== LocalAI firewall rules =====
+
+Name                                      Enabled Action Profile Protocol LocalPort IcmpType RemoteAddress            
+----                                      ------- ------ ------- -------- --------- -------- -------------            
+LocalAI - OpenSSH from trusted LAN           True  Allow     Any TCP      22        Any      192.168.1.0/255.255.255.0
+LocalAI - RDP TCP from controller only       True  Allow     Any TCP      3389      Any      192.168.1.41             
+LocalAI - RDP UDP from controller only       True  Allow     Any UDP      3389      Any      192.168.1.41             
+LocalAI - WinRM HTTP from controller only    True  Allow     Any TCP      5985      Any      192.168.1.41             
+LocalAI - SMB from controller only           True  Allow     Any TCP      445       Any      192.168.1.41             
+LocalAI - ICMPv4 Echo from trusted LAN       True  Allow     Any ICMPv4   RPC       8        192.168.1.0/255.255.255.0
+
+===== Firewall profiles (must remain enabled) =====
+
+Name    Enabled DefaultInboundAction DefaultOutboundAction
+----    ------- -------------------- ---------------------
+Domain     True        NotConfigured         NotConfigured
+Private    True        NotConfigured         NotConfigured
+Public     True        NotConfigured         NotConfigured
+
+===== Microsoft Defender status (not modified) =====
+(нет данных)
+
+===== RDP settings =====
+
+LimitBlankPasswordUse
+---------------------
+                    0
+                     
+
+
+
+
+UserAuthentication : 0
+SecurityLayer      : 2
+MinEncryptionLevel : 3
+fPromptForPassword : 0

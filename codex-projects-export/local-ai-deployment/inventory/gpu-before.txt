@@ -1,0 +1,22 @@
+Collected: 2026-07-31T21:02:05.9357449+03:00
+
+===== Display controllers (CIM) =====
+
+
+Name                 : NVIDIA GeForce RTX 5070
+AdapterCompatibility : NVIDIA
+AdapterRAM           : 4293918720
+DriverVersion        : 32.0.15.7270
+DriverDate           : 03.03.2025 3:00:00
+PNPDeviceID          : PCI\VEN_10DE&DEV_2F04&SUBSYS_417E1458&REV_A1\11F6D76DBE2DB04800
+Status               : OK
+
+===== NVIDIA concise status =====
+name, driver_version, memory.total [MiB], temperature.gpu, power.draw [W], power.limit [W], pstate, pci.bus_id
+NVIDIA GeForce RTX 5070, 572.70, 12227 MiB, 41, 8.84 W, 250.00 W, P8, 00000000:02:00.0
+
+===== NVIDIA topology =====
+ERROR: Option -m is missing its value. Please run 'nvidia-smi -h' for help.
+
+===== CUDA compiler =====
+nvcc.exe not found; CUDA Toolkit may be absent (driver CUDA capability is reported by nvidia-smi).

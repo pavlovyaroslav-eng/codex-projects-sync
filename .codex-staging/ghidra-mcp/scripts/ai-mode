@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+if [[ ${EUID} -ne 0 ]]; then
+  echo "Run with sudo." >&2
+  exit 1
+fi
+
+wait_ghidra() {
+  for _ in {1..180}; do
+    if systemctl is-active --quiet pyghidra-mcp.service && \
+      ss -lnt | grep -Fq '127.0.0.1:8000'; then
+      return 0
+    fi
+    if systemctl is-failed --quiet pyghidra-mcp.service; then
+      journalctl -u pyghidra-mcp.service -n 60 --no-pager >&2
+      return 1
+    fi
+    sleep 1
+  done
+  echo "PyGhidra MCP did not become ready." >&2
+  return 1
+}
+
+case "${1:-status}" in
+  llm)
+    systemctl stop local-ai-whisper.service >/dev/null 2>&1 || true
+    /usr/local/sbin/ai-model start "$(cat /etc/local-ai/active-model 2>/dev/null || echo coder30)"
+    systemctl start pyghidra-mcp.service local-ai-ghidra-mcp-proxy.socket
+    wait_ghidra
+    ;;
+  comfy|image|video)
+    /usr/local/sbin/ai-model stop >/dev/null
+    systemctl start local-ai-comfyui.service
+    echo "ComfyUI mode: http://192.168.1.65:8188"
+    ;;
+  whisper|speech)
+    systemctl stop local-ai-ghidra-mcp-proxy.socket \
+      local-ai-ghidra-mcp-proxy.service pyghidra-mcp.service \
+      >/dev/null 2>&1 || true
+    /usr/local/sbin/ai-model stop >/dev/null
+    systemctl start local-ai-whisper.service
+    echo "Whisper mode: http://192.168.1.65:8000"
+    ;;
+  off)
+    /usr/local/sbin/ai-model stop
+    ;;
+  status)
+    /usr/local/sbin/ai-model status
+    ;;
+  *)
+    echo "Usage: sudo ai-mode {llm|comfy|image|video|whisper|speech|off|status}" >&2
+    exit 2
+    ;;
+esac

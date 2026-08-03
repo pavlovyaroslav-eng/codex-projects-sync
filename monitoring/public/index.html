@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VPN Infrastructure Monitor</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🔒 VPN Infrastructure Monitor</h1>
+            <div class="header-controls">
+                <button id="refreshBtn" class="btn btn-primary">🔄 Refresh All</button>
+                <button id="autoRefreshBtn" class="btn btn-secondary">⏱️ Auto: OFF</button>
+                <span class="connection-status" id="connectionStatus">⚫ Connecting...</span>
+            </div>
+        </header>
+
+        <div class="servers-grid" id="serversGrid">
+            <!-- Server cards will be inserted here dynamically -->
+        </div>
+
+        <div class="logs-panel" id="logsPanel">
+            <div class="logs-header">
+                <h3>📋 Activity Log</h3>
+                <button id="clearLogsBtn" class="btn btn-sm">Clear</button>
+            </div>
+            <div class="logs-content" id="logsContent"></div>
+        </div>
+    </div>
+
+    <!-- Command Modal -->
+    <div id="commandModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Execute Command</h2>
+            <div id="commandForm">
+                <label>Server: <span id="modalServerName"></span></label>
+                <select id="commandType">
+                    <option value="service-status">Service Status</option>
+                    <option value="restart-service">Restart Service</option>
+                    <option value="fail2ban-status">Fail2Ban Status</option>
+                    <option value="ports-check">Check Ports</option>
+                    <option value="vpn-list">VPN Users List</option>
+                    <option value="vpn-add">Add VPN User</option>
+                    <option value="vpn-del">Delete VPN User</option>
+                </select>
+                <div id="commandArgs"></div>
+                <button id="executeBtn" class="btn btn-primary">Execute</button>
+            </div>
+            <div id="commandResult"></div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

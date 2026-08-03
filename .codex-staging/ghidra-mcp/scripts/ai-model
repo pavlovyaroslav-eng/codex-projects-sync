@@ -1,0 +1,101 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+if [[ ${EUID} -ne 0 ]]; then
+  echo "Run with sudo." >&2
+  exit 1
+fi
+
+active_file=/etc/local-ai/active-model
+
+service_for() {
+  case "$1" in
+    qwen14) echo local-ai-llama.service ;;
+    coder30) echo qwen3-coder.service ;;
+    qwen-vl|vl) echo local-ai-qwen-vl.service ;;
+    *) return 2 ;;
+  esac
+}
+
+stop_gpu() {
+  systemctl stop local-ai-open-webui.service local-ai-qwen3-tool-proxy.service \
+    qwen3-coder.service local-ai-llama.service local-ai-coder30.service \
+    local-ai-qwen-vl.service local-ai-comfyui.service local-ai-whisper.service
+}
+
+wait_gpu_free() {
+  local used
+  for _ in {1..120}; do
+    used="$(nvidia-smi --query-compute-apps=used_memory --format=csv,noheader,nounits 2>/dev/null | awk '{s+=$1} END {print s+0}')"
+    if (( used < 768 )); then return 0; fi
+    sleep 1
+  done
+  echo "GPU memory did not become free in time." >&2
+  return 1
+}
+
+wait_api() {
+  local unit="$1"
+  for _ in {1..180}; do
+    if curl -fsS --max-time 3 http://127.0.0.1:8080/health >/dev/null 2>&1; then return 0; fi
+    if ! systemctl is-active --quiet "${unit}"; then
+      journalctl -u "${unit}" -n 40 --no-pager >&2
+      return 1
+    fi
+    sleep 2
+  done
+  echo "Model API did not become ready." >&2
+  return 1
+}
+
+wait_webui() {
+  for _ in {1..90}; do
+    if curl -fsS --max-time 3 http://127.0.0.1:3000/health >/dev/null 2>&1; then return 0; fi
+    if ! systemctl is-active --quiet local-ai-open-webui.service; then
+      journalctl -u local-ai-open-webui.service -n 40 --no-pager >&2
+      return 1
+    fi
+    sleep 2
+  done
+  echo "Open WebUI did not become ready." >&2
+  return 1
+}
+
+case "${1:-status}" in
+  start)
+    model="${2:-coder30}"
+    unit="$(service_for "${model}")" || { echo "Unknown model: ${model}" >&2; exit 2; }
+    [[ ${model} == vl ]] && model=qwen-vl
+    stop_gpu
+    wait_gpu_free
+    systemctl reset-failed "${unit}" qwen3-coder.service \
+      local-ai-qwen3-tool-proxy.service local-ai-open-webui.service
+    if [[ ${model} == coder30 ]]; then
+      systemctl start qwen3-coder.service local-ai-qwen3-tool-proxy.service
+    else
+      systemctl start "${unit}"
+    fi
+    wait_api "${unit}"
+    echo "${model}" >"${active_file}"
+    systemctl start local-ai-open-webui.service
+    wait_webui
+    echo "Active model: ${model} (http://192.168.1.65:3000, API :8080)"
+    ;;
+  stop)
+    stop_gpu
+    echo "GPU services stopped"
+    ;;
+  status)
+    echo "Selected: $(cat "${active_file}" 2>/dev/null || echo coder30)"
+    for unit in qwen3-coder local-ai-qwen3-tool-proxy local-ai-llama \
+      local-ai-coder30 local-ai-qwen-vl local-ai-open-webui \
+      local-ai-comfyui local-ai-whisper; do
+      printf '%-31s %s\n' "${unit}" "$(systemctl is-active "${unit}.service" 2>/dev/null || true)"
+    done
+    nvidia-smi --query-gpu=name,memory.used,memory.total,temperature.gpu --format=csv,noheader
+    ;;
+  *)
+    echo "Usage: sudo ai-model {status|start qwen14|start coder30|start qwen-vl|stop}" >&2
+    exit 2
+    ;;
+esac

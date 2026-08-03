@@ -1,0 +1,104 @@
+﻿**********************
+Начало записи сценария Windows PowerShell
+Время начала: 20260731212313
+Имя пользователя: WIN-27KGFBIDMBS\User
+Запуск от имени пользователя: WIN-27KGFBIDMBS\User
+Имя конфигурации: 
+Компьютер: WIN-27KGFBIDMBS (Microsoft Windows NT 10.0.19045.0)
+Ведущее приложение: powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File C:\LocalAI-Deployment\windows-stage1-critical-recheck.ps1
+ИД процесса: 16440
+PSVersion: 5.1.19041.3930
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.3930
+BuildVersion: 10.0.19041.3930
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+===== WHEA (EXACT PROVIDER) =====
+WHEA event count (30 days): 0
+===== WINDOWS MEMORY DIAGNOSTIC =====
+Memory diagnostic event count (365 days): 0
+===== WINDOWS RECOVERY ENVIRONMENT =====
+ReAgentc.exe : REAGENTC.EXE: конечная установка Windows не найдена.
+C:\LocalAI-Deployment\windows-stage1-critical-recheck.ps1:50 знак:9
++         & reagentc.exe /info 2>&1
++         ~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (REAGENTC.EXE: к...ows не найдена.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+>> TerminatingError(): "Сбой выполнения программы ReAgentc.exe: Произошла внутренняя ошибка Win32 "Отказано в доступе" 0x5 при чтении выходного буфера консоли. Обратитесь в службу поддержки корпорации Майкрософт.C:\LocalAI-Deployment\windows-stage1-critical-recheck.ps1:50 знак:9
++         & reagentc.exe /info 2>&1
++         ~~~~~~~~~~~~~~~~~~~~~~~~~."
+reagentc /info invocation error: Сбой выполнения программы ReAgentc.exe: Произошла внутренняя ошибка Win32 "Отказано в доступе" 0x5 при чтении выходного буфера консоли. Обратитесь в службу поддержки корпорации Майкрософт.C:\LocalAI-Deployment\windows-stage1-critical-recheck.ps1:50 знак:9
++         & reagentc.exe /info 2>&1
++         ~~~~~~~~~~~~~~~~~~~~~~~~~.
+ReAgentc.exe : REAGENTC.EXE: конечная установка Windows не найдена.
+C:\LocalAI-Deployment\windows-stage1-critical-recheck.ps1:57 знак:9
++         & reagentc.exe /info /target C:\Windows 2>&1
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (REAGENTC.EXE: к...ows не найдена.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+>> TerminatingError(): "Сбой выполнения программы ReAgentc.exe: Произошла внутренняя ошибка Win32 "Отказано в доступе" 0x5 при чтении выходного буфера консоли. Обратитесь в службу поддержки корпорации Майкрософт.C:\LocalAI-Deployment\windows-stage1-critical-recheck.ps1:57 знак:9
++         & reagentc.exe /info /target C:\Windows 2>&1
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~."
+reagentc /info /target invocation error: Сбой выполнения программы ReAgentc.exe: Произошла внутренняя ошибка Win32 "Отказано в доступе" 0x5 при чтении выходного буфера консоли. Обратитесь в службу поддержки корпорации Майкрософт.C:\LocalAI-Deployment\windows-stage1-critical-recheck.ps1:57 знак:9
++         & reagentc.exe /info /target C:\Windows 2>&1
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.
+
+Path                                     Exists
+----                                     ------
+C:\Windows\System32\Recovery\ReAgent.xml  False
+C:\Windows\System32\Recovery\Winre.wim    False
+C:\Recovery\WindowsRE\Winre.wim           False
+
+
+===== SECURE BOOT / BCD =====
+PS>TerminatingError(Confirm-SecureBootUEFI): "В настоящее время переменная не определена: 0xC0000100"
+Confirm-SecureBootUEFI error: В настоящее время переменная не определена: 0xC0000100
+Confirm-SecureBootUEFI HRESULT: 0x80131500
+Secure Boot State registry key is absent.
+PS>TerminatingError(): "Сбой выполнения программы bcdedit.exe: Произошла внутренняя ошибка Win32 "Отказано в доступе" 0x5 при чтении выходного буфера консоли. Обратитесь в службу поддержки корпорации Майкрософт.C:\LocalAI-Deployment\windows-stage1-critical-recheck.ps1:98 знак:9
++         & bcdedit.exe /enum '{current}' 2>&1
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~."
+bcdedit current invocation error: Сбой выполнения программы bcdedit.exe: Произошла внутренняя ошибка Win32 "Отказано в доступе" 0x5 при чтении выходного буфера консоли. Обратитесь в службу поддержки корпорации Майкрософт.C:\LocalAI-Deployment\windows-stage1-critical-recheck.ps1:98 знак:9
++         & bcdedit.exe /enum '{current}' 2>&1
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.
+PS>TerminatingError(): "Сбой выполнения программы bcdedit.exe: Произошла внутренняя ошибка Win32 "Отказано в доступе" 0x5 при чтении выходного буфера консоли. Обратитесь в службу поддержки корпорации Майкрософт.C:\LocalAI-Deployment\windows-stage1-critical-recheck.ps1:105 знак:9
++         & bcdedit.exe /enum '{bootmgr}' 2>&1
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~."
+bcdedit bootmgr invocation error: Сбой выполнения программы bcdedit.exe: Произошла внутренняя ошибка Win32 "Отказано в доступе" 0x5 при чтении выходного буфера консоли. Обратитесь в службу поддержки корпорации Майкрософт.C:\LocalAI-Deployment\windows-stage1-critical-recheck.ps1:105 знак:9
++         & bcdedit.exe /enum '{bootmgr}' 2>&1
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.
+===== MICROSOFT DEFENDER =====
+
+Name                   Status StartType
+----                   ------ ---------
+SecurityHealthService Stopped  Disabled
+WdNisSvc              Stopped  Disabled
+WinDefend             Stopped  Disabled
+
+
+Get-MpComputerStatus : Произошла общая ошибка, для которой нет более конкретного кода.
+C:\LocalAI-Deployment\windows-stage1-critical-recheck.ps1:117 знак:9
++         Get-MpComputerStatus |
++         ~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (MSFT_MpComputerStatus:ROOT\Microsoft\...pComputerStatus) [Get-MpComputerSta
+tus], CimException
+    + FullyQualifiedErrorId : HRESULT 0x800106ba,Get-MpComputerStatus
+Get-MpComputerStatus : Произошла общая ошибка, для которой нет более конкретного кода.
+C:\LocalAI-Deployment\windows-stage1-critical-recheck.ps1:117 знак:9
++         Get-MpComputerStatus |
++         ~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (MSFT_MpComputerStatus:ROOT\Microsoft\...pComputerStatus) [Get-MpComputerS
+   tatus], CimException
+    + FullyQualifiedErrorId : HRESULT 0x800106ba,Get-MpComputerStatus
+
+**********************
+Конец записи протокола Windows PowerShell
+Время окончания: 20260731212314
+**********************

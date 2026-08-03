@@ -1,0 +1,616 @@
+[
+  {
+    "name": "decompile_function",
+    "description": "Decompile function(s) to pseudo-C by name or address.\n\n    Accepts a single target or a list for batch decompilation.\n    Rich response flags attach callees, strings, and/or xrefs to each result.\n    `timeout_sec` applies per target.\n    ",
+    "inputSchema": {
+      "properties": {
+        "binary_name": {
+          "title": "Binary Name",
+          "type": "string"
+        },
+        "name_or_address": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ],
+          "title": "Name Or Address"
+        },
+        "include_callees": {
+          "default": false,
+          "title": "Include Callees",
+          "type": "boolean"
+        },
+        "include_strings": {
+          "default": false,
+          "title": "Include Strings",
+          "type": "boolean"
+        },
+        "include_xrefs": {
+          "default": false,
+          "title": "Include Xrefs",
+          "type": "boolean"
+        },
+        "timeout_sec": {
+          "default": 30,
+          "title": "Timeout Sec",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "binary_name",
+        "name_or_address"
+      ],
+      "title": "decompile_functionArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_symbols_by_name",
+    "description": "Search symbols by regex pattern (case-insensitive).\n\n    Supports full regex (e.g. ``^main$``, ``func.*init``). Plain substrings\n    still work since they are valid regex.\n\n    Set ``functions_only=True`` to search only function symbols\n    (excludes labels, variables, classes, namespaces).\n    ",
+    "inputSchema": {
+      "properties": {
+        "binary_name": {
+          "title": "Binary Name",
+          "type": "string"
+        },
+        "query": {
+          "title": "Query",
+          "type": "string"
+        },
+        "functions_only": {
+          "default": false,
+          "title": "Functions Only",
+          "type": "boolean"
+        },
+        "offset": {
+          "default": 0,
+          "title": "Offset",
+          "type": "integer"
+        },
+        "limit": {
+          "default": 25,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "binary_name",
+        "query"
+      ],
+      "title": "search_symbols_by_nameArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_code",
+    "description": "Search decompiled pseudo-C code.\n\n    Modes: semantic (vector similarity, default) or literal (exact match).\n    Results include both mode counts.\n    ",
+    "inputSchema": {
+      "properties": {
+        "binary_name": {
+          "title": "Binary Name",
+          "type": "string"
+        },
+        "query": {
+          "title": "Query",
+          "type": "string"
+        },
+        "limit": {
+          "default": 5,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "offset": {
+          "default": 0,
+          "title": "Offset",
+          "type": "integer"
+        },
+        "search_mode": {
+          "default": "semantic",
+          "enum": [
+            "semantic",
+            "literal"
+          ],
+          "title": "Search Mode",
+          "type": "string"
+        },
+        "include_full_code": {
+          "default": true,
+          "title": "Include Full Code",
+          "type": "boolean"
+        },
+        "preview_length": {
+          "default": 500,
+          "title": "Preview Length",
+          "type": "integer"
+        },
+        "similarity_threshold": {
+          "default": 0.0,
+          "title": "Similarity Threshold",
+          "type": "number"
+        }
+      },
+      "required": [
+        "binary_name",
+        "query"
+      ],
+      "title": "search_codeArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "list_project_binaries",
+    "description": "List all binaries in the project with their status.",
+    "inputSchema": {
+      "properties": {},
+      "title": "list_project_binariesArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "list_project_binary_metadata",
+    "description": "Get binary metadata: architecture, compiler, endianness, hashes, analysis counts.",
+    "inputSchema": {
+      "properties": {
+        "binary_name": {
+          "title": "Binary Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "binary_name"
+      ],
+      "title": "list_project_binary_metadataArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "rename_function",
+    "description": "Rename a function.",
+    "inputSchema": {
+      "properties": {
+        "binary_name": {
+          "title": "Binary Name",
+          "type": "string"
+        },
+        "name_or_address": {
+          "title": "Name Or Address",
+          "type": "string"
+        },
+        "new_name": {
+          "title": "New Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "binary_name",
+        "name_or_address",
+        "new_name"
+      ],
+      "title": "rename_functionArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "rename_variable",
+    "description": "Rename a parameter or local by exact name.",
+    "inputSchema": {
+      "properties": {
+        "binary_name": {
+          "title": "Binary Name",
+          "type": "string"
+        },
+        "function_name_or_address": {
+          "title": "Function Name Or Address",
+          "type": "string"
+        },
+        "variable_name": {
+          "title": "Variable Name",
+          "type": "string"
+        },
+        "new_name": {
+          "title": "New Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "binary_name",
+        "function_name_or_address",
+        "variable_name",
+        "new_name"
+      ],
+      "title": "rename_variableArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "save",
+    "description": "Save all programs.",
+    "inputSchema": {
+      "properties": {},
+      "title": "saveArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "set_variable_type",
+    "description": "Set a parameter or local type by exact name.",
+    "inputSchema": {
+      "properties": {
+        "binary_name": {
+          "title": "Binary Name",
+          "type": "string"
+        },
+        "function_name_or_address": {
+          "title": "Function Name Or Address",
+          "type": "string"
+        },
+        "variable_name": {
+          "title": "Variable Name",
+          "type": "string"
+        },
+        "type_name": {
+          "title": "Type Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "binary_name",
+        "function_name_or_address",
+        "variable_name",
+        "type_name"
+      ],
+      "title": "set_variable_typeArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "set_function_prototype",
+    "description": "Set a function prototype. Invalid input returns Ghidra's error.",
+    "inputSchema": {
+      "properties": {
+        "binary_name": {
+          "title": "Binary Name",
+          "type": "string"
+        },
+        "function_name_or_address": {
+          "title": "Function Name Or Address",
+          "type": "string"
+        },
+        "prototype": {
+          "title": "Prototype",
+          "type": "string"
+        }
+      },
+      "required": [
+        "binary_name",
+        "function_name_or_address",
+        "prototype"
+      ],
+      "title": "set_function_prototypeArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "set_comment",
+    "description": "Set a decompiler or listing comment.",
+    "inputSchema": {
+      "properties": {
+        "binary_name": {
+          "title": "Binary Name",
+          "type": "string"
+        },
+        "target": {
+          "title": "Target",
+          "type": "string"
+        },
+        "comment": {
+          "title": "Comment",
+          "type": "string"
+        },
+        "comment_type": {
+          "enum": [
+            "decompiler",
+            "plate",
+            "pre",
+            "eol",
+            "post",
+            "repeatable"
+          ],
+          "title": "Comment Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "binary_name",
+        "target",
+        "comment",
+        "comment_type"
+      ],
+      "title": "set_commentArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "delete_project_binary",
+    "description": "Delete a binary from the project.",
+    "inputSchema": {
+      "properties": {
+        "binary_name": {
+          "title": "Binary Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "binary_name"
+      ],
+      "title": "delete_project_binaryArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "list_exports",
+    "description": "List exported symbols, optionally filtered by regex query.",
+    "inputSchema": {
+      "properties": {
+        "binary_name": {
+          "title": "Binary Name",
+          "type": "string"
+        },
+        "query": {
+          "default": ".*",
+          "title": "Query",
+          "type": "string"
+        },
+        "offset": {
+          "default": 0,
+          "title": "Offset",
+          "type": "integer"
+        },
+        "limit": {
+          "default": 25,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "binary_name"
+      ],
+      "title": "list_exportsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "list_imports",
+    "description": "List imported symbols, optionally filtered by regex query.",
+    "inputSchema": {
+      "properties": {
+        "binary_name": {
+          "title": "Binary Name",
+          "type": "string"
+        },
+        "query": {
+          "default": ".*",
+          "title": "Query",
+          "type": "string"
+        },
+        "offset": {
+          "default": 0,
+          "title": "Offset",
+          "type": "integer"
+        },
+        "limit": {
+          "default": 25,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "binary_name"
+      ],
+      "title": "list_importsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "list_xrefs",
+    "description": "List cross-references to function(s), symbol(s), or address(es).\n\n    Accepts a single target or a list for batch lookup.\n    Suggests close matches on no exact hit.\n    ",
+    "inputSchema": {
+      "properties": {
+        "binary_name": {
+          "title": "Binary Name",
+          "type": "string"
+        },
+        "name_or_address": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ],
+          "title": "Name Or Address"
+        }
+      },
+      "required": [
+        "binary_name",
+        "name_or_address"
+      ],
+      "title": "list_xrefsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "search_strings",
+    "description": "Search for strings within a binary.",
+    "inputSchema": {
+      "properties": {
+        "binary_name": {
+          "title": "Binary Name",
+          "type": "string"
+        },
+        "query": {
+          "title": "Query",
+          "type": "string"
+        },
+        "limit": {
+          "default": 100,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "binary_name",
+        "query"
+      ],
+      "title": "search_stringsArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "read_bytes",
+    "description": "Read raw bytes at an address. Hex format supported (0x prefix optional).",
+    "inputSchema": {
+      "properties": {
+        "binary_name": {
+          "title": "Binary Name",
+          "type": "string"
+        },
+        "address": {
+          "title": "Address",
+          "type": "string"
+        },
+        "size": {
+          "default": 32,
+          "title": "Size",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "binary_name",
+        "address"
+      ],
+      "title": "read_bytesArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "disassemble",
+    "description": "Disassemble instructions at an address. Returns up to `count` instructions (max 200).\n\n    Returns a compact, whitespace-aligned text listing in `listing` (one\n    instruction per line: address, mnemonic, operands).\n    Set `include_bytes=True` to also include the raw instruction bytes (hex) as a\n    column.\n\n    Useful for inspecting raw assembly at any address without needing to know\n    the function name or entry point.\n    ",
+    "inputSchema": {
+      "properties": {
+        "binary_name": {
+          "title": "Binary Name",
+          "type": "string"
+        },
+        "address": {
+          "title": "Address",
+          "type": "string"
+        },
+        "count": {
+          "default": 20,
+          "title": "Count",
+          "type": "integer"
+        },
+        "include_bytes": {
+          "default": false,
+          "title": "Include Bytes",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "binary_name",
+        "address"
+      ],
+      "title": "disassembleArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "gen_callgraph",
+    "description": "Generate a MermaidJS call graph for a function.",
+    "inputSchema": {
+      "properties": {
+        "binary_name": {
+          "title": "Binary Name",
+          "type": "string"
+        },
+        "function_name": {
+          "title": "Function Name",
+          "type": "string"
+        },
+        "direction": {
+          "default": "calling",
+          "enum": [
+            "calling",
+            "called"
+          ],
+          "title": "Direction",
+          "type": "string"
+        },
+        "display_type": {
+          "default": "flow",
+          "enum": [
+            "flow",
+            "flow_ends"
+          ],
+          "title": "Display Type",
+          "type": "string"
+        },
+        "condense_threshold": {
+          "default": 50,
+          "title": "Condense Threshold",
+          "type": "integer"
+        },
+        "top_layers": {
+          "default": 3,
+          "title": "Top Layers",
+          "type": "integer"
+        },
+        "bottom_layers": {
+          "default": 3,
+          "title": "Bottom Layers",
+          "type": "integer"
+        },
+        "max_run_time": {
+          "default": 120,
+          "title": "Max Run Time",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "binary_name",
+        "function_name"
+      ],
+      "title": "gen_callgraphArguments",
+      "type": "object"
+    }
+  },
+  {
+    "name": "import_binary",
+    "description": "Import a binary into the project from a file path.",
+    "inputSchema": {
+      "properties": {
+        "binary_path": {
+          "title": "Binary Path",
+          "type": "string"
+        }
+      },
+      "required": [
+        "binary_path"
+      ],
+      "title": "import_binaryArguments",
+      "type": "object"
+    }
+  }
+]

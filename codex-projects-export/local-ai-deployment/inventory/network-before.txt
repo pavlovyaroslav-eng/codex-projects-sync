@@ -1,0 +1,110 @@
+Collected: 2026-07-31T21:01:36.8958499+03:00
+
+===== Adapters and link speed =====
+
+ifIndex Name     InterfaceDescription               Status MacAddress        LinkSpeed MediaConnectionState
+------- ----     --------------------               ------ ----------        --------- --------------------
+     14 Ethernet Realtek PCIe GbE Family Controller Up     00-E0-21-A9-50-30 100 Mbps             Connected
+
+===== IP configuration =====
+
+
+ComputerName                          : WIN-27KGFBIDMBS
+InterfaceAlias                        : Ethernet
+InterfaceIndex                        : 14
+InterfaceDescription                  : Realtek PCIe GbE Family Controller
+NetCompartment.CompartmentId          : 1
+NetCompartment.CompartmentDescription : Default Compartment
+NetAdapter.LinkLayerAddress           : 00-E0-21-A9-50-30
+NetAdapter.Status                     : Up
+NetProfile.Name                       : Сеть 6
+NetProfile.NetworkCategory            : Private
+NetProfile.IPv6Connectivity           : NoTraffic
+NetProfile.IPv4Connectivity           : Internet
+IPv6Address                           : fd98:1fa8:6209:0:2938:3031:45de:e255
+IPv6TemporaryAddress                  : fd98:1fa8:6209:0:f438:2e37:e327:4891
+IPv6LinkLocalAddress                  : fe80::515e:2d4b:a82f:dfc3%14
+IPv4Address                           : 192.168.1.65
+IPv6DefaultGateway                    : 
+IPv4DefaultGateway                    : 192.168.1.1
+NetIPv6Interface.NlMTU                : 1500
+NetIPv4Interface.NlMTU                : 1500
+NetIPv6Interface.DHCP                 : Enabled
+NetIPv4Interface.DHCP                 : Enabled
+DNSServer                             : fe80::52ff:20ff:fed6:4265
+                                        192.168.1.1
+
+===== IPv4 routes =====
+
+DestinationPrefix  NextHop     InterfaceAlias              RouteMetric State
+-----------------  -------     --------------              ----------- -----
+0.0.0.0/0          192.168.1.1 Ethernet                              0 Alive
+127.0.0.0/8        0.0.0.0     Loopback Pseudo-Interface 1         256 Alive
+127.0.0.1/32       0.0.0.0     Loopback Pseudo-Interface 1         256 Alive
+127.255.255.255/32 0.0.0.0     Loopback Pseudo-Interface 1         256 Alive
+192.168.1.0/24     0.0.0.0     Ethernet                            256 Alive
+192.168.1.255/32   0.0.0.0     Ethernet                            256 Alive
+192.168.1.65/32    0.0.0.0     Ethernet                            256 Alive
+224.0.0.0/4        0.0.0.0     Ethernet                            256 Alive
+224.0.0.0/4        0.0.0.0     Loopback Pseudo-Interface 1         256 Alive
+255.255.255.255/32 0.0.0.0     Ethernet                            256 Alive
+255.255.255.255/32 0.0.0.0     Loopback Pseudo-Interface 1         256 Alive
+
+===== Network profiles =====
+
+Name   InterfaceAlias NetworkCategory IPv4Connectivity IPv6Connectivity
+----   -------------- --------------- ---------------- ----------------
+Сеть 6 Ethernet               Private         Internet        NoTraffic
+
+===== Listening remote-management ports before changes =====
+
+LocalAddress LocalPort OwningProcess
+------------ --------- -------------
+::                  22          6640
+0.0.0.0             22          6640
+::                 445             4
+0.0.0.0           3389         15120
+::                3389         15120
+::                5985             4
+
+===== Existing SMB shares =====
+
+Name                Path                  Description                                    EncryptData FolderEnumerationMode
+----                ----                  -----------                                    ----------- ---------------------
+ADMIN$              C:\Windows            Удаленный Admin                                      False          Unrestricted
+C$                  C:\                   Стандартный общий ресурс                             False          Unrestricted
+D$                  D:\                   Стандартный общий ресурс                             False          Unrestricted
+IPC$                                      Удаленный IPC                                        False          Unrestricted
+LocalAI-Deployment  C:\LocalAI-Deployment                                                      False           AccessBased
+LocalAI-Deployment$ C:\LocalAI-Deployment Local AI deployment audit workspace (LAN only)        True          Unrestricted
+
+===== Windows Firewall profiles =====
+
+Name    Enabled DefaultInboundAction DefaultOutboundAction NotifyOnListen LogAllowed LogBlocked
+----    ------- -------------------- --------------------- -------------- ---------- ----------
+Domain     True        NotConfigured         NotConfigured           True      False      False
+Private    True        NotConfigured         NotConfigured           True      False      False
+Public     True        NotConfigured         NotConfigured           True      False      False
+
+===== Relevant inbound firewall rules =====
+
+Name                                                                  Enabled Action         Profile Protocol LocalPort RemoteAddress            
+----                                                                  ------- ------         ------- -------- --------- -------------            
+Удаленное управление службой (именованные каналы - входящий)            False  Allow          Domain TCP      445       Any                      
+Удаленное управление службой (именованные каналы - входящий)            False  Allow Private, Public TCP      445       LocalSubnet              
+Служба входа в сеть (NP-In)                                             False  Allow             Any TCP      445       Any                      
+Удаленное управление журналом событий (именованные каналы - входящий)   False  Allow          Domain TCP      445       Any                      
+Удаленное управление журналом событий (именованные каналы - входящий)   False  Allow Private, Public TCP      445       LocalSubnet              
+Удаленное управление Windows (HTTP - входящий трафик)                    True  Allow Domain, Private TCP      5985      192.168.1.41             
+Удаленное управление Windows (HTTP - входящий трафик)                    True  Allow          Public TCP      5985      192.168.1.41             
+Общий доступ к файлам и принтерам (входящий трафик SMB)                 False  Allow          Domain TCP      445       Any                      
+Общий доступ к файлам и принтерам (входящий трафик SMB)                 False  Allow          Public TCP      445       LocalSubnet              
+Удаленный рабочий стол — пользовательский режим (входящий трафик TCP)   False  Allow             Any TCP      3389      Any                      
+Удаленный рабочий стол — пользовательский режим (входящий трафик UDP)   False  Allow             Any UDP      3389      Any                      
+Общий доступ к файлам и принтерам (входящий трафик SMB)                  True  Allow         Private TCP      445       192.168.1.41             
+OpenSSH SSH Server (sshd)                                                True  Allow             Any TCP      22        192.168.1.0/255.255.255.0
+LocalAI - OpenSSH from trusted LAN                                       True  Allow             Any TCP      22        192.168.1.0/255.255.255.0
+LocalAI - RDP TCP from controller only                                   True  Allow             Any TCP      3389      192.168.1.41             
+LocalAI - RDP UDP from controller only                                   True  Allow             Any UDP      3389      192.168.1.41             
+LocalAI - WinRM HTTP from controller only                                True  Allow             Any TCP      5985      192.168.1.41             
+LocalAI - SMB from controller only                                       True  Allow             Any TCP      445       192.168.1.41

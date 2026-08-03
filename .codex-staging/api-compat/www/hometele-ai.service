@@ -1,0 +1,15 @@
+[Unit]
+Description=HomeTele AI Matrix Bot via local Qwen3-Coder
+After=network-online.target matrix-synapse.service openvpn-server@local-ai.service
+Wants=network-online.target openvpn-server@local-ai.service
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/hometele-ai
+ExecStart=/opt/hometele-ai/venv/bin/python /opt/hometele-ai/hometele-ai.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

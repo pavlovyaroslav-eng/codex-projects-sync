@@ -1,0 +1,41 @@
+[Unit]
+Description=Local PyGhidra MCP server
+After=network.target
+ConditionFileIsExecutable=/opt/ai-stack/venvs/pyghidra-mcp/bin/pyghidra-mcp
+ConditionPathIsDirectory=/opt/ghidra/current
+
+[Service]
+Type=simple
+User=ghidramcp
+Group=ghidramcp
+WorkingDirectory=/var/lib/ghidramcp
+Environment=GHIDRA_INSTALL_DIR=/opt/ghidra/current
+Environment=JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/opt/ai-stack/venvs/pyghidra-mcp/bin/pyghidra-mcp --transport streamable-http --host 127.0.0.1 --port 8000 --project-path /var/lib/ghidramcp/projects --wait-for-analysis
+Restart=on-failure
+RestartSec=10s
+TimeoutStartSec=180
+TimeoutStopSec=30
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectHostname=true
+ProtectClock=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+CapabilityBoundingSet=
+AmbientCapabilities=
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+IPAddressDeny=any
+IPAddressAllow=localhost
+ReadWritePaths=/var/lib/ghidramcp
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

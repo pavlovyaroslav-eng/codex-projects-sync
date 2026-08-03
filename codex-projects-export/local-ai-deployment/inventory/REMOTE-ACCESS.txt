@@ -1,0 +1,14 @@
+Computer=WIN-27KGFBIDMBS
+BootstrapVersion=2026.07.31.7
+TargetUser=User
+AllowedSubnet=192.168.1.0/24
+RdpAllowedAddress=192.168.1.41/32
+WorkDirectory=C:\LocalAI-Deployment
+SMB=\\WIN-27KGFBIDMBS\LocalAI-Deployment$
+SSH=22/TCP key-only authentication; password authentication disabled
+RDP=3389/TCP+UDP; NLA disabled; blank-password remote logon enabled by explicit user request
+WinRM=5985/TCP; source=192.168.1.41/32
+SMB=445/TCP with share encryption; source=192.168.1.41/32
+SSH public key fingerprint=SHA256:+ZpNXYYtKVDWFEG+onx8ckoA+PIt/PHUoJZ9jaoabPw
+Transcript=C:\LocalAI-Deployment\logs\windows-bootstrap-20260731-205941.log
+Rollback=C:\LocalAI-Deployment\rollback\windows-bootstrap-20260731-205941

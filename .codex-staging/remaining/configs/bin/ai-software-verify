@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+if (($# != 1)) || [[ ! "$1" =~ ^[a-zA-Z0-9][a-zA-Z0-9.+:-]*$ ]]; then echo "Usage: ai-software-verify PACKAGE" >&2; exit 64; fi
+package="$1"
+dpkg-query -W -f='Package: ${binary:Package}\nVersion: ${Version}\nStatus: ${db:Status-Status}\n' "$package"
+echo "Installed executable paths:"
+dpkg-query -L "$package" | awk '/\/(s?bin)\// {print}'
+echo "Related services:"
+systemctl list-unit-files --no-legend | awk -v p="$package" 'tolower($1) ~ tolower(p) {print}'
+echo "Listening ports after install:"
+ss -lntup

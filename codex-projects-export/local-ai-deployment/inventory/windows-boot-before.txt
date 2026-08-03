@@ -1,0 +1,239 @@
+Collected: 2026-07-31T21:01:31.1343940+03:00
+
+===== Firmware type =====
+
+
+BiosFirmwareType : Uefi
+
+===== Secure Boot =====
+Unavailable/Legacy/unsupported: В настоящее время переменная не определена: 0xC0000100
+
+===== Windows Recovery Environment =====
+ОШИБКА СБОРА: REAGENTC.EXE: конечная установка Windows не найдена.
+
+===== Windows Boot Manager =====
+
+Диспетчер загрузки Windows
+--------------------
+идентификатор           {bootmgr}
+device                  partition=\Device\HarddiskVolume1
+path                    \EFI\MICROSOFT\BOOT\BOOTMGFW.EFI
+description             Windows Boot Manager
+locale                  ru-RU
+inherit                 {globalsettings}
+flightsigning           Yes
+default                 {current}
+resumeobject            {7b2bd9db-dc3b-11ef-9410-fd49b85658e7}
+displayorder            {current}
+toolsdisplayorder       {memdiag}
+timeout                 30
+
+===== Current Windows loader =====
+
+Загрузка Windows
+-------------------
+идентификатор           {current}
+device                  partition=C:
+path                    \Windows\system32\winload.efi
+description             Windows 10
+locale                  ru-RU
+inherit                 {bootloadersettings}
+isolatedcontext         Yes
+flightsigning           Yes
+allowedinmemorysettings 0x15000075
+osdevice                partition=C:
+systemroot              \Windows
+resumeobject            {7b2bd9db-dc3b-11ef-9410-fd49b85658e7}
+nx                      OptIn
+bootmenupolicy          Standard
+
+===== All BCD entries (read-only) =====
+
+Диспетчер загрузки микропрограмм
+---------------------
+идентификатор           {fwbootmgr}
+displayorder            {bootmgr}
+                        {d81264f3-dc3b-11ef-88e6-806e6f6e6963}
+                        {7b2bd9d9-dc3b-11ef-9410-fd49b85658e7}
+                        {7b2bd9d8-dc3b-11ef-9410-fd49b85658e7}
+timeout                 1
+
+Диспетчер загрузки Windows
+--------------------
+идентификатор           {bootmgr}
+device                  partition=\Device\HarddiskVolume1
+path                    \EFI\MICROSOFT\BOOT\BOOTMGFW.EFI
+description             Windows Boot Manager
+locale                  ru-RU
+inherit                 {globalsettings}
+flightsigning           Yes
+default                 {current}
+resumeobject            {7b2bd9db-dc3b-11ef-9410-fd49b85658e7}
+displayorder            {current}
+toolsdisplayorder       {memdiag}
+timeout                 30
+
+Приложение микропрограммы (101fffff)
+-------------------------------
+идентификатор           {7b2bd9d8-dc3b-11ef-9410-fd49b85658e7}
+description             UEFI: Built-in EFI Shell
+
+Приложение микропрограммы (101fffff)
+-------------------------------
+идентификатор           {7b2bd9d9-dc3b-11ef-9410-fd49b85658e7}
+description             Hard Drive
+
+Приложение микропрограммы (101fffff)
+-------------------------------
+идентификатор           {d81264f3-dc3b-11ef-88e6-806e6f6e6963}
+device                  partition=\Device\HarddiskVolume1
+path                    \EFI\BOOT\BOOTX64.EFI
+description             UEFI OS
+
+Загрузка Windows
+-------------------
+идентификатор           {current}
+device                  partition=C:
+path                    \Windows\system32\winload.efi
+description             Windows 10
+locale                  ru-RU
+inherit                 {bootloadersettings}
+isolatedcontext         Yes
+flightsigning           Yes
+allowedinmemorysettings 0x15000075
+osdevice                partition=C:
+systemroot              \Windows
+resumeobject            {7b2bd9db-dc3b-11ef-9410-fd49b85658e7}
+nx                      OptIn
+bootmenupolicy          Standard
+
+Выход из режима гибернации
+--------------------------
+идентификатор           {7b2bd9db-dc3b-11ef-9410-fd49b85658e7}
+device                  partition=C:
+path                    \Windows\system32\winresume.efi
+description             Windows Resume Application
+locale                  ru-RU
+inherit                 {resumeloadersettings}
+isolatedcontext         Yes
+allowedinmemorysettings 0x15000075
+filedevice              partition=C:
+filepath                \hiberfil.sys
+bootmenupolicy          Standard
+debugoptionenabled      No
+
+Проверка памяти Windows
+---------------------
+идентификатор           {memdiag}
+device                  partition=\Device\HarddiskVolume1
+path                    \EFI\Microsoft\Boot\memtest.efi
+description             Диагностика памяти
+locale                  ru-RU
+inherit                 {globalsettings}
+badmemoryaccess         Yes
+
+Параметры EMS
+-------------
+идентификатор           {emssettings}
+bootems                 No
+
+Параметры отладчика
+-------------------
+идентификатор           {dbgsettings}
+debugtype               Local
+
+Дефекты ОЗУ
+-----------
+идентификатор           {badmemory}
+
+Глобальные параметры
+--------------------
+идентификатор           {globalsettings}
+inherit                 {dbgsettings}
+                        {emssettings}
+                        {badmemory}
+
+Параметры загрузчика
+--------------------
+идентификатор           {bootloadersettings}
+inherit                 {globalsettings}
+                        {hypervisorsettings}
+
+Параметры гипервизора
+-------------------
+идентификатор           {hypervisorsettings}
+hypervisordebugtype     Serial
+hypervisordebugport     1
+hypervisorbaudrate      115200
+
+Параметры загрузчика восстановления
+-----------------------------------
+идентификатор           {resumeloadersettings}
+inherit                 {globalsettings}
+
+===== BitLocker summary without recovery secrets =====
+
+MountPoint      VolumeType   VolumeStatus ProtectionStatus EncryptionMethod EncryptionPercentage AutoUnlockEnabled KeyProtectorTypes
+----------      ----------   ------------ ---------------- ---------------- -------------------- ----------------- -----------------
+C:         OperatingSystem FullyDecrypted              Off             None                    0                                    
+E:                    Data FullyDecrypted              Off             None                    0
+
+===== manage-bde status (does not reveal recovery password) =====
+Шифрование дисков BitLocker: версия средства настройки: 10.0.19041
+(C) Корпорация Майкрософт (Microsoft Corporation), 2013. Все права защищены.
+
+Тома диска, которые можно защитить с помощью
+шифрования диска BitLocker:
+Том C: []
+[Том с операционной системой]
+
+    Размер:                           931,40 ГБ
+    Версия BitLocker:                 Нет
+    Состояние преобразования:         Полностью расшифровано
+    Зашифровано (процентов):          0,0%
+    Метод шифрования:                 Нет
+    Состояние защиты:                 Защита отключена
+    Состояние блокировки:             Разблокировка
+    Поле идентификации:               Нет
+    Предохранители ключа:              не обнаружены
+
+Том E: []
+[Том данных]
+
+    Размер:                           59,45 ГБ
+    Версия BitLocker:                 Нет
+    Состояние преобразования:         Полностью расшифровано
+    Зашифровано (процентов):          0,0%
+    Метод шифрования:                 Нет
+    Состояние защиты:                 Защита отключена
+    Состояние блокировки:             Разблокировка
+    Поле идентификации:               Нет
+    Автоматическая разблокировка:     Отключен
+    Предохранители ключа:              не обнаружены
+
+===== Fast Startup and hibernation registry =====
+
+
+HiberbootEnabled : 1
+HibernateEnabled :
+
+===== Available sleep states =====
+В данной системе доступны следующие состояния спящего режима:
+    Гибернация
+    Быстрый запуск
+
+Следующие состояния спящего режима недоступны в данной системе:
+    Ждущий режим (S1)
+	Системное встроенное ПО не поддерживает этот ждущий режим.
+
+    Ждущий режим (S2)
+	Системное встроенное ПО не поддерживает этот ждущий режим.
+
+    Ждущий режим (S3)
+	Системное встроенное ПО не поддерживает этот ждущий режим.
+
+    Ждущий режим (простой S0 для пониженного энергопотребления)
+	Системное встроенное ПО не поддерживает этот ждущий режим.
+
+    Гибридный спящий режим
+	Ждущий режим (S3) недоступен.

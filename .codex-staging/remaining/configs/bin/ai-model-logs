@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+exec journalctl -u qwen3-coder.service -n "${1:-200}" --no-pager

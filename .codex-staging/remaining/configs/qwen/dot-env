@@ -1,0 +1,3 @@
+# The local llama.cpp endpoint does not require authentication.
+LOCAL_QWEN_API_KEY=local-not-required
+OPENAI_API_KEY=local-not-required

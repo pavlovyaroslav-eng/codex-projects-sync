@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+exec java -jar /opt/ai-stack/releases/apktool-v3.0.3/apktool_3.0.3.jar "$@"
