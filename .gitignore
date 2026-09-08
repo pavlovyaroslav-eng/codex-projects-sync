@@ -57,3 +57,7 @@ v400-calibration/max-flow/plate_1.gcode
 
 # Local PowerShell backup files
 scripts/*.bak-*
+
+# Local scripts containing credentials; never publish
+/scripts/element_bot.fixed.py
+/scripts/homebot-matrix-config.py.example

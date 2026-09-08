@@ -1,10 +1,77 @@
 # 02-RUNBOOK — VPN Server
 
-Дата: 2026-07-04  
+Дата актуализации: 2026-09-08
 Проект: **VPN сервер**  
 Назначение: короткие рабочие инструкции для проверки, ремонта и эксплуатации.
 
 > Правило: перед опасным изменением делаем backup, после изменения — validate/test, затем restart/reload. Секреты, токены, private keys и UUID клиентов в WIKI не вставлять.
+
+> **Текущая production-схема — Remnawave с Hysteria2 и Reality.** Разделы
+> ниже про host-level Xray, `tun79`, 3x-ui и старое управление пользователями
+> сохранены как исторические инструкции. Для текущих операций сначала
+> использовать раздел 0 и [`REMNAWAVE-HYSTERIA2.md`](REMNAWAVE-HYSTERIA2.md).
+
+---
+
+## 0. Актуальная схема Remnawave
+
+Проверить всю инфраструктуру с `www`:
+
+```bash
+sudo /opt/vpn-migration/tests/vpn-healthcheck.sh
+sudo cat /opt/vpn-migration/reports/health-latest.txt
+sudo systemctl list-timers vpn-healthcheck.timer vpn-deepcheck.timer
+```
+
+Проверить публичную подписку и полную маршрутизацию:
+
+```bash
+sudo /opt/vpn-migration/tests/test-public-remnawave.sh
+sudo /opt/vpn-migration/tests/test-hysteria-routing.sh
+sudo /opt/vpn-migration/tests/test-telegram-mtproto-route.sh
+```
+
+Измерить доступность и скорость обоих клиентских транспортов:
+
+```bash
+sudo /opt/vpn-migration/tests/monitor-vpn-transports.sh
+sudo jq . /opt/vpn-migration/reports/vpn-transport-monitor-latest.json
+```
+
+Проверить входной узел `hometele` без изменения конфигурации:
+
+```bash
+sudo docker ps --filter name=remnanode
+sudo nginx -t
+sudo ss -lntup | egrep ':443|:10443|:8443|:52000'
+sudo ss -u -a -n -p -m | grep ':443'
+```
+
+Проверить выходной узел `azazello`:
+
+```bash
+sudo docker ps --filter name=remnanode
+sudo ss -lunp | egrep ':24443|:39425'
+sudo ss -u -a -n -p -m | grep ':24443'
+```
+
+Рабочие признаки Hysteria2: UDP/443 и UDP/24443 слушаются, размеры `rb`/`tb`
+равны 16 MiB, `d0`, а `UdpRcvbufErrors`/`UdpSndbufErrors` не растут за окно
+теста. Сравнивать нужно дельту счётчиков, а не их накопленное значение.
+
+Создать пользователя и получить ссылку:
+
+1. Открыть `https://panel.hometele.com.ru/`.
+2. Создать пользователя в разделе **Users**.
+3. Назначить squad `hometele-users`.
+4. Скопировать subscription URL из строки пользователя.
+5. Обновить профиль в Hiddify; в нём должны быть `Auto`, Hysteria2, Reality и MTU `1280`.
+
+Обычным пользователям не назначать squad `hometele-azazello-bridge`. Полные
+subscription URL, UUID и учётные данные панели в WIKI не сохранять.
+
+Результаты контрольного измерения 2026-09-08 находятся в
+[`notes/vpn-monitoring-2026-09-08.md`](notes/vpn-monitoring-2026-09-08.md).
 
 ---
 
@@ -473,3 +540,48 @@ cat /etc/sudoers.d/hometele-vpn-user
 После каждого важного изменения в проекте просить готовый блок для WIKI.
 Формат: короткий Markdown без логов, без скриншотов, без секретов.
 ```
+---
+
+## 19. 2026-07-27 — Hiddify: invalid Reality public_key после `!vpn add`
+
+### Симптом
+- пользователь через Element создавался, но Hiddify отклонял профиль с `invalid public_key`;
+- создание пользователя из консоли сервера не воспроизводило ошибку импорта.
+
+### Причина
+- Xray `26.3.27` выводит результат `x25519 -i` с меткой `Password (PublicKey):`;
+- `/usr/local/sbin/hometele-vpn-user` распознавал только старую метку `Public key:` и формировал VLESS Reality-ссылку без параметра `pbk`.
+
+### Что изменили
+- server: `hometele`;
+- file: `/usr/local/sbin/hometele-vpn-user`;
+- parser поддерживает старую и новую метки Xray;
+- Reality public key проверяется как 43-символьный base64url, декодирующийся в 32 байта;
+- ссылка проверяется до записи клиента, поэтому при ошибке пользователь не создаётся частично;
+- Xray-конфигурация, TCP 443 и Matrix-агент не перенастраивались.
+
+### Проверка
+- временный пользователь успешно создан и удалён через `/usr/local/sbin/www-hometele-vpn` на `www`;
+- ссылка содержала один канонический 32-байтный `pbk`, host `hometele.com.ru`, port `443`, security `reality`;
+- `xray run -test` — OK;
+- `xray.service` — active;
+- TCP 443 — LISTEN;
+- `hometele-command-agent.service` — active;
+- временный пользователь после теста отсутствует.
+
+### Backup и откат
+
+Backup скрипта:
+
+```text
+/usr/local/sbin/hometele-vpn-user.bak-2026-07-27-103016
+```
+
+Откат:
+
+```bash
+sudo cp -a /usr/local/sbin/hometele-vpn-user.bak-2026-07-27-103016 /usr/local/sbin/hometele-vpn-user
+sudo python3 -m py_compile /usr/local/sbin/hometele-vpn-user
+```
+
+Перезапуск Xray для отката самого parser-скрипта не требуется.
