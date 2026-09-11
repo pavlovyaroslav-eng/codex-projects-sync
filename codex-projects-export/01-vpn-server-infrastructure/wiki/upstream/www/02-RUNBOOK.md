@@ -585,3 +585,76 @@ sudo python3 -m py_compile /usr/local/sbin/hometele-vpn-user
 ```
 
 Перезапуск Xray для отката самого parser-скрипта не требуется.
+
+---
+
+## 20. Управляемое обновление config-audit baseline
+
+Baseline обновляется только после того, как изменение рабочей системы описано в WIKI и обе проверки VPN завершились успешно. Ежедневный audit по-прежнему только сравнивает конфигурацию и не принимает drift автоматически.
+
+На сервере, baseline которого нужно принять, выполнить:
+
+```bash
+sudo vpn-config-baseline-refresh
+```
+
+По умолчанию команда сама выбирает последний коммит, изменявший основную документацию Remnawave. Чтобы явно привязать baseline к проверенному коммиту WIKI:
+
+```bash
+sudo vpn-config-baseline-refresh --wiki-ref COMMIT
+```
+
+Команда выполняет следующие проверки и действия:
+
+1. убеждается, что ветка WIKI совпадает с именем сервера, рабочее дерево чистое, а локальная и центральная ветки синхронизированы;
+2. проверяет, что указанный WIKI-коммит существует и является предком текущего `HEAD`;
+3. сохраняет предыдущие baseline/current и WIKI HEAD в `/opt/vpn-migration/rollback/audit-baseline-HOST-TIMESTAMP/`;
+4. на `www` запускает `vpn-healthcheck.sh` и `test-vpn.sh --deep`; на VPN-узле проверяет Docker, работающий контейнер `remnanode` и `nginx -t`;
+5. создаёт новый baseline, немедленно проверяет его через `vpn-config-audit check` и требует полного совпадения baseline/current;
+6. записывает связь с WIKI-коммитом в `sanitized-configs/audit-baselines/HOST.wiki-ref`, создаёт отдельный Git-коммит и отправляет его в центральный репозиторий.
+
+Откат выполняется копированием `baseline.before` из напечатанного каталога rollback на место `sanitized-configs/audit-baselines/HOST.sha256`, после чего запускается `sudo vpn-config-audit check`.
+
+Git-команды helper всегда выполняет от владельца WIKI-репозитория. Это предотвращает появление root-owned объектов в central bare repo, даже когда сам health/audit запускается через `sudo`.
+
+Текущее состояние `www` принято 2026-09-11 после полного health/deep check. Первый commit обновлённого эталона: `ebc3491`; резервная копия прежнего эталона: `/opt/vpn-migration/rollback/audit-baseline-20260911-193432/`.
+
+---
+
+## 21. Hiddify 4.1.1: `failed to start background core` на Windows
+
+Если журнал содержит `Cannot create a file when that file already exists` для `inbound/tun[tun-in]`, это повторное создание локального `tun0`, а не отказ Remnawave/Hysteria2.
+
+На обслуживаемом Windows-компьютере использовать ярлык:
+
+```text
+Hiddify - безопасный запуск
+```
+
+Launcher ждёт полного удаления старого TUN и выполняет не более одного clean retry. После запуска проверить один процесс Hiddify, один `tun0`, `LISTEN` на `127.0.0.1:17078` и отсутствие новой ошибки в `app.log`.
+
+Подробности, результаты транспортных тестов, UDP tuning и диагностика Amnezia error 305: `notes/vpn-stability-2026-09-11.md`.
+
+---
+
+## 22. Синхронизация общей WIKI на серверные ветки
+
+`www` хранит каноническую документацию, а ветки `hometele` и `azazello` — собственные inventory/audit-истории. Их Git-истории независимы, поэтому общий merge не используется.
+
+Ежедневный `/usr/local/sbin/vpn-wiki-sync-cron`:
+
+1. получает свою ветку и разрешает только безопасный fast-forward;
+2. на удалённых узлах получает `origin/www`;
+3. копирует только пути из `scripts/wiki-common-paths.txt`;
+4. собирает host inventory, создаёт коммит и отправляет свою ветку;
+5. при неизвестной дивергенции останавливается без force-push и без изменения центральной истории.
+
+Ручная проверка:
+
+```bash
+sudo /usr/local/sbin/vpn-wiki-sync-cron
+git -C /opt/vpn-server-wiki status --short
+git -C /opt/vpn-server-wiki rev-list --left-right --count origin/$(hostname -s)...$(hostname -s)
+```
+
+Последняя команда должна показать `0 0`. Файлы `inventory/HOST-*` и `notes/audit/HOST-*` никогда не включать в список общей синхронизации.

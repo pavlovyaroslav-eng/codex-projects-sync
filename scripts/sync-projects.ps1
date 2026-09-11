@@ -21,24 +21,47 @@ function Write-SyncLog {
 }
 
 function Invoke-Git {
-    param([string[]]$Arguments, [switch]$AllowFailure)
+    param(
+        [string[]]$Arguments,
+        [switch]$AllowFailure,
+        [ValidateRange(1, 6)][int]$MaxAttempts = 1,
+        [ValidateRange(1, 60)][int]$RetryDelaySeconds = 5
+    )
 
-    $previousErrorActionPreference = $ErrorActionPreference
-    try {
-        # Git пишет обычные информационные сообщения в stderr. Решение об
-        # ошибке принимается только по коду завершения процесса.
-        $ErrorActionPreference = 'Continue'
-        $output = @(& $GitExe -C $RepoRoot @Arguments 2>&1)
-        $exitCode = $LASTEXITCODE
-    }
-    finally {
-        $ErrorActionPreference = $previousErrorActionPreference
-    }
-    foreach ($item in $output) {
-        if ($null -ne $item -and "$item".Trim().Length -gt 0) {
-            Write-SyncLog "git $($Arguments -join ' '): $item"
+    $attempt = 0
+    do {
+        $attempt++
+        $previousErrorActionPreference = $ErrorActionPreference
+        try {
+            # Git пишет обычные информационные сообщения в stderr. Решение об
+            # ошибке принимается только по коду завершения процесса.
+            $ErrorActionPreference = 'Continue'
+            $output = @(& $GitExe -C $RepoRoot @Arguments 2>&1)
+            $exitCode = $LASTEXITCODE
         }
-    }
+        finally {
+            $ErrorActionPreference = $previousErrorActionPreference
+        }
+        foreach ($item in $output) {
+            if ($null -ne $item -and "$item".Trim().Length -gt 0) {
+                Write-SyncLog "git $($Arguments -join ' '): $item"
+            }
+        }
+
+        if ($exitCode -eq 0 -or $AllowFailure -or $attempt -ge $MaxAttempts) {
+            break
+        }
+
+        $combinedOutput = $output -join "`n"
+        $isTransientNetworkFailure = $combinedOutput -match '(?i)(could not resolve|temporary failure|timed out|connection reset|connection refused|network is unreachable|no route to host|remote end hung up)'
+        if (-not $isTransientNetworkFailure) {
+            break
+        }
+
+        $delay = $RetryDelaySeconds * $attempt
+        Write-SyncLog "Временная сетевая ошибка Git; повтор $($attempt + 1) из $MaxAttempts через $delay с." 'WARN'
+        Start-Sleep -Seconds $delay
+    } while ($attempt -lt $MaxAttempts)
 
     if ($exitCode -ne 0 -and -not $AllowFailure) {
         throw "Команда git $($Arguments -join ' ') завершилась с кодом $exitCode."
@@ -145,7 +168,7 @@ try {
     }
 
     # Только fast-forward. При конфликте или расхождении история не изменяется.
-    Invoke-Git -Arguments @('pull', '--ff-only', 'origin', 'main') | Out-Null
+    Invoke-Git -Arguments @('pull', '--ff-only', 'origin', 'main') -MaxAttempts 4 | Out-Null
 
     # Односторонний импорт серверной WIKI выполняется до git add/commit.
     # При недоступном Pageant, ошибке доступа или находке секрета дочерний
@@ -185,7 +208,7 @@ try {
     }
 
     # Push выполняется и без нового коммита, чтобы повторить ранее неудавшуюся отправку.
-    Invoke-Git -Arguments @('push', 'origin', 'main') | Out-Null
+    Invoke-Git -Arguments @('push', 'origin', 'main') -MaxAttempts 4 | Out-Null
     Write-SyncLog 'Синхронизация успешно завершена.'
     exit 0
 }

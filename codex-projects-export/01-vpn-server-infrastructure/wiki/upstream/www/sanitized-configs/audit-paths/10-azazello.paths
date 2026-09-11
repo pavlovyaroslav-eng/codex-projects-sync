@@ -1,0 +1,6 @@
+# azazello: Remnawave foreign exit, Hysteria2, AmneziaWG and MTProto/Signal proxy.
+
+/opt/remnanode
+/etc/nginx
+/etc/docker
+/home/azzzi/proxy/Signal-TLS-Proxy/docker-compose.yml

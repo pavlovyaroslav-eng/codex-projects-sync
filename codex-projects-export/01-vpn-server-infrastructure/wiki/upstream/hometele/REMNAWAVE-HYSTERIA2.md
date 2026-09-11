@@ -1,6 +1,6 @@
 # Remnawave + Hysteria2 infrastructure
 
-Status date: 2026-09-03
+Status date: 2026-09-08
 
 This document describes the production replacement of the former host-level
 Xray/3x-ui cascade. It intentionally contains no passwords, API tokens,
@@ -22,17 +22,21 @@ subscription identifiers, UUIDs, private keys, or client credentials.
                             UDP/24443
                               ^
                               |
-                    Hysteria2 / UDP/443
-                              |
-                     hometele.com.ru
+                +-------------+-------------+
+                |                           |
+       Hysteria2 / UDP/443       VLESS Reality / TCP/443
+          preferred path          automatic fallback
+                |                           |
+                +--------- hometele.com.ru--+
                               ^
                               |
-                           Hiddify
+                       Hiddify `Auto`
 ```
 
-The client sees one host only: `hometele.com.ru`. Remnawave/Xray on hometele
-selects either the local `direct` outbound or the private Hysteria2 bridge to
-azazello. Users never choose azazello themselves.
+The client sees one host only: `hometele.com.ru`. Hiddify automatically tests
+Hysteria2 and Reality and normally prefers Hysteria2. Remnawave/Xray on
+hometele selects either the local `direct` outbound or the private Hysteria2
+bridge to azazello. Users never choose azazello themselves.
 
 The private Windows overlay is separate from the proxy path:
 
@@ -76,7 +80,10 @@ background visible.
 
 ### hometele
 
-- TCP `80`, `443`: Nginx and the ordinary website.
+- TCP `80`: Nginx and the ordinary website.
+- TCP `443`: Nginx stream SNI router.
+- TCP `127.0.0.1:10443`: Remnawave/Xray VLESS Reality backend.
+- TCP `127.0.0.1:8443`: Nginx HTTPS backend for the ordinary site and Headscale.
 - UDP `443`: public Hysteria2 inbound managed by Remnawave Node.
 - TCP `52000`: SSH.
 - TCP `127.0.0.1:8081`: Headscale API behind Nginx.
@@ -85,6 +92,7 @@ background visible.
 ### azazello
 
 - UDP `24443`: private Hysteria2 bridge; firewall permits the hometele source.
+- UDP `39425`: separate Amnezia service; it is not part of the Remnawave path.
 - TCP `52000`: SSH.
 - Existing unrelated MTProto and Amnezia services were preserved.
 
@@ -152,8 +160,10 @@ Each user has one URL under `https://sub.hometele.com.ru/`. Never store the
 full URL in Git or shared documentation. Copy it from the user row in the
 Remnawave panel.
 
-The Hiddify response rule emits native Sing-box JSON and contains exactly one
-Hysteria2 outbound. The client template also contains direct bypass rules for:
+The Hiddify response rule emits native Sing-box JSON and contains one
+Hysteria2 outbound, one VLESS Reality outbound and an `Auto` URL-test group.
+The TUN MTU is `1280`. The client template also contains direct bypass rules
+for:
 
 ```text
 100.64.0.0/10
@@ -161,8 +171,9 @@ fd7a:115c:a1e0::/48
 ```
 
 It enables automatic interface detection and DNS hijacking. A real Windows
-Hiddify client imported and used the generated profile successfully on
-2026-09-03.
+Hiddify client imported and used the generated profile successfully. The
+prepared Windows installer version is `4.1.1`; the installer binary is
+distributed separately and is not stored in this Git repository.
 
 ## Creating a user and copying a link
 
@@ -237,6 +248,45 @@ the subscription output, all management containers, node connectivity,
 Hysteria2 transport, selective egress, overlay bypass rules and a conservative
 path-MTU probe.
 
+An on-demand transport monitor is installed on `www`:
+
+```bash
+sudo /opt/vpn-migration/tests/monitor-vpn-transports.sh
+sudo jq . /opt/vpn-migration/reports/vpn-transport-monitor-latest.json
+```
+
+The test uses a protected synthetic subscription, performs repeated HTTP
+availability probes through each complete VPN path, downloads the same 36 MB
+official release through each transport and records only sanitized aggregate
+results.
+
+Post-deployment measurement on 2026-09-08:
+
+| Measurement | Hysteria2 | Reality |
+|---|---:|---:|
+| Successful probes | 40/40 | 40/40 |
+| Application-level loss | 0% | 0% |
+| Average response | 0.4269 s | 0.1882 s |
+| p95 response | 0.3357 s | 0.2116 s |
+| Maximum response | 5.2158 s | 0.2445 s |
+| Single 36 MB download | 20.78 Mbit/s | 13.48 Mbit/s |
+
+The direct `www` baseline to the same object was 193.06 Mbit/s. This is a
+single-object operational comparison, not a guaranteed subscriber line rate.
+Both transports confirmed foreign egress through azazello.
+
+The 100-packet, 1200-byte DF ICMP samples showed 0% loss from `www` to
+hometele, but 4–6% loss on paths involving azazello, at approximately 54–55 ms
+average RTT. During the load test, UDP receive/send error counters did not
+increase and both Hysteria2 sockets retained 16 MiB buffers with socket drops
+`d0`. The observed loss is therefore on the external path to azazello rather
+than a Remnawave/Hysteria2 receive-buffer overflow. QUIC recovery hid it from
+the 40-request application sample, but it remains the primary performance
+risk for selected foreign traffic.
+
+Detailed sanitized record:
+[`notes/vpn-monitoring-2026-09-08.md`](notes/vpn-monitoring-2026-09-08.md).
+
 ## Backups
 
 Complete pre-migration backups:
@@ -296,6 +346,17 @@ sudo /opt/vpn-migration/tests/test-telegram-mtproto-route.sh
 
 Then inspect the dedicated routing JSON files. Do not edit generated node
 configuration inside a running container.
+
+For speed, latency or intermittent availability complaints, run:
+
+```bash
+sudo /opt/vpn-migration/tests/monitor-vpn-transports.sh
+sudo jq . /opt/vpn-migration/reports/vpn-transport-monitor-latest.json
+```
+
+Interpret the result together with destination packet loss and UDP counter
+deltas. Cumulative kernel counters alone do not prove that the current test
+lost packets.
 
 If the Telegram website works but native mobile or desktop clients reconnect,
 verify that `TELEGRAM_NETWORKS` is present in `hometele-entry-hy2`. Native

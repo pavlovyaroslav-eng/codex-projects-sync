@@ -1,10 +1,77 @@
 # 02-RUNBOOK — VPN Server
 
-Дата: 2026-07-04  
+Дата актуализации: 2026-09-08
 Проект: **VPN сервер**  
 Назначение: короткие рабочие инструкции для проверки, ремонта и эксплуатации.
 
 > Правило: перед опасным изменением делаем backup, после изменения — validate/test, затем restart/reload. Секреты, токены, private keys и UUID клиентов в WIKI не вставлять.
+
+> **Текущая production-схема — Remnawave с Hysteria2 и Reality.** Разделы
+> ниже про host-level Xray, `tun79`, 3x-ui и старое управление пользователями
+> сохранены как исторические инструкции. Для текущих операций сначала
+> использовать раздел 0 и [`REMNAWAVE-HYSTERIA2.md`](REMNAWAVE-HYSTERIA2.md).
+
+---
+
+## 0. Актуальная схема Remnawave
+
+Проверить всю инфраструктуру с `www`:
+
+```bash
+sudo /opt/vpn-migration/tests/vpn-healthcheck.sh
+sudo cat /opt/vpn-migration/reports/health-latest.txt
+sudo systemctl list-timers vpn-healthcheck.timer vpn-deepcheck.timer
+```
+
+Проверить публичную подписку и полную маршрутизацию:
+
+```bash
+sudo /opt/vpn-migration/tests/test-public-remnawave.sh
+sudo /opt/vpn-migration/tests/test-hysteria-routing.sh
+sudo /opt/vpn-migration/tests/test-telegram-mtproto-route.sh
+```
+
+Измерить доступность и скорость обоих клиентских транспортов:
+
+```bash
+sudo /opt/vpn-migration/tests/monitor-vpn-transports.sh
+sudo jq . /opt/vpn-migration/reports/vpn-transport-monitor-latest.json
+```
+
+Проверить входной узел `hometele` без изменения конфигурации:
+
+```bash
+sudo docker ps --filter name=remnanode
+sudo nginx -t
+sudo ss -lntup | egrep ':443|:10443|:8443|:52000'
+sudo ss -u -a -n -p -m | grep ':443'
+```
+
+Проверить выходной узел `azazello`:
+
+```bash
+sudo docker ps --filter name=remnanode
+sudo ss -lunp | egrep ':24443|:39425'
+sudo ss -u -a -n -p -m | grep ':24443'
+```
+
+Рабочие признаки Hysteria2: UDP/443 и UDP/24443 слушаются, размеры `rb`/`tb`
+равны 16 MiB, `d0`, а `UdpRcvbufErrors`/`UdpSndbufErrors` не растут за окно
+теста. Сравнивать нужно дельту счётчиков, а не их накопленное значение.
+
+Создать пользователя и получить ссылку:
+
+1. Открыть `https://panel.hometele.com.ru/`.
+2. Создать пользователя в разделе **Users**.
+3. Назначить squad `hometele-users`.
+4. Скопировать subscription URL из строки пользователя.
+5. Обновить профиль в Hiddify; в нём должны быть `Auto`, Hysteria2, Reality и MTU `1280`.
+
+Обычным пользователям не назначать squad `hometele-azazello-bridge`. Полные
+subscription URL, UUID и учётные данные панели в WIKI не сохранять.
+
+Результаты контрольного измерения 2026-09-08 находятся в
+[`notes/vpn-monitoring-2026-09-08.md`](notes/vpn-monitoring-2026-09-08.md).
 
 ---
 
@@ -214,7 +281,10 @@ docker logs --tail=80 mtproto-telegram
 systemctl status matrix-synapse --no-pager -l
 systemctl status coturn --no-pager -l
 systemctl status hometele-command-agent --no-pager -l
-systemctl status hometele-ai --no-pager -l
+systemctl status matrix-qwen-bot --no-pager -l
+systemctl is-active openvpn-server@local-ai
+curl -fsS http://10.93.0.10:8080/health
+curl -fsS http://10.93.0.10:8080/v1/models
 docker ps --filter "name=synapse-admin"
 ss -lntup | egrep ':80|:443|:5349|:8008|:8080'
 ```
@@ -228,8 +298,11 @@ journalctl -u hometele-command-agent -n 150 --no-pager
 Логи AI bot:
 
 ```bash
-journalctl -u hometele-ai -n 150 --no-pager
+journalctl -u matrix-qwen-bot -n 150 --no-pager
 ```
+
+Полный rollback на DeepSeek описан в
+`/opt/backups/matrix-deepseek-bot-20260801-193151/RESTORE.md`.
 
 ---
 
@@ -467,3 +540,121 @@ cat /etc/sudoers.d/hometele-vpn-user
 После каждого важного изменения в проекте просить готовый блок для WIKI.
 Формат: короткий Markdown без логов, без скриншотов, без секретов.
 ```
+---
+
+## 19. 2026-07-27 — Hiddify: invalid Reality public_key после `!vpn add`
+
+### Симптом
+- пользователь через Element создавался, но Hiddify отклонял профиль с `invalid public_key`;
+- создание пользователя из консоли сервера не воспроизводило ошибку импорта.
+
+### Причина
+- Xray `26.3.27` выводит результат `x25519 -i` с меткой `Password (PublicKey):`;
+- `/usr/local/sbin/hometele-vpn-user` распознавал только старую метку `Public key:` и формировал VLESS Reality-ссылку без параметра `pbk`.
+
+### Что изменили
+- server: `hometele`;
+- file: `/usr/local/sbin/hometele-vpn-user`;
+- parser поддерживает старую и новую метки Xray;
+- Reality public key проверяется как 43-символьный base64url, декодирующийся в 32 байта;
+- ссылка проверяется до записи клиента, поэтому при ошибке пользователь не создаётся частично;
+- Xray-конфигурация, TCP 443 и Matrix-агент не перенастраивались.
+
+### Проверка
+- временный пользователь успешно создан и удалён через `/usr/local/sbin/www-hometele-vpn` на `www`;
+- ссылка содержала один канонический 32-байтный `pbk`, host `hometele.com.ru`, port `443`, security `reality`;
+- `xray run -test` — OK;
+- `xray.service` — active;
+- TCP 443 — LISTEN;
+- `hometele-command-agent.service` — active;
+- временный пользователь после теста отсутствует.
+
+### Backup и откат
+
+Backup скрипта:
+
+```text
+/usr/local/sbin/hometele-vpn-user.bak-2026-07-27-103016
+```
+
+Откат:
+
+```bash
+sudo cp -a /usr/local/sbin/hometele-vpn-user.bak-2026-07-27-103016 /usr/local/sbin/hometele-vpn-user
+sudo python3 -m py_compile /usr/local/sbin/hometele-vpn-user
+```
+
+Перезапуск Xray для отката самого parser-скрипта не требуется.
+
+---
+
+## 20. Управляемое обновление config-audit baseline
+
+Baseline обновляется только после того, как изменение рабочей системы описано в WIKI и обе проверки VPN завершились успешно. Ежедневный audit по-прежнему только сравнивает конфигурацию и не принимает drift автоматически.
+
+На сервере, baseline которого нужно принять, выполнить:
+
+```bash
+sudo vpn-config-baseline-refresh
+```
+
+По умолчанию команда сама выбирает последний коммит, изменявший основную документацию Remnawave. Чтобы явно привязать baseline к проверенному коммиту WIKI:
+
+```bash
+sudo vpn-config-baseline-refresh --wiki-ref COMMIT
+```
+
+Команда выполняет следующие проверки и действия:
+
+1. убеждается, что ветка WIKI совпадает с именем сервера, рабочее дерево чистое, а локальная и центральная ветки синхронизированы;
+2. проверяет, что указанный WIKI-коммит существует и является предком текущего `HEAD`;
+3. сохраняет предыдущие baseline/current и WIKI HEAD в `/opt/vpn-migration/rollback/audit-baseline-HOST-TIMESTAMP/`;
+4. на `www` запускает `vpn-healthcheck.sh` и `test-vpn.sh --deep`; на VPN-узле проверяет Docker, работающий контейнер `remnanode` и `nginx -t`;
+5. создаёт новый baseline, немедленно проверяет его через `vpn-config-audit check` и требует полного совпадения baseline/current;
+6. записывает связь с WIKI-коммитом в `sanitized-configs/audit-baselines/HOST.wiki-ref`, создаёт отдельный Git-коммит и отправляет его в центральный репозиторий.
+
+Откат выполняется копированием `baseline.before` из напечатанного каталога rollback на место `sanitized-configs/audit-baselines/HOST.sha256`, после чего запускается `sudo vpn-config-audit check`.
+
+Git-команды helper всегда выполняет от владельца WIKI-репозитория. Это предотвращает появление root-owned объектов в central bare repo, даже когда сам health/audit запускается через `sudo`.
+
+Текущее состояние `www` принято 2026-09-11 после полного health/deep check. Первый commit обновлённого эталона: `ebc3491`; резервная копия прежнего эталона: `/opt/vpn-migration/rollback/audit-baseline-20260911-193432/`.
+
+---
+
+## 21. Hiddify 4.1.1: `failed to start background core` на Windows
+
+Если журнал содержит `Cannot create a file when that file already exists` для `inbound/tun[tun-in]`, это повторное создание локального `tun0`, а не отказ Remnawave/Hysteria2.
+
+На обслуживаемом Windows-компьютере использовать ярлык:
+
+```text
+Hiddify - безопасный запуск
+```
+
+Launcher ждёт полного удаления старого TUN и выполняет не более одного clean retry. После запуска проверить один процесс Hiddify, один `tun0`, `LISTEN` на `127.0.0.1:17078` и отсутствие новой ошибки в `app.log`.
+
+Подробности, результаты транспортных тестов, UDP tuning и диагностика Amnezia error 305: `notes/vpn-stability-2026-09-11.md`.
+
+---
+
+## 22. Синхронизация общей WIKI на серверные ветки
+
+`www` хранит каноническую документацию, а ветки `hometele` и `azazello` — собственные inventory/audit-истории. Их Git-истории независимы, поэтому общий merge не используется.
+
+Ежедневный `/usr/local/sbin/vpn-wiki-sync-cron`:
+
+1. получает свою ветку и разрешает только безопасный fast-forward;
+2. на удалённых узлах получает `origin/www`;
+3. копирует только пути из `scripts/wiki-common-paths.txt`;
+4. собирает host inventory, создаёт коммит и отправляет свою ветку;
+5. при неизвестной дивергенции останавливается без force-push и без изменения центральной истории.
+
+Ручная проверка:
+
+```bash
+sudo /usr/local/sbin/vpn-wiki-sync-cron
+git -C /opt/vpn-server-wiki status --short
+git -C /opt/vpn-server-wiki rev-list --left-right --count origin/$(hostname -s)...$(hostname -s)
+```
+
+Последняя команда должна показать `0 0`. Файлы `inventory/HOST-*` и `notes/audit/HOST-*` никогда не включать в список общей синхронизации.

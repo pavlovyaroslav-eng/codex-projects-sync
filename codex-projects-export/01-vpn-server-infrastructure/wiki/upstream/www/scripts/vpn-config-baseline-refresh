@@ -1,0 +1,157 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+repo=/opt/vpn-server-wiki
+audit=/usr/local/sbin/vpn-config-audit
+health=/opt/vpn-migration/tests/vpn-healthcheck.sh
+deepcheck=/opt/vpn-migration/tests/test-vpn.sh
+rollback_root=/opt/vpn-migration/rollback
+www_host="${VPN_WIKI_WWW_HOST:-93.183.106.203}"
+www_port="${VPN_WIKI_WWW_PORT:-52000}"
+wiki_ref=
+
+usage() {
+  echo "Usage: sudo vpn-config-baseline-refresh [--wiki-ref COMMIT]" >&2
+}
+
+while (($#)); do
+  case "$1" in
+    --wiki-ref)
+      [[ $# -ge 2 ]] || { usage; exit 2; }
+      wiki_ref="$2"
+      shift 2
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    *)
+      usage
+      exit 2
+      ;;
+  esac
+done
+
+[[ $EUID -eq 0 ]] || { echo "Run as root." >&2; exit 3; }
+host="$(hostname -s)"
+required_paths=("$repo/.git" "$audit")
+if [[ "$host" == "www" ]]; then
+  required_paths+=("$health" "$deepcheck")
+fi
+for required in "${required_paths[@]}"; do
+  [[ -e "$required" ]] || { echo "Missing required path: $required" >&2; exit 4; }
+done
+
+exec 9>/run/lock/vpn-config-baseline-refresh.lock
+flock -n 9 || { echo "Another baseline refresh is already running." >&2; exit 5; }
+
+cd "$repo"
+repo_owner="$(stat -c '%U' .)"
+repo_group="$(stat -c '%G' .)"
+owner_home="$(getent passwd "$repo_owner" | cut -d: -f6)"
+ssh_key="${VPN_WIKI_SSH_KEY:-$owner_home/.ssh/vpn-wiki-to-www}"
+
+run_git() {
+  sudo -H -u "$repo_owner" git -C "$repo" "$@"
+}
+
+remote_git() {
+  if [[ "$host" == "www" ]]; then
+    run_git "$@"
+  else
+    sudo -H -u "$repo_owner" env \
+      GIT_SSH_COMMAND="ssh -i $ssh_key -p $www_port -o BatchMode=yes -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new" \
+      git -C "$repo" "$@"
+  fi
+}
+
+branch="$(run_git branch --show-current)"
+[[ "$branch" == "$host" ]] || {
+  echo "Refusing refresh: branch '$branch' does not match host '$host'." >&2
+  exit 6
+}
+[[ -z "$(run_git status --porcelain)" ]] || {
+  echo "Refusing refresh: WIKI worktree is not clean." >&2
+  run_git status --short >&2
+  exit 7
+}
+
+remote_git fetch --quiet origin "$branch"
+[[ "$(run_git rev-parse HEAD)" == "$(run_git rev-parse "origin/$branch")" ]] || {
+  echo "Refusing refresh: local and central WIKI branches differ." >&2
+  exit 8
+}
+
+if [[ -z "$wiki_ref" ]]; then
+  if [[ "$host" == "www" ]]; then
+    wiki_ref="$(run_git log -1 --format=%H -- \
+      README-VPN-SERVER.md 02-RUNBOOK.md REMNAWAVE-HYSTERIA2.md \
+      notes/vpn-monitoring-*.md notes/remnawave-*.md notes/vpn-stability-*.md)"
+  else
+    wiki_ref="$(run_git rev-parse HEAD)"
+  fi
+fi
+wiki_ref="$(run_git rev-parse --verify "$wiki_ref^{commit}")"
+run_git merge-base --is-ancestor "$wiki_ref" HEAD || {
+  echo "Refusing refresh: WIKI reference is not an ancestor of HEAD." >&2
+  exit 9
+}
+
+stamp="$(date +%Y%m%d-%H%M%S)"
+rollback="$rollback_root/audit-baseline-$host-$stamp"
+install -d -m 700 "$rollback"
+baseline="sanitized-configs/audit-baselines/$host.sha256"
+current="notes/audit/current/$host-current.sha256"
+[[ -f "$baseline" ]] && cp -a "$baseline" "$rollback/baseline.before"
+[[ -f "$current" ]] && cp -a "$current" "$rollback/current.before"
+run_git rev-parse HEAD >"$rollback/wiki-head.before"
+
+echo "WIKI_REF=$wiki_ref"
+echo "ROLLBACK=$rollback"
+if [[ "$host" == "www" ]]; then
+  echo "Running health check..."
+  "$health" | tee "$rollback/health-check.txt"
+  echo "Running deep VPN check..."
+  "$deepcheck" --deep | tee "$rollback/deep-check.txt"
+else
+  echo "Running local node preflight..."
+  {
+    systemctl is-active docker
+    [[ "$(docker inspect -f '{{.State.Running}}' remnanode)" == "true" ]]
+    nginx -t
+  } 2>&1 | tee "$rollback/node-preflight.txt"
+fi
+
+echo "Creating the accepted baseline..."
+"$audit" baseline
+sleep 2
+echo "Verifying the accepted baseline..."
+"$audit" check
+cmp -s "$baseline" "$current" || {
+  echo "Baseline verification failed; restoring previous files." >&2
+  [[ -f "$rollback/baseline.before" ]] && cp -a "$rollback/baseline.before" "$baseline"
+  [[ -f "$rollback/current.before" ]] && cp -a "$rollback/current.before" "$current"
+  exit 10
+}
+
+metadata="sanitized-configs/audit-baselines/$host.wiki-ref"
+{
+  printf 'host=%s\n' "$host"
+  printf 'accepted_at=%s\n' "$(date -Is)"
+  printf 'wiki_ref=%s\n' "$wiki_ref"
+  printf 'wiki_subject=%s\n' "$(run_git show -s --format=%s "$wiki_ref")"
+  printf 'rollback=%s\n' "$rollback"
+} >"$metadata"
+
+chown "$repo_owner:$repo_group" "$baseline" "$current" "$metadata" notes/audit/"$host"-latest.md notes/audit/"$host"-audit-*.md
+chmod 0644 "$baseline" "$current" "$metadata" notes/audit/"$host"-audit-*.md
+
+run_git config user.name "VPN Server Wiki"
+run_git config user.email "vpn-wiki@local"
+run_git add -- "$baseline" "$current" "$metadata" notes/audit/"$host"-latest.md notes/audit/"$host"-audit-*.md
+run_git commit -m "audit: accept $host baseline for WIKI ${wiki_ref:0:12}"
+remote_git push origin "$branch"
+
+echo "Baseline refresh completed."
+run_git log -1 --format='COMMIT=%H%nSUBJECT=%s'
+echo "ROLLBACK=$rollback"

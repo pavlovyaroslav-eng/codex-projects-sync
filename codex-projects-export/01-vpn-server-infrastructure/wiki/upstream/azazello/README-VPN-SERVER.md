@@ -1,32 +1,43 @@
 # VPN Server Mini-WIKI
 
-Дата сборки: 2026-07-04  
+Дата актуализации: 2026-09-08
 Проект: **VPN сервер**  
 Назначение: короткая рабочая документация без длинных логов, картинок и отладочного шума.
 
 > В документ намеренно не включены приватные ключи, токены Matrix, пароли, client UUID, MTProto secret, private keys Reality/WireGuard/WARP и содержимое SSH-ключей. Храним только структуру, пути, порты, команды и нюансы эксплуатации.
+
+> **Актуальная VPN-схема:** [`REMNAWAVE-HYSTERIA2.md`](REMNAWAVE-HYSTERIA2.md).
+> Описания host-level Xray, 3x-ui, OpenVPN `tun79` и старого Matrix-менеджера
+> пользователей ниже сохранены как история и не являются текущей инструкцией.
 
 ---
 
 ## 1. Общая схема
 
 ```text
-Клиент VPN
-   ↓
-hometele — RU входная точка, видимая для провайдера
-   ↓ VPN-туннель / каскад
-azazello — CZ шлюз наружу / интернет
+Hiddify
+   ├─ Hysteria2 UDP/443 (основной)
+   └─ VLESS Reality TCP/443 (автоматический резерв)
+                     ↓
+hometele — RU входная точка и server-side routing
+   ├─ direct: обычный и российский трафик
+   └─ Hysteria2 bridge UDP/24443 → azazello: выбранный зарубежный трафик
 
-www — отдельный VPS для Matrix/Synapse, командного агента и мониторинга
+www — Remnawave Panel, подписки, Matrix/Synapse и мониторинг
 ```
 
 ### Роли серверов
 
 | Сервер | Роль | Ключевые функции |
 |---|---|---|
-| `azazello` | Чехия, выход в интернет | 3x-ui/Xray, WARP outbound, VLESS Reality, Hysteria/MTProto, панель 3x-ui |
-| `hometele` | Россия, входная точка для клиентов | Xray VLESS Reality на 443, сайт-заглушка, почта, VPN-каскад на Чехию, WireGuard/OpenVPN связки |
-| `www` | Matrix VPS | Matrix Synapse, Coturn, Synapse Admin, командный агент, AI bot, мониторинг 3 серверов |
+| `azazello` | Чехия, выбранный зарубежный выход | Remnawave Node `3.4.1`, Xray-core `26.7.28`, Hysteria2 bridge UDP/24443; Amnezia и MTProto работают отдельно |
+| `hometele` | Россия, входная точка для клиентов | Remnawave Node `3.4.1`, Hysteria2 UDP/443, Reality за Nginx stream, Headscale/HomeMesh |
+| `www` | Управление и мониторинг | Remnawave Panel `3.4.3`, Subscription Page `8.0.0`, Matrix/Synapse, healthcheck/deepcheck |
+
+Проверка 2026-09-08 подтвердила доступность обоих транспортов без потери
+HTTP-запросов. На межсерверном маршруте до `azazello` наблюдалось 4–6% ICMP
+потерь, при этом локальные UDP-переполнения отсутствовали. Подробности:
+[`notes/vpn-monitoring-2026-09-08.md`](notes/vpn-monitoring-2026-09-08.md).
 
 ---
 
@@ -377,12 +388,18 @@ hometele-status [server|all]
 Сервис:
 
 ```text
-hometele-ai.service
-WorkingDirectory=/opt/hometele-ai
-ExecStart=/opt/hometele-ai/venv/bin/python /opt/hometele-ai/hometele-ai.py
+matrix-qwen-bot.service
+User=matrix-qwen-bot
+WorkingDirectory=/opt/matrix-qwen-bot
+EnvironmentFile=/etc/matrix-qwen-bot/bot.env
 ```
 
-Назначение: HomeTele AI Matrix Bot via DeepSeek.
+Назначение: приватный разговорный Matrix bot через локальную Qwen3-14B.
+OpenAI-compatible endpoint доступен только по OpenVPN:
+`http://10.93.0.10:8080/v1`, модель `qwen3-14b-q4km`, контекст 8192.
+
+Старый `hometele-ai.service` отключён, сохранён для rollback и не удалён.
+Подробности и диагностика: [`04-MATRIX-QWEN-BOT.md`](04-MATRIX-QWEN-BOT.md).
 
 ### Synapse Admin
 

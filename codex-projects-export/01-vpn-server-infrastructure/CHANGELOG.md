@@ -1,5 +1,16 @@
 # Changelog — VPN server infrastructure
 
+## 2026-09-11
+
+- Новая схема Remnawave проверена: Hysteria2 и VLESS Reality, selective routing, Telegram, YouTube, панель и подписки работают.
+- На `hometele` и `azazello` default UDP socket buffers увеличены с 1 до 4 MiB; после нагрузочной проверки новые `UdpRcvbufErrors` не появились.
+- Исправлена Git-WIKI синхронизация: `fetch` и безопасный fast-forward выполняются до inventory/push, неизвестная дивергенция не перезаписывается.
+- Общая документация из ветки `www` доставляется на независимые ветки узлов по `scripts/wiki-common-paths.txt` без перезаписи host-specific audit/inventory.
+- Устранены смешанные владельцы central bare Git; Git-операции baseline helper выполняются от штатного владельца репозитория.
+- Baseline `www`, `hometele` и `azazello` обновлены после health/deep или node preflight; итоговый статус всех трёх — `OK_NO_CHANGES`.
+- Для локальной ошибки Hiddify `failed to start background core` создан safe-start launcher с ожиданием удаления stale `tun0` и одним clean retry.
+- Amnezia error 305 локализована в SSH management-доступе; рабочий порт управления — TCP/52000, AmneziaWG продолжает работать на UDP/39425.
+
 ## 2026-07-18
 
 - Основной каскадный outbound Xray на `hometele` переведён с OpenVPN `tun79` на существующий AmneziaWG-сервер `azazello`; OpenVPN оставлен включённым резервом.

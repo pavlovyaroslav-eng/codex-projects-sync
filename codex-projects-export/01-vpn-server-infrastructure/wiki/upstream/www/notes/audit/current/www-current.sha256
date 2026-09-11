@@ -154,6 +154,7 @@ FILE	1bde6157f24611586cf0aa67a21d489939aef6079247ee0347392feccb4eda9e	644	root	r
 FILE	1be3bd28495a6dc5ea6cfc1f13feba9735f97c66a18771aee83024cfff59849c	644	root	root	558	/opt/hometele-ai/venv/lib/python3.12/site-packages/pip/_internal/models/scheme.py
 FILE	1bfb27fbc0ca8ccd6c1232c6fe8738a2f9169a25295af8fc6d78b4c9e7762e76	644	root	root	9586	/opt/hometele-ai/venv/lib/python3.12/site-packages/pip/_vendor/rich/highlighter.py
 FILE	1bfd609dc4e60db44b6358e8e150c8f54c3e6f9204ae1fd0f55fc16d5253983f	644	root	root	33890	/opt/hometele-ai/venv/lib/python3.12/site-packages/pip/_vendor/packaging/pylock.py
+FILE	1c01b1af39fbec292ebd2ab98037862b8d2e99c11206da6724cac6fb60cae7a4	755	root	root	4910	/usr/local/sbin/vpn-config-baseline-refresh
 FILE	1c4fc4b63c196c7661cd8c167a99a89a00c0d823756e1f95a91e2344647fde8d	644	root	root	24366	/opt/hometele-ai/venv/lib/python3.12/site-packages/pip/_vendor/urllib3/__pycache__/poolmanager.cpython-312.pyc
 FILE	1c73903a4e1b809038a736ccb1344ccfc46c4ec9787d1477b21bedcfe7b0558c	644	root	root	878	/opt/hometele-ai/venv/lib/python3.12/site-packages/pip/_vendor/idna/__pycache__/compat.cpython-312.pyc
 FILE	1c8cf00e4fbf58ef512059031720204331de6a81f2496ae45f30367ec27eb7cc	644	root	root	6443	/etc/fail2ban/action.d/xarf-login-attack.conf
@@ -286,6 +287,7 @@ FILE	34d95f740e3ee539eae3125842bc93b48dd7ef20b263c0a9af70b8b00603d8d6	644	root	r
 FILE	34eefa66b7d1dbe2ca253c9a5eb990a0686624c02b00bbda72b9591d58920d3f	644	root	root	10544	/opt/hometele-ai/venv/lib/python3.12/site-packages/pip/_internal/metadata/pkg_resources.py
 FILE	3540f87d529d483d36ae2efe75bd2d9ced15a8b3fd687bb3992b5c5bbb40974f	644	root	root	1130	/opt/hometele-ai/venv/lib/python3.12/site-packages/pip/_vendor/truststore/_ssl_constants.py
 FILE	354e5b0ab4349a3316e25a2f9087ac143091100f8b0920a14c85c59530290b2c	644	root	root	4519	/opt/hometele-ai/venv/lib/python3.12/site-packages/pip/_internal/utils/__pycache__/_jaraco_text.cpython-312.pyc
+FILE	35b42994c0c119f6768c23ffece952d5cd5fc80a62dc04ed1f5e824dc388411d	755	root	root	4898	/usr/local/sbin/vpn-wiki-sync-cron
 FILE	35e405417fc641664244d728154ef67b8142f86ed6ff06f767162f2ef9f47561	644	root	root	306	/etc/matrix-synapse/conf.d/turn.yaml
 FILE	360a3b3203cdfc728631a8db56952512ee84f8e0926eaedc2a85cf67c8dd8029	644	root	root	291	/etc/fail2ban/action.d/iptables-allports.conf
 FILE	36781d848194db851debba635176d7b2ce2ecdfbf02189590ea5408c2130a21d	644	root	root	3618	/opt/hometele-ai/venv/lib/python3.12/site-packages/pip/_vendor/rich/__pycache__/_null_file.cpython-312.pyc
@@ -489,7 +491,6 @@ FILE	5ff8bfd2ab8708d59f0d88d43bec2497e658b85592bb310c882bdab0048e802d	644	root	r
 FILE	60bb694e7662bb4ee7637a0af677d1e84f58d4504784fe4f5fc82f90959c7da8	644	root	root	1910	/opt/hometele-ai/venv/lib/python3.12/site-packages/pip/_vendor/pygments/filter.py
 FILE	615f73a840ccca37d5f347a529b226a72146f66075936b746fe182411c2315eb	644	root	root	260	/etc/fail2ban/filter.d/squid.conf
 FILE	6167ecadb99f72b7d682a418cba3ae223b326fd21f2f5abfdafe33b26b355a32	644	root	root	2459	/opt/hometele-ai/venv/lib/python3.12/site-packages/pip/_internal/utils/egg_link.py
-FILE	6168fcedab04b3288c47a73436fa6b80f992b0e13f5ed90168182cc15137f809	755	root	root	3252	/usr/local/sbin/vpn-wiki-sync-cron
 FILE	61a0fbcf10f909da5e5ed3a32ef2d67a04882e203366e72ea8b4d8dffeda7847	644	root	root	236	/etc/fail2ban/filter.d/gitlab.conf
 FILE	61d46e8fa322706f90f4c834dc56d4bf55932da9ba2dcec08228d8e2fa15ca2b	644	root	root	4468	/opt/hometele-ai/venv/lib/python3.12/site-packages/pip/_internal/utils/wheel.py
 FILE	623cc9023a9fefc01136c2e59c94fd97a7cd6e9c833c903e6ab3885d8b0ae489	644	root	root	4403	/opt/hometele-ai/venv/lib/python3.12/site-packages/pip/_internal/cli/main_parser.py

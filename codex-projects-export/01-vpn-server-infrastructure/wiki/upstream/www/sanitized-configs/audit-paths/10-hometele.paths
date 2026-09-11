@@ -1,0 +1,11 @@
+# hometele: Remnawave user entry, Hysteria2, Headscale, mail and legacy LAN links.
+
+/opt/remnanode
+/opt/headscale
+/etc/nginx
+/etc/postfix
+/etc/openvpn
+/etc/wireguard
+/usr/local/sbin/hometele-vpn-ssh-wrapper
+/etc/sudoers.d/hometele-vpn-user
+/home/suazzzi/.ssh/authorized_keys

@@ -1,0 +1,10 @@
+# Common files/directories for all VPN project servers.
+# Directories are scanned recursively; WIKI stores hashes and metadata only.
+
+/etc/cron.d/server-maintenance
+/etc/cron.d/vpn-wiki-sync
+/opt/server-maintenance
+/etc/fail2ban
+/etc/sysctl.d/99-hysteria2-performance.conf
+/usr/local/sbin/vpn-wiki-sync
+/usr/local/sbin/vpn-wiki-sync-cron

@@ -1,0 +1,185 @@
+#!/usr/bin/env bash
+# Synchronize one host branch without hiding divergent history.
+set -euo pipefail
+
+REPO="/opt/vpn-server-wiki"
+CENTRAL_REPO="/opt/git/vpn-server-wiki.git"
+
+WWW_USER="suazzzi"
+WWW_HOST="${VPN_WIKI_WWW_HOST:-93.183.106.203}"
+WWW_PORT="${VPN_WIKI_WWW_PORT:-52000}"
+
+HOST="$(hostname -s)"
+BRANCH="$HOST"
+NOW="$(date +%F_%H-%M-%S)"
+
+if [ ! -d "$REPO/.git" ]; then
+  echo "ERROR: Git WIKI repo not found: $REPO"
+  exit 1
+fi
+
+REPO_OWNER="$(stat -c '%U' "$REPO")"
+REPO_GROUP="$(stat -c '%G' "$REPO")"
+OWNER_HOME="$(getent passwd "$REPO_OWNER" | cut -d: -f6)"
+SSH_KEY="${VPN_WIKI_SSH_KEY:-$OWNER_HOME/.ssh/vpn-wiki-to-www}"
+
+run_user() {
+  sudo -H -u "$REPO_OWNER" "$@"
+}
+
+remote_git() {
+  if [ "$HOST" = "www" ]; then
+    run_user git -C "$REPO" "$@"
+  else
+    run_user env GIT_SSH_COMMAND="ssh -i $SSH_KEY -p $WWW_PORT -o BatchMode=yes -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new" \
+      git -C "$REPO" "$@"
+  fi
+}
+
+echo "=== VPN WIKI SYNC CRON ==="
+echo "Date: $(date -Is)"
+echo "Host: $HOST"
+echo "Branch: $BRANCH"
+echo "Repo: $REPO"
+echo "Repo owner: $REPO_OWNER:$REPO_GROUP"
+echo
+
+cd "$REPO"
+
+echo "=== CHECK COLLECT SCRIPT ==="
+if [ ! -x "$REPO/scripts/collect-inventory.sh" ]; then
+  echo "ERROR: collect-inventory.sh not found or not executable"
+  exit 1
+fi
+
+echo "=== GIT IDENTITY ==="
+run_user git -C "$REPO" config user.name "VPN Server Wiki"
+run_user git -C "$REPO" config user.email "vpn-wiki@local"
+
+echo
+echo "=== SET BRANCH ==="
+run_user git -C "$REPO" branch -M "$BRANCH"
+
+echo
+echo "=== SET REMOTE ==="
+run_user git -C "$REPO" remote remove origin 2>/dev/null || true
+
+if [ "$HOST" = "www" ]; then
+  echo "Mode: local sync with central repo"
+  if [ ! -d "$CENTRAL_REPO" ]; then
+    echo "ERROR: central repo not found: $CENTRAL_REPO"
+    exit 1
+  fi
+  run_user git -C "$REPO" remote add origin "$CENTRAL_REPO"
+else
+  echo "Mode: SSH sync with www"
+  echo "Remote: ssh://$WWW_USER@$WWW_HOST:$WWW_PORT$CENTRAL_REPO"
+
+  if [ ! -f "$SSH_KEY" ]; then
+    echo "ERROR: SSH key not found: $SSH_KEY"
+    exit 1
+  fi
+
+  chmod 600 "$SSH_KEY" 2>/dev/null || true
+  run_user git -C "$REPO" remote add origin "ssh://$WWW_USER@$WWW_HOST:$WWW_PORT$CENTRAL_REPO"
+fi
+
+echo
+echo "=== FETCH AND FAST-FORWARD ==="
+remote_git fetch origin "$BRANCH"
+if run_user git -C "$REPO" show-ref --verify --quiet "refs/remotes/origin/$BRANCH"; then
+  if run_user git -C "$REPO" merge-base --is-ancestor "$BRANCH" "origin/$BRANCH"; then
+    remote_git merge --ff-only "origin/$BRANCH"
+  elif run_user git -C "$REPO" merge-base --is-ancestor "origin/$BRANCH" "$BRANCH"; then
+    echo "Local branch already contains origin/$BRANCH."
+  else
+    echo "ERROR: local and origin/$BRANCH have diverged; manual reconciliation is required."
+    run_user git -C "$REPO" rev-list --left-right --count "origin/$BRANCH...$BRANCH"
+    exit 1
+  fi
+fi
+
+if [ "$HOST" != "www" ]; then
+  echo
+  echo "=== SYNC CANONICAL WIKI FILES FROM WWW ==="
+  remote_git fetch origin www
+  common_manifest="$(mktemp)"
+  trap 'rm -f "$common_manifest"' EXIT
+  remote_git show origin/www:scripts/wiki-common-paths.txt >"$common_manifest"
+
+  while IFS= read -r common_path; do
+    common_path="${common_path%%#*}"
+    common_path="${common_path%${common_path##*[![:space:]]}}"
+    common_path="${common_path#${common_path%%[![:space:]]*}}"
+    [ -n "$common_path" ] || continue
+    case "$common_path" in
+      /*|../*|*/../*|*/..)
+        echo "ERROR: unsafe path in common WIKI manifest: $common_path"
+        exit 1
+        ;;
+    esac
+    remote_git cat-file -e "origin/www:$common_path"
+    remote_git checkout origin/www -- "$common_path"
+    echo "Updated: $common_path"
+  done <"$common_manifest"
+fi
+
+echo
+echo "=== COLLECT INVENTORY AS ROOT ==="
+"$REPO/scripts/collect-inventory.sh" inventory
+
+echo
+echo "=== FIX PERMISSIONS ==="
+chown -R "$REPO_OWNER:$REPO_GROUP" "$REPO/inventory"
+chmod 0644 "$REPO"/inventory/*.md 2>/dev/null || true
+
+echo
+echo "=== GIT STATUS BEFORE COMMIT ==="
+run_user git -C "$REPO" status --short
+
+echo
+echo "=== STAGE SAFE PATHS ==="
+paths=()
+for p in \
+  ".gitignore" \
+  "README-VPN-SERVER.md" \
+  "README-GIT-START.md" \
+  "01-INVENTORY.md" \
+  "02-RUNBOOK.md" \
+  "03-SELF-HEALING.md" \
+  "REMNAWAVE-HYSTERIA2.md" \
+  "HOMEMESH-USER-ONBOARDING.md" \
+  "scripts" \
+  "inventory" \
+  "notes" \
+  "sanitized-configs"
+do
+  if [ -e "$REPO/$p" ]; then
+    paths+=("$p")
+  fi
+done
+
+if [ "${#paths[@]}" -gt 0 ]; then
+  run_user git -C "$REPO" add -A -- "${paths[@]}"
+fi
+
+echo
+echo "=== COMMIT ==="
+if run_user git -C "$REPO" diff --cached --quiet; then
+  echo "No staged changes to commit."
+else
+  run_user git -C "$REPO" commit -m "cron-sync: $HOST $NOW"
+fi
+
+echo
+echo "=== PUSH ==="
+remote_git push -u origin "$BRANCH"
+
+echo
+echo "=== RESULT ==="
+run_user git -C "$REPO" log --oneline --max-count=5
+echo
+run_user git -C "$REPO" status --short
+
+echo
+echo "=== DONE VPN WIKI SYNC CRON ==="

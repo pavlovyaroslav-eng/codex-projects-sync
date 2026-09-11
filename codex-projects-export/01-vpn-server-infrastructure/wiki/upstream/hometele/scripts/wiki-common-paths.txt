@@ -1,0 +1,21 @@
+# Canonical WIKI files copied from the central www branch to host branches.
+# Keep host-specific inventory and notes/audit files out of this list.
+.gitattributes
+README-VPN-SERVER.md
+README-GIT-START.md
+01-INVENTORY.md
+02-RUNBOOK.md
+03-SELF-HEALING.md
+04-MATRIX-QWEN-BOT.md
+05-VLESS-LOCAL-AI-GATEWAY.md
+REMNAWAVE-HYSTERIA2.md
+HOMEMESH-USER-ONBOARDING.md
+notes/vpn-stability-2026-09-11.md
+notes/vpn-monitoring-2026-09-08.md
+scripts/collect-inventory.sh
+scripts/vpn-config-baseline-refresh
+scripts/vpn-wiki-sync-cron
+scripts/wiki-common-paths.txt
+sanitized-configs/audit-paths/00-common.paths
+sanitized-configs/audit-paths/10-hometele.paths
+sanitized-configs/audit-paths/10-azazello.paths

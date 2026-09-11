@@ -10,9 +10,7 @@ FILE	09200f27b2bec1777db2478d6cfabd394e5334f0dc74a3a3f001ac8d2bf7b5e6	644	root	r
 FILE	0923f00baa1949c2dc9d0910b8e398976d3a466707d44006b8a25d77e42c8fd0	644	root	root	371	/etc/fail2ban/filter.d/sieve.conf
 FILE	09e6f4cb2b7c86f3fd163933c59dd2faad5db6b068e5c11e70dae0586f8610ef	644	root	root	1500	/etc/nginx/nginx.conf.dpkg-old
 FILE	0ad9e53669cf0a06b935f03b76055ef904717e2363d7ee0cb19c45d530b093c9	644	root	root	427	/etc/fail2ban/filter.d/bitwarden.conf
-FILE	0b4f8aad8643d37065aaa13282917923dafcb8e9fff78a10aa567089fef580a6	644	root	root	69	/etc/x-ui/update-status.json
 FILE	0c3e154f19e5f2756f177b0a66597c6f67aa4dd4a79f42b659af5b74fcddd47d	644	root	root	444	/etc/fail2ban/filter.d/cyrus-imap.conf
-FILE	0d098928cf19c756a8c956c0b5ca736b75f9eaff0765fd71c26a3dcb413a3dde	644	root	root	12666	/usr/local/x-ui/bin/README.md
 FILE	0d2cb5f1e939df6d05cd7e0d621dede26d0508d191316288a217584b7aed8da7	644	root	root	403	/etc/fail2ban/filter.d/apache-fakegooglebot.conf
 FILE	10570f82138142d50e6f0f732a2889090d00d83b5a108da4b5b959813cea0f9d	644	root	root	2187	/etc/fail2ban/filter.d/apache-overflows.conf
 FILE	10a3efd3e59cf4036f7347e3d7f6a5b353de6a210a10893b949ef264b513eee3	644	root	root	568	/etc/fail2ban/filter.d/perdition.conf
@@ -21,7 +19,6 @@ FILE	11457eda63da10d4879cc2840f443d0628ed55f2b122eef2ad7725746b77c2d6	644	root	r
 FILE	11c2e6da2341e6ab976d95e9c27493cf2c5d36ddbc0127e298f67f1eafcfb2c3	644	root	root	629	/etc/fail2ban/action.d/badips.conf
 FILE	11c63d8dca0c2f2486783b2cd9f2e4aeace15b62b4baa840a7ecc807426ed3c8	644	root	root	4010	/etc/fail2ban/action.d/nginx-block-map.conf
 FILE	139780febc5dd81f3e39dd05cf6d4295fed67252f8ed02ccf659586c2f4b050d	644	root	root	4292	/etc/fail2ban/action.d/ipthreat.conf
-FILE	184566560234d92698617f9c7dcaca890e5096aea6adb9d22ffac5119fb52b38	600	root	root	15142	/usr/local/x-ui/bin/config.json
 FILE	18884a453d29db001782cb6b875de2953b43ee8b6b57e055fb91dcca5ec72dbc	644	root	root	1503	/etc/fail2ban/action.d/symbiosis-blacklist-allports.conf
 FILE	18990a5b8ef3ac715174566f5d3019d2bcda4b2c06f79056ec216ce4034d2efa	644	root	root	570	/etc/fail2ban/filter.d/selinux-ssh.conf
 FILE	1a76ac2292d516dd83f5d1a7152715c6a7385a9beabb8cb0721b16b8ee26055d	644	root	root	950	/etc/fail2ban/action.d/sendmail-whois.conf
@@ -30,7 +27,6 @@ FILE	1bcf7bdbead3e774eaed422b2ceb614f307c8bb236cb5f2346a91a6d1917f811	644	root	r
 FILE	1c8cf00e4fbf58ef512059031720204331de6a81f2496ae45f30367ec27eb7cc	644	root	root	6443	/etc/fail2ban/action.d/xarf-login-attack.conf
 FILE	1e55231a7c98f7488265b545f8985ee09ed6444b376a5a1434bbf6951c057640	644	root	root	1270	/etc/fail2ban/action.d/firewallcmd-multiport.conf
 FILE	1f2388b6d81c13d868b850dba337dc28f708c6c19a1ae9871e525cd4479a0969	644	root	root	2970	/etc/fail2ban/filter.d/sendmail-reject.conf
-FILE	1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5	644	root	root	16725	/usr/local/x-ui/bin/LICENSE
 FILE	21214d33d31e3725d30ea5eab6f1eedda714697cc1246a275ed28b380d2ff9f8	644	root	root	1299	/etc/fail2ban/action.d/sendmail-whois-lines.conf
 FILE	21f5056f46d521790480f0a918d5a0b5beccdd173b15001a565e866bceb88b42	644	root	root	1051	/etc/fail2ban/action.d/mail-whois-common.conf
 FILE	22c256bf664462187a3bcb2856c8d903e0a98b157c111f07f45c764d48546c57	644	root	root	953	/etc/fail2ban/filter.d/mysqld-auth.conf
@@ -45,8 +41,11 @@ FILE	2cc75b6857332e5319c66e87efda5905ef4a2449a3269bcdbec04f0eb833dd4e	644	root	r
 FILE	2fc3cb0a56652c3fe2497ff8490445a2170cdf642602bdc80faf557c45ac9f2c	644	root	root	787	/etc/fail2ban/filter.d/monit.conf
 FILE	2fe7e3dec1a537a036d0875c96e127c26bb0a1c4cc276d7b5b00ad54d03285d5	644	root	root	3748	/etc/fail2ban/action.d/abuseipdb.conf
 FILE	325696fb996771790782133c4fd725f4a6d5f2676da6549ce327fab8151511a4	644	root	root	2842	/etc/fail2ban/action.d/iptables-xt_recent-echo.conf
+FILE	32ddda516cdd5d8d74925dc560a163a2a096cedf1cbc185d98db96012f061f46	600	root	root	2564	/opt/remnanode/.env
 FILE	3397bcc06c3a5e20855113b13ad709f82743b931fcf72c596598f149eade0fa5	644	root	root	790	/etc/fail2ban/filter.d/sendmail-auth.conf
+FILE	345a928010c8d114261d5cedef8fec1c6249737510d77bd65ffc9fb576f9fa46	644	root	root	143	/etc/fail2ban/jail.d/99-infrastructure-ignore.local
 FILE	345c783de64def9bbbb976e3b8c3e06f78efb1131fd70431af8d9446acd0d01b	644	root	root	374	/etc/fail2ban/filter.d/uwimap-auth.conf
+FILE	35b42994c0c119f6768c23ffece952d5cd5fc80a62dc04ed1f5e824dc388411d	755	root	root	4898	/usr/local/sbin/vpn-wiki-sync-cron
 FILE	360a3b3203cdfc728631a8db56952512ee84f8e0926eaedc2a85cf67c8dd8029	644	root	root	291	/etc/fail2ban/action.d/iptables-allports.conf
 FILE	3683b075180b94ba87225a0cce403c91ab55574b404db5588e48e9be3e7969ba	644	root	root	1505	/etc/fail2ban/action.d/ipfw.conf
 FILE	36c77daa2d85803e87c91ba723dd2bc6aaa6543ae4bd4a569034a7bf8bce464d	644	root	root	5465	/etc/nginx/mime.types
@@ -67,12 +66,9 @@ FILE	46b15b7e128da16ef8738cc4ce2f15d556ad3cd0ed726e0d5e8fe87ccc10ed0e	644	root	r
 FILE	482fb85891578ac882be4515cf31d48a254b1d16725f8a7003876910dd5b0f6e	644	root	root	1023	/etc/fail2ban/action.d/route.conf
 FILE	48c6a4ec1e1fd28ccf968490f07e34a1d7f755793b2108a3ed8670b1ee2a0aa2	644	root	root	1446	/etc/nginx/nginx.conf
 FILE	4cc9fd133205b5b75468a994381c12a34f58db479ece82d3da6c8df0a702a89a	644	root	root	814	/etc/fail2ban/action.d/iptables-ipset-proto6-allports.conf
-FILE	4d55c7cdfd05cbdf1ed54b0d5fecdc79ca8fbe8d48fc7a1460db1d89c3762242	644	root	root	391	/usr/local/x-ui/x-ui.service.arch
 FILE	4e0945432e68d9d7cac62356766fbea8652790c15a7332a42af1a78877225c32	644	root	root	1055	/etc/nginx/fastcgi_params
 FILE	4fc31e96fecb720acb9d5412b0cb45c4b3258727d1b813b02a02ea108d2e7894	644	root	root	467	/etc/fail2ban/filter.d/3proxy.conf
 FILE	4fd3cd0af17833297b7dc0152baa3d1c703a7c2d1b34b68d038f7d99148af9eb	644	root	root	538	/etc/fail2ban/filter.d/selinux-common.conf
-FILE	513f84fd2be16e3eec41e61acdd72c32cc639715eb4105e6dd9dc5ff190e5aec	644	root	root	392	/usr/local/x-ui/x-ui.service.debian
-FILE	53dc90b50877d2ed974ea81fb0fbdcbac84e189c0ac7fdcab7a966bb5e36b6e6	644	root	root	17425291	/usr/local/x-ui/bin/geoip.dat
 FILE	54028279298fb8a6caaf1f7b942a06ca569692702e9b768afcdc27a38500be76	644	root	root	400	/etc/fail2ban/filter.d/nagios.conf
 FILE	5581757cffc168ce5e1f60c37b95819ec51b7d31d4aa144603f0aaf4dff2ce9d	644	root	root	1657	/etc/fail2ban/action.d/hostsdeny.conf
 FILE	565eb63af5f0b21c6e5cc1fba258e4a93ff5e895e8ec74dc15202e082de6048b	644	root	root	199	/etc/fail2ban/filter.d/3x-ipl.conf
@@ -85,14 +81,11 @@ FILE	5be9ad2a154764d52ac5767f004abf3839d795aa15f015b8880bca9111b295fa	644	root	r
 FILE	5d7ec914599053b1038b76978a0ab6f2cb2fd98f5015b07cc4a438758c57eba7	644	root	root	1600	/etc/fail2ban/filter.d/named-refused.conf
 FILE	5de8168730529b4ea9f5e3c742adb8788426f267dcfb99a2f8cb29ca7e9bcd28	644	root	root	3226	/etc/fail2ban/action.d/bsd-ipfw.conf
 FILE	5df16fc6185defce4335e8ae50e53b0a8b46abb48edab91fcd5c97f04c97afd3	644	root	root	1890	/etc/fail2ban/action.d/mail-whois.conf
-FILE	60437579fbe247c3950d538b4fc37a0ea6f2db0fcacf2324ffca8f52b253045d	755	root	root	68841232	/usr/local/x-ui/x-ui
 FILE	615f73a840ccca37d5f347a529b226a72146f66075936b746fe182411c2315eb	644	root	root	260	/etc/fail2ban/filter.d/squid.conf
-FILE	6168fcedab04b3288c47a73436fa6b80f992b0e13f5ed90168182cc15137f809	755	root	root	3252	/usr/local/sbin/vpn-wiki-sync-cron
 FILE	61a0fbcf10f909da5e5ed3a32ef2d67a04882e203366e72ea8b4d8dffeda7847	644	root	root	236	/etc/fail2ban/filter.d/gitlab.conf
 FILE	62e07f3f0d00540fe495f8f5a90a3187d85bc178209e741d178cbffdaeb54ff9	644	root	root	1020	/etc/fail2ban/filter.d/apache-shellshock.conf
 FILE	6310505afa1b257e0ce7c6d3f562d48b0eb239d2a8651b160dfbe7a05c4aaed1	644	root	root	338	/etc/fail2ban/filter.d/directadmin.conf
 FILE	6423a7608985b226d2abf8fc85b19b682ba2c02be52a6c28c27a7348bfd26dab	644	root	root	547	/etc/fail2ban/filter.d/drupal-auth.conf
-FILE	64d46afb80adea1bf97a0d467e83f4a9ac1ebd0995891e84bca3f1a1d1affb1d	755	root	root	37720190	/usr/local/x-ui/bin/xray-linux-amd64
 FILE	6514230b6117ae8f41d9577f8e3ebc84912ca3fa0bc4273bc9d97c7136153de1	644	root	root	706	/etc/fail2ban/filter.d/slapd.conf
 FILE	66d047211b65359e2bb14cd9a841ea8aa6e00e4114fe00572ded4d7347295428	644	root	root	444	/etc/fail2ban/filter.d/webmin-auth.conf
 FILE	673fb531b74528cdf953b55784dc58c427a96cb2c8ceb7951cd568294410307f	644	root	root	1524	/etc/fail2ban/action.d/npf.conf
@@ -111,6 +104,7 @@ FILE	77b4155f2e981dfa21e3a8e1b266534a8733d3eef44d28364371804322107582	644	root	r
 FILE	7bcd2e9bacd42c42a38e3597b86c642f002938dc02026e20600227350a16301e	644	root	root	522	/etc/fail2ban/filter.d/botsearch-common.conf
 FILE	7c2c4d42937e20063eda47de3a6ba79ad8a9c538d2d201dab930482a20ad8c36	644	root	root	474	/etc/fail2ban/filter.d/nginx-bad-request.conf
 FILE	7cff43a9768c1112bb074e9f26aaa1173da6ef85a7a20838242e846835c8eeb2	644	root	root	180	/etc/nginx/proxy_params
+FILE	7d0f1a1395c02d25bde76e58c2895e80d3dc09336ded901f5aa3931b30c53e7c	600	root	root	465	/opt/remnanode/docker-compose.yml
 FILE	7dc1bdd68db20aee88fa618ee2e49acb35604c1199952421440afa0202b5b7ff	644	root	root	2379	/etc/fail2ban/action.d/ufw.conf
 FILE	823cdc8d9d0482565e2070042162304c0b10a1b2512333cc9ddd819380e41c8f	755	root	root	2391	/opt/server-maintenance/restart-containers-and-services.sh
 FILE	824693bbefca02ebfe3ba6e2c23cfd077672b252d6a489ea2e0148f5a2c13aba	644	root	root	2715	/etc/fail2ban/action.d/blocklist_de.conf
@@ -118,11 +112,8 @@ FILE	8308107be2c5277a873dac9428f1be71df08f6266b735cf0e4d3c61373460a8a	644	root	r
 FILE	8493091ae4a04bd3ebc0d702f476d9a73f098217531b4a9a67da67152ffa0913	644	root	root	242	/etc/fail2ban/filter.d/portsentry.conf
 FILE	84ea809bef4fcbf62e721cbd1ed489eea67017d135995241f759eb39734a1967	644	root	root	1163	/etc/fail2ban/filter.d/proftpd.conf
 FILE	861ba75cbae453f9acd2690e531b309e7e261ef790d154c64691b4358a7aa624	644	root	root	521	/etc/fail2ban/filter.d/xinetd-fail.conf
-FILE	8669748361612b2ee17f2d03ffc43520c91ef39b0cb343712608bfc965ab518c	644	root	root	394	/usr/local/x-ui/x-ui.service.rhel
 FILE	88c887a3ca69881f1f8c89b7ab23883a46f6047e777742c295b8d16087668230	644	root	root	388	/etc/fail2ban/filter.d/grafana.conf
 FILE	88d1a1f168c22f0c7dcf7315171a9a8426275a5a2d62cc43e77fd6a65f13640f	644	root	root	278	/etc/fail2ban/filter.d/phpmyadmin-syslog.conf
-FILE	88d2d773bb104436ea894f7fb32ce47ab2470a56b59a91a1b1e97e14b22848cb	644	root	root	17386434	/usr/local/x-ui/bin/geoip_IR.dat
-FILE	8923e0d696dfbe81197355db1720402ad00e26d346df9283b1e76f3d9af5d3e5	755	root	root	13668514	/usr/local/x-ui/bin/mtg-linux-amd64
 FILE	9263e4a34ed78a91a7eebff3bb560e47d136032158072f77ccbf1443c8c7dc42	644	root	root	1146	/etc/fail2ban/filter.d/zoneminder.conf
 FILE	953390cc97f443669ac3110a0c7c53c5ddc6245900fdaa49589c5aec04c2f2d7	644	root	root	1493	/etc/fail2ban/action.d/netscaler.conf
 FILE	96118ea914bca63577d46c26495125a80408dae54c9eae608e2d593cdf9fe195	644	root	root	290	/etc/cron.d/vpn-wiki-sync
@@ -130,17 +121,14 @@ FILE	963f7c1182b6af44f4b752ada135445eeb3d19b3572bda6b0f2c5df879c3a2d3	644	root	r
 FILE	9688818a9e49196465f9e690ec1d255269890067b22432beb2c97f612db2dc6a	644	root	root	1055	/etc/fail2ban/action.d/sendmail-whois-ipjailmatches.conf
 FILE	96f6bd77e781eca342af9c50922b3cb10f92fb42a406e12ac32bf87b6ef19b01	644	root	root	1246	/etc/fail2ban/filter.d/apache-noscript.conf
 FILE	9a00dc85b5fa4f1374449784c9c7247edac4a994d13d7462cf507d38ed549db2	644	root	root	3492	/etc/fail2ban/filter.d/assp.conf
-FILE	9bd7b3609769d14ad2a43894bd1d0d911f39e34c3a3ad9ed6e10b7832b5d77fd	644	root	root	18872839	/usr/local/x-ui/bin/geoip_RU.dat
 FILE	9c552cb2fb83e42081486f898a5a3104736547c1c8432ad32cd754c6612b4c64	644	root	root	384	/etc/fail2ban/action.d/nftables-multiport.conf
 FILE	9c62527062adb4bdac8ce182e00acc71720040f87bcf2e0d12898b5873998fb2	644	root	root	2279	/etc/fail2ban/filter.d/mongodb-auth.conf
 FILE	9c87158d9c4a8b11e4c3ac6af335a7b75fa80144a3e2919247107b4f26261747	644	root	root	2875	/etc/fail2ban/filter.d/exim.conf
 FILE	9c9f6b0f64cb248adb45461d483c94900151b0e0d50737d32acff53657f690b5	644	root	root	497	/etc/fail2ban/action.d/osx-afctl.conf
 FILE	9cf71169b33d4ac22080ed7881b6cd600ea5237a423a48153ecb7fa9d3393fda	644	root	root	795	/etc/fail2ban/filter.d/qmail.conf
 FILE	9d9548dc5e7e81283ba4de38ff19770f66cd7051143980f0e40139fcf7b63ad6	644	root	root	2831	/etc/fail2ban/filter.d/apache-badbots.conf
-FILE	9e16fd5150ef7e0615f02badb14759caae8236159992844f90b3e545ca84c6b8	644	root	root	7649244	/usr/local/x-ui/bin/geosite_IR.dat
 FILE	a3d7d2062da7e94e896108ff0d3bc8117df87c035c487a35052d30a42c16de43	644	root	root	495	/etc/fail2ban/filter.d/openwebmail.conf
 FILE	a447d5fd0734ebebb94e3e4a62c41c20e2faa926871b7f9535d296695b665628	644	root	root	130	/etc/fail2ban/jail.d/3x-ipl.conf
-FILE	a4e23eadbfb4880bc3070e1434a33b61927a2c77bc1a597f0f0347be28efb5ea	644	root	root	10572431	/usr/local/x-ui/bin/geosite.dat
 FILE	a568abcd9ee0366548326fd75fae8b87eab883404b30a4c4155c3e533468b09a	644	root	root	354	/etc/fail2ban/filter.d/scanlogd.conf
 FILE	a63722543a7cc005f1a7c323f6d9c6d5031535de4ef4dc6d24d7542c591a8d82	644	root	root	6318	/etc/fail2ban/action.d/nftables.conf
 FILE	a9dd98bf9631d727f0a846a9c7f4fe6193468a714c782df26d5cc9a7756411f2	644	root	root	423	/etc/nginx/snippets/fastcgi-php.conf
@@ -163,10 +151,10 @@ FILE	c58dceba554b19ceff366af194dda2da88f0f98daa83b3ec4817904ec4df3ef2	644	root	r
 FILE	c7cfb457f34d43a31daf84ef379362368576b2d528ae90a22f09816e5f901d86	644	root	root	2738	/etc/fail2ban/action.d/iptables-common.conf
 FILE	c90a81ff585cc3dda46831d93fcf2c4bde799ddf2374156c7e60aae982245093	644	root	root	244	/etc/fail2ban/filter.d/counter-strike.conf
 FILE	c92091b56bbc4f11b185e6e2178345b92cbb779fe20067a4bf9863ca0e3c9c20	644	root	root	512	/etc/fail2ban/filter.d/courier-smtp.conf
+FILE	ca0fcad64ab5bc7cb10736ede3ccbb960ef12fb5178ea41e8c4ba2d29c314405	644	root	root	282	/etc/sysctl.d/99-hysteria2-performance.conf
 FILE	cab4849913f8af8259c534aa615697c76dc6ce16d7afeac9d7cbee9166ea2f4f	644	root	root	131	/etc/fail2ban/jail.local
 FILE	ce0901350a021608139b5639cf4ccd7717bef8c3a9e4f79031eb46386b67b03f	644	root	root	2412	/etc/nginx/sites-available/default
 FILE	cf80d637f26378a551ed03e6d052909a2bd025d305b81432baeaac35251b6d64	644	root	root	191	/etc/fail2ban/filter.d/squirrelmail.conf
-FILE	cfabcd4af35a3646c374ea0ccba5178f4c0d3135f699277fc8d8b810158e85c0	755	root	root	134792	/usr/local/x-ui/x-ui.sh
 FILE	d1644ada338af135b37bfac1e7b2086fda61a22f1be30954a8c2b239008d145e	644	root	root	938	/etc/fail2ban/filter.d/kerio.conf
 FILE	d37c74fa8c0a897f6e17eb01aab926b4bd1545ec16edccf554b1569beac85bcd	644	root	root	332	/etc/fail2ban/action.d/iptables-new.conf
 FILE	d8db71e6618819b27e9bf4d3da6972d11f6d2deb3374fc00402a9b573181a231	644	root	root	3016	/etc/fail2ban/fail2ban.conf
@@ -210,7 +198,6 @@ FILE	f6d1875e3565f9dd89450497647ee80eada04c886c851077232924f050e41151	644	root	r
 FILE	f754437d6e66255da7c43fc089380b9aaacc605adf00278fa1cdcba3c4bd082d	644	root	root	1619	/etc/fail2ban/filter.d/apache-common.conf
 FILE	f95b461705cf13dce7d15358b9a8f161cf79d43b23ab49696218d2d89a2081e4	644	root	root	193	/etc/fail2ban/jail.d/00-sshd-safe.local
 FILE	fa8349d841b51e9bdb1930a02f1d2686d2597eb01ed8bde247fa9f91640e2c5a	644	root	root	821	/etc/fail2ban/filter.d/screensharingd.conf
-FILE	fc7ff98ed3f891a60d5f9b4a296bfe95f81235b78ee2b7d0ebc87dd72210f643	644	root	root	73931054	/usr/local/x-ui/bin/geosite_RU.dat
 FILE	fe04d6d67030901be24e5783cc3eb4ee758eac8836c1730dc8af99c3a8462131	644	root	root	2156	/etc/fail2ban/action.d/shorewall.conf
 FILE	ff552c20887c7b5a11478e84e62f312c2e6dfaa2a41dfbb156c753dc0bc0e717	644	root	root	773	/etc/fail2ban/action.d/iptables-ipset-proto6.conf
 # format: TYPE<TAB>SHA256<TAB>MODE<TAB>OWNER<TAB>GROUP<TAB>SIZE<TAB>PATH
@@ -218,5 +205,5 @@ FILE	ff552c20887c7b5a11478e84e62f312c2e6dfaa2a41dfbb156c753dc0bc0e717	644	root	r
 # host: azazello
 LINK	0c9625bc44677152876d5eed1d4a047e616004ef25da5d3af59a72f9e331aab9	777	root	root	34	/etc/nginx/sites-enabled/default -> /etc/nginx/sites-available/default
 LINK	9935dfa86f29ac4c550ae52fa7b130eb3598e6b118a9ca655927e5810f74c954	777	root	root	50	/etc/nginx/modules-enabled/50-mod-stream.conf -> /usr/share/nginx/modules-available/mod-stream.conf
-MISSING	-	-	-	-	-	/usr/local/etc/xray
+MISSING	-	-	-	-	-	/home/azzzi/proxy/Signal-TLS-Proxy/docker-compose.yml
 # vpn-config-audit current hash list

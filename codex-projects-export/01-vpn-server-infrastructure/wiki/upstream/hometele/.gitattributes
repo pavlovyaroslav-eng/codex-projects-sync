@@ -1,0 +1,3 @@
+*.sh text eol=lf
+*.paths text eol=lf
+scripts/* text eol=lf

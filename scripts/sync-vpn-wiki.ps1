@@ -26,16 +26,36 @@ function Write-WikiLog {
 }
 
 function Invoke-Git {
-    param([string[]]$Arguments, [string]$WorkingDirectory)
-    $previous = $ErrorActionPreference
-    try {
-        $ErrorActionPreference = 'Continue'
-        $output = @(& $GitExe -C $WorkingDirectory @Arguments 2>&1)
-        $exitCode = $LASTEXITCODE
-    }
-    finally {
-        $ErrorActionPreference = $previous
-    }
+    param(
+        [string[]]$Arguments,
+        [string]$WorkingDirectory,
+        [ValidateRange(1, 6)][int]$MaxAttempts = 1,
+        [ValidateRange(1, 60)][int]$RetryDelaySeconds = 5
+    )
+
+    $attempt = 0
+    do {
+        $attempt++
+        $previous = $ErrorActionPreference
+        try {
+            $ErrorActionPreference = 'Continue'
+            $output = @(& $GitExe -C $WorkingDirectory @Arguments 2>&1)
+            $exitCode = $LASTEXITCODE
+        }
+        finally {
+            $ErrorActionPreference = $previous
+        }
+
+        if ($exitCode -eq 0 -or $attempt -ge $MaxAttempts) { break }
+        $combinedOutput = $output -join "`n"
+        $isTransientNetworkFailure = $combinedOutput -match '(?i)(could not resolve|temporary failure|timed out|connection reset|connection refused|network is unreachable|no route to host|remote end hung up)'
+        if (-not $isTransientNetworkFailure) { break }
+
+        $delay = $RetryDelaySeconds * $attempt
+        Write-WikiLog "Временная сетевая ошибка Git; повтор $($attempt + 1) из $MaxAttempts через $delay с." 'WARN'
+        Start-Sleep -Seconds $delay
+    } while ($attempt -lt $MaxAttempts)
+
     if ($exitCode -ne 0) {
         throw "Git-команда завершилась с кодом ${exitCode}: git $($Arguments -join ' ')"
     }
@@ -220,8 +240,8 @@ try {
     $prepared = Join-Path $tempRoot 'upstream'
     New-Item -ItemType Directory -Path $prepared -Force | Out-Null
 
-    Invoke-Git -WorkingDirectory $tempRoot -Arguments @('clone', '--no-checkout', '--', $RemoteUrl, $cloneRoot) | Out-Null
-    Invoke-Git -WorkingDirectory $cloneRoot -Arguments @('fetch', '--prune', 'origin', '+refs/heads/*:refs/remotes/origin/*') | Out-Null
+    Invoke-Git -WorkingDirectory $tempRoot -Arguments @('clone', '--no-checkout', '--', $RemoteUrl, $cloneRoot) -MaxAttempts 4 | Out-Null
+    Invoke-Git -WorkingDirectory $cloneRoot -Arguments @('fetch', '--prune', 'origin', '+refs/heads/*:refs/remotes/origin/*') -MaxAttempts 4 | Out-Null
 
     foreach ($branch in $Branches) {
         $branchRoot = Join-Path $prepared $branch
