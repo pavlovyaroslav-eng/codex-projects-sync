@@ -26,7 +26,7 @@ www — отдельный VPS для Matrix, командного агента,
 
 | Сервер | Роль | Ключевые сервисы | Главная осторожность |
 |---|---|---|---|
-| `azazello` | CZ выход в интернет | 3x-ui, Xray, WARP outbound, VLESS Reality, Hysteria, MTProto, fail2ban | Не трогать секреты 3x-ui/Xray без backup |
+| `azazello` | CZ выход в интернет | Remnawave Node, Hysteria2 bridge, Amnezia AWG, MTProto, nginx, fail2ban | Не восстанавливать удалённый 3x-ui поверх Remnawave Node |
 | `hometele` | RU входная точка каскада | Xray, nginx-заглушка, Postfix, fail2ban, OpenVPN, WireGuard | `443/tcp` занят Xray Reality |
 | `www` | Matrix / агент / мониторинг | Synapse, Coturn, nginx, synapse-admin, command-agent, AI bot | Не давать агенту полный root shell |
 
@@ -56,10 +56,11 @@ mail.hometele.com.ru  — почта
 ### `azazello.raxla.org`
 
 ```text
-Панель 3x-ui: https://azazello.raxla.org:2020/azzzi/panel/
+Legacy 3x-ui удалён при переходе на Remnawave; порт 2020 не используется.
 ```
 
-Нюанс: при SSH-туннеле на панель `http://127.0.0.1:12020/` отдавал редирект `307` на HTTPS. Рабочая схема — открывать HTTPS URL панели.
+Управление пользователями и профилями выполняется через центральную панель
+Remnawave. Старые адрес и SSH-туннель панели 3x-ui не восстанавливать.
 
 ---
 
@@ -67,73 +68,45 @@ mail.hometele.com.ru  — почта
 
 ### Роль
 
-Чешский VPS. Основной выход “в мир” и узел с 3x-ui/Xray.
+Чешский VPS. Основной зарубежный выход и узел Remnawave Node.
 
 ### Сервисы
 
 ```text
-3x-ui
-xray
-nginx
-fail2ban
-docker, если используется
-mtproto-telegram container
+remnanode container — Remnawave Node 3.4.1
+amnezia-awg2 container — параллельный Amnezia AWG
+mtproto-telegram container — Telegram MTProto
+nginx — HTTP-заглушка
+fail2ban — sshd, recidive, ufw-portscan
 cron maintenance
 ```
 
-### Xray / 3x-ui
+### Remnawave Node
 
 ```text
-3x-ui: 3.2.7
-Xray: 26.6.1 / актуальная версия по серверу на момент аудита
-API inbound: 127.0.0.1:62789 dokodemo-door
-VLESS Reality: 443/tcp
-Дополнительный VLESS Reality: 45954/tcp
-Hysteria/Hysteria2: по актуальному конфигу 3x-ui
+container: remnanode
+image: remnawave/node:3.4.1
+runtime: rw-core внутри контейнера
+Hysteria2 bridge: 24443/udp
+3x-ui/x-ui host service: removed
+host-level xray service: removed
 ```
 
-### Inbounds без секретов
+Публичные профили и пользователи управляются центральной панелью Remnawave.
+Токены узла, UUID и клиентские параметры в WIKI не сохранять.
+
+### Актуальные слушатели без секретов
 
 ```text
-api              127.0.0.1:62789  dokodemo-door
-vless-443        0.0.0.0:443       vless + tcp + reality
-vless-45954      0.0.0.0:45954     vless + tcp + reality
-hysteria-443     0.0.0.0:443       hysteria + tls
+80/tcp      nginx
+9443/tcp    mtproto-telegram
+24443/udp   rw-core / Remnawave Node
+39425/udp   amnezia-awg2
+52000/tcp   SSH
 ```
 
-> Примечание: если одновременно фигурируют TCP/443 и Hysteria на 443, обязательно проверять фактические слушатели через `ss -lntup` и актуальный runtime Xray/3x-ui. Не делать вывод только по старому выгруженному JSON.
-
-### Outbounds
-
-```text
-direct   — freedom
-blocked  — blackhole
-warp     — wireguard / Cloudflare WARP
-IPv4     — freedom UseIPv4
-```
-
-### Routing
-
-```text
-geoip:private       -> blocked
-protocol bittorrent -> blocked
-RU domains          -> direct
-geoip:ru            -> direct
-ext:geoip_RU.dat:ru -> direct
-geosite:google      -> IPv4
-geosite:openai      -> warp
-198.18.0.0/16       -> direct
-default tcp,udp     -> warp
-```
-
-RU direct domains:
-
-```text
-ya.ru, yandex.ru, ozon.ru, wb.ru, wildberries.ru, mail.ru,
-sberbank.ru, gosuslugi.ru, mos.ru, russianpost.ru, avito.ru,
-sber.ru, vkusvill.ru, lenta.ru, rbc.ru, kinopoisk.ru,
-regexp:.*\.ru$, regexp:.*\.xn--p1ai$, regexp:.*\.su$
-```
+Состояние зафиксировано 2026-09-13. Не делать вывод по старым выгрузкам 3x-ui;
+проверять `docker inspect remnanode` и фактические слушатели через `ss`.
 
 ### MTProto Telegram proxy
 

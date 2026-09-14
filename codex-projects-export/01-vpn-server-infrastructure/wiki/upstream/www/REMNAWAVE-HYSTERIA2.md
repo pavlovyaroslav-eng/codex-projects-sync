@@ -1,6 +1,6 @@
 # Remnawave + Hysteria2 infrastructure
 
-Status date: 2026-09-08
+Status date: 2026-09-11
 
 This document describes the production replacement of the former host-level
 Xray/3x-ui cascade. It intentionally contains no passwords, API tokens,
@@ -25,18 +25,21 @@ subscription identifiers, UUIDs, private keys, or client credentials.
                 +-------------+-------------+
                 |                           |
        Hysteria2 / UDP/443       VLESS Reality / TCP/443
-          preferred path          automatic fallback
+        optional fast path          stable default
                 |                           |
                 +--------- hometele.com.ru--+
                               ^
                               |
-                       Hiddify `Auto`
+                 Hiddify stable selector
 ```
 
-The client sees one host only: `hometele.com.ru`. Hiddify automatically tests
-Hysteria2 and Reality and normally prefers Hysteria2. Remnawave/Xray on
-hometele selects either the local `direct` outbound or the private Hysteria2
-bridge to azazello. Users never choose azazello themselves.
+The client sees one host only: `hometele.com.ru`. Mobile and desktop Hiddify
+profiles use VLESS Reality over TCP as the stable default. Hysteria2 remains
+available as an optional fast path, and `Auto (30s)` tests both transports with
+a 250 ms tolerance and interrupts stale connections when the selected outbound
+changes. Remnawave/Xray on hometele selects either the local `direct` outbound
+or the private Hysteria2 bridge to azazello. Users never choose azazello
+themselves.
 
 The private Windows overlay is separate from the proxy path:
 
@@ -161,9 +164,11 @@ full URL in Git or shared documentation. Copy it from the user row in the
 Remnawave panel.
 
 The Hiddify response rule emits native Sing-box JSON and contains one
-Hysteria2 outbound, one VLESS Reality outbound and an `Auto` URL-test group.
-The TUN MTU is `1280`. The client template also contains direct bypass rules
-for:
+Hysteria2 outbound, one VLESS Reality outbound and an `Auto (30s)` URL-test
+group. The outer selector defaults explicitly to Reality. The URL-test interval
+is 30 seconds, tolerance is 250 ms, and transport changes interrupt stale
+inbound connections. The TUN MTU is `1280`. The subscription update interval
+is one hour. The client template also contains direct bypass rules for:
 
 ```text
 100.64.0.0/10
@@ -183,6 +188,13 @@ distributed separately and is not stored in this Git repository.
 4. Assign the user to `hometele-users`.
 5. Create the user and use the link icon in the user row to copy the subscription URL.
 6. Import that unchanged URL into Hiddify and update the profile.
+
+For the 2026-09-11 mobile stability change, existing clients must refresh the
+profile once. The subscription response header `profile-title` is encoded by
+Remnawave from `rwEncodeBase64:Yar$$VPN`, so the profile card and the selected
+mode should both be displayed as `Yar$$VPN` after refresh;
+Reality is the default. Users may select `Auto (30s)` or Hysteria2 manually if
+their current network handles UDP reliably.
 
 Do not assign ordinary users to `hometele-azazello-bridge`.
 
@@ -304,6 +316,11 @@ The former host-level Xray service and configuration were removed from
 hometele. The former x-ui data, executable and UDP/443 redirect service were
 removed from azazello. The Xray-core embedded in Remnawave Node is part of the
 new architecture and must not be removed.
+
+The remaining live 3x-ui source tree, client-sync cron, logs, Fail2Ban rules and
+unused container image were removed from azazello on 2026-09-13. Recovery
+archives and the legacy-lock scripts remain intentionally; see
+[`notes/azazello-legacy-cleanup-2026-09-13.md`](notes/azazello-legacy-cleanup-2026-09-13.md).
 
 Current targeted rollback entry points:
 

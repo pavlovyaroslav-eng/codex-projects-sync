@@ -9,8 +9,68 @@
 - после полного завершения процесса, удаления `tun0` и чистого запуска клиент подключается без ошибки;
 - установлен безопасный локальный launcher, который при неудачном старте освобождает TUN и выполняет один контролируемый повтор;
 - AmneziaWG на `azazello` работает; клиентская ошибка 305 относится к SSH management-доступу, а не к UDP-туннелю.
+- общие мобильные разрывы локализованы в Hysteria2/QUIC после сна или смены сети, а не в серверной перегрузке;
+- Hiddify-профиль переведён на Reality/TCP по умолчанию, `Auto (30s)` оставлен как дополнительный режим.
 
 Секреты, subscription token, UUID и ключи в документ не включены.
+
+## Общие мобильные разрывы — 22:01 MSK
+
+Серверный аудит не выявил постоянного отказа:
+
+- `remnanode` на обоих узлах имеет `RestartCount=0`, OOM не было;
+- входные UDP-сокеты имели нулевые очереди и `d0`;
+- за тестовое окно `UdpInErrors`, `UdpRcvbufErrors`, `UdpSndbufErrors`,
+  `IpOutDiscards` и qdisc drops не выросли;
+- полная deep-проверка панели, подписки, узлов, маршрутов Telegram и
+  Hysteria2 прошла без ошибок.
+
+При этом прежний Sing-box шаблон использовал Hysteria2 через `Auto` с
+интервалом проверки 3 минуты и `interrupt_exist_connections=false`. Это
+оставляло мобильный клиент на устаревшей QUIC-сессии после сна телефона или
+смены Wi-Fi/LTE. Симптом совпадает с известной upstream-проблемой Xray
+Hysteria2 26.6.x; установленный rw-core 26.7.28 не устраняет её на уровне
+конфигурации.
+
+Применён клиентский шаблон:
+
+```text
+selector: Yar$$VPN
+subscription profile-title: Yar$$VPN (Remnawave value rwEncodeBase64:Yar$$VPN)
+default: VLESS Reality / TCP 443
+optional: Auto (30s), Hysteria2 / UDP 443
+urltest interval: 30s
+urltest tolerance: 250ms
+interrupt existing connections: true
+TUN MTU: 1280
+profile update interval: 1h
+```
+
+Hysteria2 не удалена и остаётся доступна вручную. Значение MTU не повышалось:
+DF-пакеты с payload 1200 и 1400 байт проходят между входным и выходным узлами,
+а повышение TUN MTU на мобильных сетях увеличило бы риск фрагментации.
+
+Контроль после изменения:
+
+| Транспорт | Успешно | Потери HTTP | Среднее | p95 | Скорость |
+|---|---:|---:|---:|---:|---:|
+| Hysteria2 | 80/80 | 0% | 0.3529 s | 0.6108 s | 7.59 Mbit/s |
+| VLESS Reality | 80/80 | 0% | 0.4630 s | 0.8418 s | 8.34 Mbit/s |
+
+Отчёт: `/opt/vpn-migration/reports/vpn-transport-monitor-20260911-220301.json`.
+Между `hometele` и `azazello` в симметричном 60-секундном DF-тесте было 2%
+ICMP loss на payload 1200 и 1% на payload 1400. Это внешний маршрут, но
+прикладные проверки обоих VPN-транспортов дали 0% потерь.
+
+Backup и rollback шаблона:
+
+```text
+/root/remnawave-hiddify-mobile-stability-backups/20260911-220529/
+```
+
+Каталог содержит полный `pg_dump`, исходный шаблон, исходные subscription
+settings и готовые rollback payloads. Полные данные имеют режим `0600` и не
+копируются в Git.
 
 ## Серверные измерения
 

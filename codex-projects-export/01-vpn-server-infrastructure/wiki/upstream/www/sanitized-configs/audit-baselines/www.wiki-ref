@@ -1,5 +1,5 @@
 host=www
-accepted_at=2026-09-11T21:16:38+03:00
-wiki_ref=56ba3bc12e11926756bf258d15774ef999dd8133
-wiki_subject=ops: support baseline refresh on VPN nodes
-rollback=/opt/vpn-migration/rollback/audit-baseline-www-20260911-211545
+accepted_at=2026-09-13T09:31:41+03:00
+wiki_ref=10d52ddb2022df6fd56f3cdd52d8404e41aec2f3
+wiki_subject=vpn: set Hiddify profile title to Yar$$VPN
+rollback=/opt/vpn-migration/rollback/audit-baseline-www-20260913-093049

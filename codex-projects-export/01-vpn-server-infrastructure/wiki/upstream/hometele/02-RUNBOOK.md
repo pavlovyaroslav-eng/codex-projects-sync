@@ -1,6 +1,6 @@
 # 02-RUNBOOK — VPN Server
 
-Дата актуализации: 2026-09-08
+Дата актуализации: 2026-09-13
 Проект: **VPN сервер**  
 Назначение: короткие рабочие инструкции для проверки, ремонта и эксплуатации.
 
@@ -65,13 +65,19 @@ sudo ss -u -a -n -p -m | grep ':24443'
 2. Создать пользователя в разделе **Users**.
 3. Назначить squad `hometele-users`.
 4. Скопировать subscription URL из строки пользователя.
-5. Обновить профиль в Hiddify; в нём должны быть `Auto`, Hysteria2, Reality и MTU `1280`.
+5. Обновить профиль в Hiddify; карточка профиля и основной селектор должны называться `Yar$$VPN`, в нём должны быть `Auto (30s)`, Hysteria2, Reality и MTU `1280`. Транспорт по умолчанию — Reality. Заголовок подписки `profile-title` задаётся как `rwEncodeBase64:Yar$$VPN`.
 
 Обычным пользователям не назначать squad `hometele-azazello-bridge`. Полные
 subscription URL, UUID и учётные данные панели в WIKI не сохранять.
 
 Результаты контрольного измерения 2026-09-08 находятся в
 [`notes/vpn-monitoring-2026-09-08.md`](notes/vpn-monitoring-2026-09-08.md).
+
+При жалобах мобильных клиентов после сна или смены Wi-Fi/LTE не повышать MTU
+без доказанной фрагментации. Сначала обновить профиль и убедиться, что выбран
+`Yar$$VPN` с Reality. Xray Hysteria2 26.7.28 может удерживать
+устаревшую QUIC-сессию до тайм-аута; `Auto (30s)` предназначен для сетей, где
+UDP работает устойчиво.
 
 ---
 
@@ -234,19 +240,18 @@ Czech exit IP: 91.242.163.206
 ## 8. Проверить `azazello`
 
 ```bash
-systemctl status xray --no-pager -l || true
-systemctl status x-ui --no-pager -l || true
+docker inspect -f '{{.Name}} {{.State.Status}} restarts={{.RestartCount}}' remnanode
+docker inspect -f '{{.Name}} {{.State.Status}} restarts={{.RestartCount}}' amnezia-awg2
 systemctl status nginx --no-pager -l || true
 systemctl status fail2ban --no-pager -l || true
-ss -lntup | egrep ':443|:45954|:9443|:2020|:62789' || true
-journalctl -u xray -n 120 --no-pager || true
+fail2ban-client -t
+fail2ban-client status
+ss -lntup | egrep ':80|:9443|:24443|:39425|:52000' || true
 ```
 
-3x-ui панель:
-
-```text
-https://azazello.raxla.org:2020/azzzi/panel/
-```
+3x-ui и host-level `xray.service` удалены. Их отсутствие штатно; управление
+выполняется через центральную панель Remnawave. Не восстанавливать порт 2020 и
+jail `3x-ipl`.
 
 ---
 
@@ -326,6 +331,13 @@ fail2ban-client unban IP
 ```bash
 fail2ban-client reload
 ```
+
+На `azazello` после удаления 3x-ui файлы jail, filter и action `3x-ipl`
+удалены из `/etc/fail2ban`: их прежний logpath `/var/log/x-ui/3xipl.log`
+больше не существует. Перед restart всегда выполнять `fail2ban-client -t`.
+См. отчёты
+[`notes/fail2ban-azazello-2026-09-13.md`](notes/fail2ban-azazello-2026-09-13.md)
+и [`notes/azazello-legacy-cleanup-2026-09-13.md`](notes/azazello-legacy-cleanup-2026-09-13.md).
 
 Whitelist файл:
 

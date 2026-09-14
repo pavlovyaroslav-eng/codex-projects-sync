@@ -12,6 +12,8 @@ REMNAWAVE-HYSTERIA2.md
 HOMEMESH-USER-ONBOARDING.md
 notes/vpn-stability-2026-09-11.md
 notes/vpn-monitoring-2026-09-08.md
+notes/fail2ban-azazello-2026-09-13.md
+notes/azazello-legacy-cleanup-2026-09-13.md
 scripts/collect-inventory.sh
 scripts/vpn-config-baseline-refresh
 scripts/vpn-wiki-sync-cron

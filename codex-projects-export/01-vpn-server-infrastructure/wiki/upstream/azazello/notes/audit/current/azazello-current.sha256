@@ -71,7 +71,6 @@ FILE	4fc31e96fecb720acb9d5412b0cb45c4b3258727d1b813b02a02ea108d2e7894	644	root	r
 FILE	4fd3cd0af17833297b7dc0152baa3d1c703a7c2d1b34b68d038f7d99148af9eb	644	root	root	538	/etc/fail2ban/filter.d/selinux-common.conf
 FILE	54028279298fb8a6caaf1f7b942a06ca569692702e9b768afcdc27a38500be76	644	root	root	400	/etc/fail2ban/filter.d/nagios.conf
 FILE	5581757cffc168ce5e1f60c37b95819ec51b7d31d4aa144603f0aaf4dff2ce9d	644	root	root	1657	/etc/fail2ban/action.d/hostsdeny.conf
-FILE	565eb63af5f0b21c6e5cc1fba258e4a93ff5e895e8ec74dc15202e082de6048b	644	root	root	199	/etc/fail2ban/filter.d/3x-ipl.conf
 FILE	57a71d409b1e78b631b62abcb6cf4ecc98e6532faf46c68ec9a3ba7e641be3da	755	root	root	1363	/opt/server-maintenance/weekly-apt-upgrade.sh
 FILE	593e050f386ec039447a398a18116b382b25a5693bf00a8e9c852fd20020c6f8	644	root	root	404	/etc/fail2ban/filter.d/horde.conf
 FILE	595071066fd7791f264d316ebc33b6c75c2201a1288c8edd81cd8fc561727d9d	644	root	root	1980	/etc/fail2ban/action.d/iptables-ipset-proto4.conf
@@ -99,7 +98,6 @@ FILE	6c59ab4a2b0c1b33b69d687ca1bef998aebbcf89408ff1335599bbd8b342f6d3	644	root	r
 FILE	6ccc35650f6b83ed8587071ad0bbe3e766aec329d17fe067b0775f374caed770	644	root	root	1000	/etc/fail2ban/action.d/sendmail-whois-matches.conf
 FILE	6da900656125cb7326cc8e11a6badcb89fddcabe63e626f6647b207bdfb3b6f0	644	root	root	4790	/etc/fail2ban/action.d/iptables.conf
 FILE	6dd90220c3f8fd01b460fb305c872e1b9f282450f2c768f4bbb87bd5315ffb44	644	root	root	72	/etc/fail2ban/filter.d/ufw-portscan.conf
-FILE	740ac74040edcdfd0aaff3a5786a158a0b7314d967954ff49acf3ab8d3ab1ff4	644	root	root	1174	/etc/fail2ban/action.d/3x-ipl.conf
 FILE	77b4155f2e981dfa21e3a8e1b266534a8733d3eef44d28364371804322107582	644	root	root	534	/etc/fail2ban/filter.d/exim-common.conf
 FILE	7bcd2e9bacd42c42a38e3597b86c642f002938dc02026e20600227350a16301e	644	root	root	522	/etc/fail2ban/filter.d/botsearch-common.conf
 FILE	7c2c4d42937e20063eda47de3a6ba79ad8a9c538d2d201dab930482a20ad8c36	644	root	root	474	/etc/fail2ban/filter.d/nginx-bad-request.conf
@@ -128,7 +126,6 @@ FILE	9c9f6b0f64cb248adb45461d483c94900151b0e0d50737d32acff53657f690b5	644	root	r
 FILE	9cf71169b33d4ac22080ed7881b6cd600ea5237a423a48153ecb7fa9d3393fda	644	root	root	795	/etc/fail2ban/filter.d/qmail.conf
 FILE	9d9548dc5e7e81283ba4de38ff19770f66cd7051143980f0e40139fcf7b63ad6	644	root	root	2831	/etc/fail2ban/filter.d/apache-badbots.conf
 FILE	a3d7d2062da7e94e896108ff0d3bc8117df87c035c487a35052d30a42c16de43	644	root	root	495	/etc/fail2ban/filter.d/openwebmail.conf
-FILE	a447d5fd0734ebebb94e3e4a62c41c20e2faa926871b7f9535d296695b665628	644	root	root	130	/etc/fail2ban/jail.d/3x-ipl.conf
 FILE	a568abcd9ee0366548326fd75fae8b87eab883404b30a4c4155c3e533468b09a	644	root	root	354	/etc/fail2ban/filter.d/scanlogd.conf
 FILE	a63722543a7cc005f1a7c323f6d9c6d5031535de4ef4dc6d24d7542c591a8d82	644	root	root	6318	/etc/fail2ban/action.d/nftables.conf
 FILE	a9dd98bf9631d727f0a846a9c7f4fe6193468a714c782df26d5cc9a7756411f2	644	root	root	423	/etc/nginx/snippets/fastcgi-php.conf
