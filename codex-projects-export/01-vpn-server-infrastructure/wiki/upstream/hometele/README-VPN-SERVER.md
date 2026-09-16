@@ -30,7 +30,7 @@ www — Remnawave Panel, подписки, Matrix/Synapse и мониторин�
 
 | Сервер | Роль | Ключевые функции |
 |---|---|---|
-| `azazello` | Чехия, выбранный зарубежный выход | Remnawave Node `3.4.1`, Xray-core `26.7.28`, Hysteria2 bridge UDP/24443; Amnezia и MTProto работают отдельно |
+| `azazello` | Словакия по актуальной IP-геолокации, зарубежный выход | Remnawave Node `3.4.1`, Xray-core `26.7.28`, Hysteria2 bridge UDP/24443; Amnezia и MTProto работают отдельно |
 | `hometele` | Россия, входная точка для клиентов | Remnawave Node `3.4.1`, Hysteria2 UDP/443, Reality за Nginx stream, Headscale/HomeMesh |
 | `www` | Управление и мониторинг | Remnawave Panel `3.4.3`, Subscription Page `8.0.0`, Matrix/Synapse, healthcheck/deepcheck |
 
@@ -72,7 +72,9 @@ https://azazello.raxla.org:2020/azzzi/panel/
 
 ### Роль
 
-`azazello` — чешский VPS, основной шлюз “в мир”. На нём стоит 3x-ui/Xray. Через него уходит внешний трафик каскада.
+`azazello` — зарубежный VPS, который актуальные IP-базы определяют как
+Словакию. В старых документах он назывался чешским. Через него уходит внешний
+трафик каскада. Описание 3x-ui ниже является историческим.
 
 ### Основные компоненты
 

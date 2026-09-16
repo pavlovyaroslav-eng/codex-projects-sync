@@ -130,19 +130,21 @@ Routing is server-side and is stored as dedicated lists under:
 /opt/vpn-migration/configs/routing/telegram-networks.json
 ```
 
-Selected foreign domains include YouTube/GoogleVideo, Telegram, OpenAI,
-Discord and other maintained entries. Russian services and the default
-catch-all leave directly through hometele, except for explicit foreign-list
-overrides. Private destinations and BitTorrent are blocked. IPv6 egress is
-blocked until an explicitly tested IPv6 design is introduced.
+The explicit foreign-domain and Telegram-IP rules are retained for visibility
+and regression testing. Since 2026-09-15, the default IPv4 catch-all is
+`CATCH_ALL_FOREIGN -> azazello-hy2`; therefore unclassified public traffic also
+leaves through the Slovak exit instead of the Russian entry. The maintained
+Russian-domain list remains direct through hometele. Private destinations and
+BitTorrent are blocked. IPv6 egress is blocked until an explicitly tested IPv6
+design is introduced.
 
 Telegram native clients connect to MTProto data centres directly by IP, not
 only by DNS name. Rule `TELEGRAM_NETWORKS` therefore sends the maintained
-Telegram IPv4 ranges through `azazello-hy2` before the direct catch-all.
+Telegram IPv4 ranges through `azazello-hy2` before the foreign catch-all.
 
-Verified result on 2026-09-03:
+Verified result after the routing correction on 2026-09-15:
 
-- direct egress: `185.71.196.110`;
+- generic public egress: `91.242.163.206`;
 - selected foreign egress: `91.242.163.206`;
 - YouTube: HTTP `204`;
 - Telegram: HTTP `200`;
@@ -180,6 +182,13 @@ Hiddify client imported and used the generated profile successfully. The
 prepared Windows installer version is `4.1.1`; the installer binary is
 distributed separately and is not stored in this Git repository.
 
+The route rules also reject UDP/443 only for the maintained YouTube domain
+set. Mobile YouTube normally prefers QUIC; rejecting that flow locally makes
+the application retry over HTTPS/TCP while keeping Hysteria2 and all unrelated
+UDP traffic available. Do not replace this scoped rule with a global UDP/443
+block, because Hysteria2 itself uses UDP/443. See
+[`notes/youtube-mobile-quic-2026-09-15.md`](notes/youtube-mobile-quic-2026-09-15.md).
+
 ## Creating a user and copying a link
 
 1. Open `https://panel.hometele.com.ru/` and sign in with the Remnawave admin account.
@@ -188,6 +197,10 @@ distributed separately and is not stored in this Git repository.
 4. Assign the user to `hometele-users`.
 5. Create the user and use the link icon in the user row to copy the subscription URL.
 6. Import that unchanged URL into Hiddify and update the profile.
+
+After a route-template change, use the profile refresh control in Hiddify and
+force-stop the affected application. Existing imported JSON is not changed
+until Hiddify downloads the subscription again.
 
 For the 2026-09-11 mobile stability change, existing clients must refresh the
 profile once. The subscription response header `profile-title` is encoded by
@@ -257,7 +270,7 @@ vpn-deepcheck.timer
 
 Checks cover DNS, public HTTPS, certificate lifetime, panel native login API,
 the subscription output, all management containers, node connectivity,
-Hysteria2 transport, selective egress, overlay bypass rules and a conservative
+Hysteria2 transport, default foreign egress, overlay bypass rules and a conservative
 path-MTU probe.
 
 An on-demand transport monitor is installed on `www`:
@@ -268,9 +281,26 @@ sudo jq . /opt/vpn-migration/reports/vpn-transport-monitor-latest.json
 ```
 
 The test uses a protected synthetic subscription, performs repeated HTTP
-availability probes through each complete VPN path, downloads the same 36 MB
-official release through each transport and records only sanitized aggregate
-results.
+availability probes through each complete VPN path, downloads the same 25 MB
+neutral Cloudflare object through each transport and records only sanitized
+aggregate results. GitHub and OVH are checked separately when needed because
+the azazello provider currently has route-specific degradation to those
+networks; they are not used as the general tunnel-speed baseline.
+
+Post-correction measurement on 2026-09-15:
+
+| Measurement | Hysteria2 | Reality |
+|---|---:|---:|
+| Successful probes | 10/10 | 10/10 |
+| Application-level loss | 0% | 0% |
+| Average response | 0.2550 s | 0.3353 s |
+| p95 response | 0.6838 s | 0.8248 s |
+| Neutral CDN download | 50.71 Mbit/s | 69.18 Mbit/s |
+
+Both transports and a generic, previously unlisted IP-check endpoint exited
+through `91.242.163.206`. Three live geolocation services returned country code
+`SK` for that address. The same session found 5--8.3% ICMP loss between
+hometele and azazello, while UDP kernel error counters did not increase.
 
 Post-deployment measurement on 2026-09-08:
 
@@ -294,7 +324,7 @@ increase and both Hysteria2 sockets retained 16 MiB buffers with socket drops
 `d0`. The observed loss is therefore on the external path to azazello rather
 than a Remnawave/Hysteria2 receive-buffer overflow. QUIC recovery hid it from
 the 40-request application sample, but it remains the primary performance
-risk for selected foreign traffic.
+risk for foreign traffic.
 
 Detailed sanitized record:
 [`notes/vpn-monitoring-2026-09-08.md`](notes/vpn-monitoring-2026-09-08.md).
@@ -363,6 +393,11 @@ sudo /opt/vpn-migration/tests/test-telegram-mtproto-route.sh
 
 Then inspect the dedicated routing JSON files. Do not edit generated node
 configuration inside a running container.
+
+The final server rule must be `CATCH_ALL_FOREIGN -> azazello-hy2`. A generic
+request such as `api.ipify.org` through either complete client transport must
+return `91.242.163.206`, while Russian domains listed in
+`direct-domains.json` remain direct through hometele.
 
 For speed, latency or intermittent availability complaints, run:
 

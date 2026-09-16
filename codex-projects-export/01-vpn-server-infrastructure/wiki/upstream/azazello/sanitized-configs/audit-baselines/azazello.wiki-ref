@@ -1,5 +1,5 @@
 host=azazello
-accepted_at=2026-09-13T11:07:54+03:00
-wiki_ref=4d8b4c47ce8f3dd17c6731b3d5cec3f6c77d0aa8
-wiki_subject=cron-sync: azazello 2026-09-13_11-06-53
-rollback=/opt/vpn-migration/rollback/audit-baseline-azazello-20260913-110728
+accepted_at=2026-09-15T18:17:35+03:00
+wiki_ref=8f03c5acb8a7714417855c49d372909bc28b9654
+wiki_subject=cron-sync: azazello 2026-09-15_18-15-32
+rollback=/opt/vpn-migration/rollback/audit-baseline-azazello-20260915-181710

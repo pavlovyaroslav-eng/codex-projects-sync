@@ -1,5 +1,5 @@
 host=www
-accepted_at=2026-09-13T09:31:41+03:00
-wiki_ref=10d52ddb2022df6fd56f3cdd52d8404e41aec2f3
-wiki_subject=vpn: set Hiddify profile title to Yar$$VPN
-rollback=/opt/vpn-migration/rollback/audit-baseline-www-20260913-093049
+accepted_at=2026-09-15T18:16:53+03:00
+wiki_ref=4b49b65c8ece8f2803e95e76d964e4f247843dec
+wiki_subject=wiki: document mobile YouTube QUIC fallback
+rollback=/opt/vpn-migration/rollback/audit-baseline-www-20260915-181600

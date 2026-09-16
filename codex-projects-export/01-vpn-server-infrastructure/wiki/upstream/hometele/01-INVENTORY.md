@@ -15,7 +15,7 @@
    ↓
 hometele — RU входная точка, видимая клиентам и провайдеру
    ↓ каскад / VPN-туннель
-azazello — CZ выход наружу / интернет
+azazello — SK выход наружу / интернет
 
 www — отдельный VPS для Matrix, командного агента, AI bot и мониторинга
 ```
@@ -26,7 +26,7 @@ www — отдельный VPS для Matrix, командного агента,
 
 | Сервер | Роль | Ключевые сервисы | Главная осторожность |
 |---|---|---|---|
-| `azazello` | CZ выход в интернет | Remnawave Node, Hysteria2 bridge, Amnezia AWG, MTProto, nginx, fail2ban | Не восстанавливать удалённый 3x-ui поверх Remnawave Node |
+| `azazello` | SK выход в интернет по актуальной IP-геолокации | Remnawave Node, Hysteria2 bridge, Amnezia AWG, MTProto, nginx, fail2ban | Не восстанавливать удалённый 3x-ui поверх Remnawave Node |
 | `hometele` | RU входная точка каскада | Xray, nginx-заглушка, Postfix, fail2ban, OpenVPN, WireGuard | `443/tcp` занят Xray Reality |
 | `www` | Matrix / агент / мониторинг | Synapse, Coturn, nginx, synapse-admin, command-agent, AI bot | Не давать агенту полный root shell |
 
@@ -68,7 +68,9 @@ Remnawave. Старые адрес и SSH-туннель панели 3x-ui не
 
 ### Роль
 
-Чешский VPS. Основной зарубежный выход и узел Remnawave Node.
+Зарубежный VPS и основной выход Remnawave Node. На 2026-09-15 три актуальные
+IP-базы определяют `91.242.163.206` как Словакию (`SK`); старые записи с `CZ`
+считать устаревшими.
 
 ### Сервисы
 

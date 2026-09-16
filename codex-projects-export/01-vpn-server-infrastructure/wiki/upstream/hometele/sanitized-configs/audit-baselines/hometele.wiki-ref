@@ -1,5 +1,5 @@
 host=hometele
-accepted_at=2026-09-13T09:31:00+03:00
-wiki_ref=9136b71b1d88289a81669f9955044a7f139857e7
-wiki_subject=cron-sync: hometele 2026-09-13_09-30-11
-rollback=/opt/vpn-migration/rollback/audit-baseline-hometele-20260913-093049
+accepted_at=2026-09-15T18:17:15+03:00
+wiki_ref=02df1e2fb6364b6293de44edb3a5592df190e219
+wiki_subject=cron-sync: hometele 2026-09-15_18-15-30
+rollback=/opt/vpn-migration/rollback/audit-baseline-hometele-20260915-181705
